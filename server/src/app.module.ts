@@ -3,8 +3,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GraphQLModule } from '@nestjs/graphql';
 
-import { UsersModule } from './users/users.module';
 import { ApolloDriver } from '@nestjs/apollo';
+import { UsersModule } from './users/users.module';
+import { PostsModule } from './posts/posts.module';
 
 @Module({
   imports: [
@@ -32,7 +33,7 @@ import { ApolloDriver } from '@nestjs/apollo';
       }),
     }),
     UsersModule,
+    PostsModule,
   ],
-  providers: [],
 })
 export class AppModule {}

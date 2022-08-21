@@ -23,13 +23,13 @@ export class UserResolver {
     return await this.userService.updateUser(updateUserInput);
   }
 
-  @Mutation(() => Number)
-  async removeUser(@Args('id') id: number): Promise<number> {
+  @Mutation(() => String)
+  async removeUser(@Args('id') id: string): Promise<string> {
     return await this.userService.removeUser(id);
   }
 
   @Query(() => UserEntity)
-  async getOneUser(@Args('id') id: number): Promise<UserEntity> {
+  async getOneUser(@Args('id') id: string): Promise<UserEntity> {
     return await this.userService.getOneUser(id);
   }
 

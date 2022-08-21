@@ -16,7 +16,7 @@ export class UserService {
     return await this.userRepository.save({ ...createUserInput });
   }
 
-  async getOneUser(id: number): Promise<UserEntity> {
+  async getOneUser(id: string): Promise<UserEntity> {
     return await this.userRepository.findOne({ where: { id } });
   }
 
@@ -24,7 +24,7 @@ export class UserService {
     return await this.userRepository.find();
   }
 
-  async removeUser(id: number): Promise<number> {
+  async removeUser(id: string): Promise<string> {
     await this.userRepository.delete({ id });
     return id;
   }

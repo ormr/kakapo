@@ -8,25 +8,17 @@ import {
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
-@Entity('users')
-export class UserEntity {
+@Entity('posts')
+export class PostEntity {
   @Field(() => ID)
   @PrimaryGeneratedColumn()
   id: string;
 
   @Field()
-  @CreateDateColumn()
-  createdAt: Date;
+  title: string;
 
   @Field()
-  @UpdateDateColumn()
-  updatedAt: Date;
+  text: string;
 
-  @Field()
-  @Column()
-  email: string;
-
-  @Field({ nullable: true })
-  @Column({ nullable: true })
-  name: string;
+  // TODO: Связь с User через userId
 }
