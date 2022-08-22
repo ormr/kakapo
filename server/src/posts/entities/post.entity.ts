@@ -2,23 +2,34 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn
 } from 'typeorm';
 import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { UserEntity } from 'src/users/entities/user.entity';
 
 @ObjectType()
 @Entity('posts')
 export class PostEntity {
   @Field(() => ID)
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn("uuid")
   id: string;
 
   @Field()
+  @Column()
   title: string;
 
   @Field()
+  @Column()
   text: string;
 
-  // TODO: Связь с User через userId
-}
+  @Field()
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @Field({ nullable: true })
+  @OneToOne(() => UserEntity)
+  @JoinColumn()
+  user: UserEntity;
+};

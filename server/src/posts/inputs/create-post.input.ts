@@ -8,6 +8,8 @@ export class CreatePostInput {
   @Field()
   text: string;
 
+  @Field()
+  userId: string;
   // TODO: Создать связь с User
   // createdBy: User
 
