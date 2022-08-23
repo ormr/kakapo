@@ -1,21 +1,15 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { GraphQLModule } from '@nestjs/graphql';
 
-import { ApolloDriver } from '@nestjs/apollo';
 import { UsersModule } from './users/users.module';
 import { PostsModule } from './posts/posts.module';
+import { PostsController } from './posts/controllers/posts.controller';
+import { UsersController } from './users/controllers/users.controller';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true, envFilePath: '../.env' }),
-    GraphQLModule.forRoot({
-      driver: ApolloDriver,
-      autoSchemaFile: 'schema.gql',
-      sortSchema: true,
-      playground: true,
-    }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -35,5 +29,6 @@ import { PostsModule } from './posts/posts.module';
     UsersModule,
     PostsModule,
   ],
+  // controllers: [UsersController, PostsController],
 })
 export class AppModule { }

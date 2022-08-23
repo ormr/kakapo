@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Post } from 'src/posts/entities/post.entity';
-import { CreatePostInput } from 'src/posts/inputs/create-post.input';
-import { UpdatePostInput } from 'src/posts/inputs/update-post.input';
+import { CreatePostDto } from 'src/posts/dto/create-post.dto';
+import { UpdatePostDto } from 'src/posts/dto/update-post.dto';
 import { User } from 'src/users/entities/user.entity';
 import { Repository } from 'typeorm';
 
@@ -13,9 +13,9 @@ export class PostService {
     private readonly postRepository: Repository<Post>,
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
-  ) { }
+  ) {}
 
-  async createPost(createPostInput: CreatePostInput): Promise<Post> {
+  async createPost(createPostInput: CreatePostDto): Promise<Post> {
     const { userId, ...postInput } = createPostInput;
 
     const user = await this.userRepository.findOne({ where: { id: userId } });
@@ -23,7 +23,7 @@ export class PostService {
     const post = {
       ...postInput,
       user,
-    }
+    };
 
     return await this.postRepository.save(post);
   }
@@ -41,10 +41,10 @@ export class PostService {
     return id;
   }
 
-  async updatePost(updatePostInput: UpdatePostInput): Promise<Post> {
+  async updatePost(id: string, updatePostInput: UpdatePostDto): Promise<Post> {
     await this.postRepository.update(
       {
-        id: updatePostInput.id,
+        id,
       },
       { ...updatePostInput },
     );
