@@ -12,15 +12,16 @@ export class PostService {
     @InjectRepository(PostEntity)
     private readonly postRepository: Repository<PostEntity>,
     @InjectRepository(UserEntity)
-    private readonly userRepository: Repository<UserEntity>
+    private readonly userRepository: Repository<UserEntity>,
   ) { }
 
-  async createPost(createPostInput: CreatePostInput): Promise<any> {
-    const user = this.userRepository.findOne({ where: { id: createPostInput.userId } });
+  async createPost(createPostInput: CreatePostInput): Promise<PostEntity> {
+    const { userId, ...postInput } = createPostInput;
+
+    const user = await this.userRepository.findOne({ where: { id: userId } });
 
     const post = {
-      ...createPostInput,
-      userId: undefined,
+      ...postInput,
       user,
     }
 

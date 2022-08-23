@@ -2,7 +2,6 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinColumn,
   OneToOne,
   PrimaryGeneratedColumn
 } from 'typeorm';
@@ -28,8 +27,7 @@ export class PostEntity {
   @CreateDateColumn()
   createdAt: Date;
 
-  @Field({ nullable: true })
+  @Field()
   @OneToOne(() => UserEntity)
-  @JoinColumn()
   user: UserEntity;
 };
