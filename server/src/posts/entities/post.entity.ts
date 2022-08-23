@@ -6,11 +6,11 @@ import {
   PrimaryGeneratedColumn
 } from 'typeorm';
 import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { UserEntity } from 'src/users/entities/user.entity';
+import { User } from 'src/users/entities/user.entity';
 
 @ObjectType()
 @Entity('posts')
-export class PostEntity {
+export class Post {
   @Field(() => ID)
   @PrimaryGeneratedColumn("uuid")
   id: string;
@@ -28,6 +28,6 @@ export class PostEntity {
   createdAt: Date;
 
   @Field()
-  @OneToOne(() => UserEntity)
-  user: UserEntity;
+  @OneToOne(() => User)
+  user: User;
 };

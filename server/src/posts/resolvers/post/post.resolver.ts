@@ -1,5 +1,5 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { PostEntity } from 'src/posts/entities/post.entity';
+import { Post } from 'src/posts/entities/post.entity';
 import { CreatePostInput } from 'src/posts/inputs/create-post.input';
 import { UpdatePostInput } from 'src/posts/inputs/update-post.input';
 import { PostService } from 'src/posts/services/post/post.service';
@@ -8,16 +8,16 @@ import { PostService } from 'src/posts/services/post/post.service';
 export class PostResolver {
   constructor(private readonly postService: PostService) { }
 
-  @Mutation(() => PostEntity)
+  @Mutation(() => Post)
   async createPost(
     @Args('createPost') createPostInput: CreatePostInput,
-  ): Promise<PostEntity> {
+  ): Promise<Post> {
     return await this.postService.createPost(createPostInput);
   }
 
-  @Mutation(() => PostEntity)
+  @Mutation(() => Post)
   async updatePost(
-    @Args('updatePost') updatePostInput: UpdatePostInput,): Promise<PostEntity> {
+    @Args('updatePost') updatePostInput: UpdatePostInput,): Promise<Post> {
     return await this.postService.updatePost(updatePostInput);
   }
 
@@ -28,13 +28,13 @@ export class PostResolver {
     return await this.postService.removePost(id);
   }
 
-  @Query(() => PostEntity)
-  async getOnePost(@Args('id') id: string): Promise<PostEntity> {
+  @Query(() => Post)
+  async getOnePost(@Args('id') id: string): Promise<Post> {
     return await this.postService.getOnePost(id);
   }
 
-  @Query(() => [PostEntity])
-  async getAllPosts(): Promise<PostEntity[]> {
+  @Query(() => [Post])
+  async getAllPosts(): Promise<Post[]> {
     return await this.postService.getAllPosts();
   }
 }
