@@ -1,8 +1,8 @@
 version: '3.8'
 
 services:
-  db:
-    container_name: blog-db
+  postgres:
+    container_name: postgres
     image: postgres:latest
     restart: always
     environment:
@@ -13,12 +13,15 @@ services:
       - ./pgdata:/var/lib/postgresql/data
     ports:
       - ${TYPEORM_PORT}:${TYPEORM_PORT}
+    networks:
+      - postgres
+      
   server:
     container_name: blog-server
     build:
       context: ./server
     depends_on:
-      - db
+      - postgres
     restart: unless-stopped
     ports:
       - '${API_PORT}:3001'
@@ -30,4 +33,32 @@ services:
       - TYPEORM_PASSWORD=${TYPEORM_PASSWORD}
       - TYPEORM_DATABASE=${TYPEORM_DATABASE}
       - TYPEORM_PORT=${TYPEORM_PORT}
-      - TYPEORM_HOST=db
+      - TYPEORM_HOST=postgres
+    networks:
+      - postgres
+
+  pgadmin:
+    links:
+    - postgres:postgres
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    ports:
+      - "8080:80"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    environment:
+      - POSTGRES_USER=${TYPEORM_USERNAME}
+      - POSTGRES_PASSWORD=${TYPEORM_PASSWORD}
+      - POSTGRES_DB=${TYPEORM_DATABASE}
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
+    networks:
+      - postgres
+
+networks:
+  postgres:
+    driver: bridge
+
+volumes:
+  pgdata:
+  pgadmin-data:
