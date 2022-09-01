@@ -11,21 +11,15 @@ export class PostService {
   constructor(
     @InjectRepository(Post)
     private readonly postRepository: Repository<Post>,
-    @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
-  ) {}
+  ) { }
 
-  async createPost(createPostInput: CreatePostDto): Promise<Post> {
-    const { userId, ...postInput } = createPostInput;
-
-    const user = await this.userRepository.findOne({ where: { id: userId } });
-
-    const post = {
-      ...postInput,
+  async createPost(post: CreatePostDto, user: User): Promise<Post> {
+    const newPost = {
+      ...post,
       user,
     };
 
-    return await this.postRepository.save(post);
+    return await this.postRepository.save(newPost);
   }
 
   async getOnePost(id: string): Promise<Post> {
@@ -48,6 +42,7 @@ export class PostService {
       },
       { ...updatePostInput },
     );
+
     return await this.getOnePost(updatePostInput.id);
   }
 }

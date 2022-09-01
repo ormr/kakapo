@@ -4,28 +4,27 @@ import { Repository } from 'typeorm';
 import { CreateCommentDto } from '../dto/create-comment.dto';
 import { Comment } from 'src/comments/entities/comment.entity';
 import { User } from 'src/users/entities/user.entity';
-// import { Post } from 'src/posts/entities/post.entity';
 
 @Injectable()
 export class CommentsService {
   constructor(
     @InjectRepository(Comment)
-    private readonly commentRepsitory: Repository<Comment>,
+    private readonly commentRepository: Repository<Comment>,
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
   ) { }
 
-  async createComment(createCommentDto: CreateCommentDto): Promise<Comment> {
-    const { userId, ...commentDto } = createCommentDto;
+  async getAllComments(): Promise<Comment[]> {
+    return this.commentRepository.find();
+  }
 
-    const user = await this.userRepository.findOne({ where: { id: userId } });
-
+  async createComment(commentDto: CreateCommentDto, author: User): Promise<Comment> {
     const comment = {
       ...commentDto,
-      author: user,
+      author,
     }
 
-    return await this.commentRepsitory.save(comment);
+    return await this.commentRepository.save(comment);
   }
 
 }

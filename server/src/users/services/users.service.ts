@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../entities/user.entity';
 import { Repository } from 'typeorm';
@@ -10,14 +10,27 @@ export class UsersService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
-  ) {}
+  ) { }
 
-  async createUser(createUserInput: CreateUserDto): Promise<User> {
-    return await this.userRepository.save({ ...createUserInput });
+  async create(createUserInput: CreateUserDto): Promise<User> {
+    const newUser = await this.userRepository.save(createUserInput);
+    return newUser;
   }
 
-  async getOneUser(id: string): Promise<User> {
-    return await this.userRepository.findOne({ where: { id } });
+  async getById(id: string): Promise<User> {
+    const user = await this.userRepository.findOne({ where: { id } });
+    if (user) {
+      return user;
+    }
+    throw new HttpException('User with this id does not exist', HttpStatus.NOT_FOUND);
+  }
+
+  async getUserByEmail(email: string): Promise<User> {
+    const user = await this.userRepository.findOne({ where: { email } });
+    if (user) {
+      return user;
+    }
+    throw new HttpException('User with this email does not exists', HttpStatus.NOT_FOUND);
   }
 
   async getAllUsers(): Promise<User[]> {
@@ -26,7 +39,7 @@ export class UsersService {
 
   async updateUser(id: string, updateUserInput: UpdateUserDto): Promise<User> {
     await this.userRepository.update({ id }, { ...updateUserInput });
-    return await this.getOneUser(id);
+    return await this.getById(id);
   }
 
   async removeUser(id: string): Promise<string> {
