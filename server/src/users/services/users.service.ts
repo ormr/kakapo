@@ -25,7 +25,7 @@ export class UsersService {
     throw new HttpException('User with this id does not exist', HttpStatus.NOT_FOUND);
   }
 
-  async getUserByEmail(email: string): Promise<User> {
+  async getByEmail(email: string): Promise<User> {
     const user = await this.userRepository.findOne({ where: { email } });
     if (user) {
       return user;

@@ -8,8 +8,10 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.use(cookieParser());
   const config = app.get(ConfigService);
-  const port = config.get<number>('API_PORT');
-  await app.listen(port || 3000, () => {
+  const mode = config.get<string>('MODE');
+  const apiPort = config.get<number>('API_PORT');
+  const port = mode === 'dev' ? 3000 : apiPort;
+  await app.listen(port, () => {
     console.log(`App started on port: ${port}`);
   });
 }

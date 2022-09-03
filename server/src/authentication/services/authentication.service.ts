@@ -4,7 +4,7 @@ import { UsersService } from "src/users/services/users.service";
 import { PostgresErrorCode } from '../../database/postgresErrorCodes.enum';
 import { RegisterDto } from '../dto/register.dto';
 import { JwtService } from '@nestjs/jwt';
-import { TokenPayload } from '../tokenPayload.interface';
+import { TokenPayload } from '../interfaces/tokenPayload.interface';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()
@@ -40,7 +40,7 @@ export class AuthenticationService {
 
   public async getAuthenticatedUser(email: string, plainTextPassword: string) {
     try {
-      const user = await this.usersService.getUserByEmail(email);
+      const user = await this.usersService.getByEmail(email);
       await this.verifyPassword(plainTextPassword, user.password);
       user.password = undefined;
       return user;
@@ -50,7 +50,8 @@ export class AuthenticationService {
   }
 
   public async verifyPassword(plainTextPassword: string, hashedPassword: string) {
-    const isPasswordMatching = await bcrypt.compare(hashedPassword, plainTextPassword);
+    const isPasswordMatching = await bcrypt.compare(plainTextPassword, hashedPassword);
+    console.log(isPasswordMatching);
 
     if (!isPasswordMatching) {
       throw new HttpException('Wrong credentials provided', HttpStatus.BAD_REQUEST);

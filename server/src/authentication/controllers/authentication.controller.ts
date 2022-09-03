@@ -2,7 +2,7 @@ import { Body, Req, Controller, HttpCode, Post, UseGuards, Res, Get } from '@nes
 import { Response } from 'express';
 import { AuthenticationService } from '../services/authentication.service';
 import { RegisterDto } from '../dto/register.dto';
-import { RequestWithUser } from '../../interfaces/requestWithUser.interface';
+import { RequestWithUser } from '../interfaces/requestWithUser.interface';
 import { LocalAuthenticationGuard } from '../guards/local-authentication.guard';
 import { JwtAuthenticationGuard } from '../guards/jwt-authentication.guard';
 
