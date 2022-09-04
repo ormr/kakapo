@@ -1,6 +1,6 @@
-# blog
+# Намедни
 
-My personal project
+My personal blog project
 
 ### Setup
 
