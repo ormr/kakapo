@@ -10,7 +10,7 @@ const initialValue = {
   author,
 };
 
-export const Posts: FC = (): ReactElement => {
+export const Feed: FC = (): ReactElement => {
   const { posts } = useSelector((state: RootState) => state.post);
   const dispatch = useDispatch();
   const [currentPost, setCurrentPost] = useState<Post>(initialValue);
