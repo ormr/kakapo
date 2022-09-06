@@ -1,6 +1,8 @@
 import { LogIn } from '@src/components/auth/LogIn';
 import { SignIn } from '@src/components/auth/SignIn';
 import { About } from '@src/components/main/About';
+import { Create } from '@src/components/main/Create';
+import { Detail } from '@src/components/main/Detail';
 import { Feed } from '@src/components/main/Feed';
 import { Footer } from '@src/components/main/Footer';
 import { Header } from '@src/components/main/Header';
@@ -22,7 +24,8 @@ export const App: FC = (): ReactElement => (
     <Header />
     <Routes>
       <Route path="/" element={<Feed />} />
-      <Route path="/create" element={<Feed />} />
+      <Route path="/:id" element={<Detail />} />
+      <Route path="/create" element={<Create />} />
       <Route path="/about" element={<About />} />
       <Route path="/sign-in" element={<SignIn />} />
       <Route path="/log-in" element={<LogIn />} />
