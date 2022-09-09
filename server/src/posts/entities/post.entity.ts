@@ -21,6 +21,6 @@ export class Post {
   @CreateDateColumn()
   createdAt: Date;
 
-  @OneToOne(() => User)
-  user: User;
+  // @OneToOne(() => User)
+  // user: User;
 }

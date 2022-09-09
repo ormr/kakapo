@@ -19,10 +19,20 @@ import { CommentsModule } from './comments/comments.module';
         password: config.get<string>('TYPEORM_PASSWORD'),
         database: config.get<string>('TYPEORM_DATABASE'),
         port: config.get<number>('TYPEORM_PORT'),
-        entities: [__dirname + 'dist/**/*.entity{.ts,.js}'],
-        synchronize: true,
+        entities: [],
         autoLoadEntities: true,
-        logging: true,
+        // entities: [__dirname + 'dist/**/*.entity{.ts,.js}'],
+        // synchronize: false,
+        // // autoLoadEntities: true,
+        // logging: true,
+        // logger: 'file',
+        // migrations: [__dirname + '/migrations/**/*{.ts,.js}'],
+        // migrationsRun: true,
+        // cli: {
+        //   // Location of migration should be inside src folder
+        //   // to be compiled into dist/ folder.
+        //   migrationsDir: 'src/migrations',
+        // },
       }),
     }),
     UsersModule,
