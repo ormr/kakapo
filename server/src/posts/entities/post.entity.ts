@@ -5,10 +5,10 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { User } from 'src/users/entities/user.entity';
+import User from '../../users/entities/user.entity';
 
 @Entity('posts')
-export class Post {
+class Post {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -21,6 +21,8 @@ export class Post {
   @CreateDateColumn()
   createdAt: Date;
 
-  // @OneToOne(() => User)
-  // user: User;
+  @OneToOne(() => User)
+  user: User;
 }
+
+export default Post;

@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from 'src/users/entities/user.entity';
-import { Post } from './entities/post.entity';
+import User from '../users/entities/user.entity';
+import Post from './entities/post.entity';
 import { UsersService } from 'src/users/services/users.service';
 import { PostService } from './services/posts.service';
 import { PostsController } from './controllers/posts.controller';
@@ -11,4 +11,4 @@ import { PostsController } from './controllers/posts.controller';
   providers: [PostService, UsersService],
   controllers: [PostsController],
 })
-export class PostsModule {}
+export class PostsModule { }

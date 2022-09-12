@@ -1,15 +1,15 @@
-import { Post } from 'src/posts/entities/post.entity';
+// import Post from '../../posts/entities/post.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
-  OneToMany,
+  // OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
 @Entity('users')
-export class User {
+class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -30,3 +30,5 @@ export class User {
   // @OneToMany(() => Post, (post: Post) => post.userId)
   // posts: Post[];
 }
+
+export default User;
