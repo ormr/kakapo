@@ -31,6 +31,6 @@ export const App: FC = (): ReactElement => (
       <Route path="/log-in" element={<LogIn />} />
       <Route path="/profile" element={<Profile />} />
     </Routes>
-    <Footer />
+    {/* <Footer /> */}
   </>
 );
