@@ -66,4 +66,4 @@ export const Profile: FC = (): ReactElement => {
       </Grid>
     </Grid>
   );
-}
+};
