@@ -1,14 +1,14 @@
-import { LogIn } from '@src/components/auth/LogIn';
-import { SignIn } from '@src/components/auth/SignIn';
-import { About } from '@src/components/main/About';
-import { Create } from '@src/components/main/Create';
-import { Detail } from '@src/components/main/Detail';
-import { Feed } from '@src/components/main/Feed';
-import { Footer } from '@src/components/main/Footer';
-import { Header } from '@src/components/main/Header';
-import { Profile } from '@src/components/profile';
 import React, { FC, ReactElement } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { About } from '@src/components/About';
+import { Header } from '@src/components/Header';
+
+import { Main } from '@src/pages/Main';
+import { Profile } from '@src/pages/Profile';
+import { Create } from '@src/pages/Create';
+import { Detail } from '@src/pages/Detail';
+import { SignIn } from '@src/pages/SignIn';
+import { LogIn } from '@src/pages/LogIn';
 
 /*
   TODO:
@@ -16,14 +16,13 @@ import { Routes, Route } from 'react-router-dom';
   2. Отладка компонента Feed на тестовых данных
   3. Страница создания статьи
   4. Авторизация
-
 */
 
 export const App: FC = (): ReactElement => (
   <>
     <Header />
     <Routes>
-      <Route path="/" element={<Feed />} />
+      <Route path="/" element={<Main />} />
       <Route path="/:id" element={<Detail />} />
       <Route path="/create" element={<Create />} />
       <Route path="/about" element={<About />} />
@@ -31,6 +30,5 @@ export const App: FC = (): ReactElement => (
       <Route path="/log-in" element={<LogIn />} />
       <Route path="/profile" element={<Profile />} />
     </Routes>
-    {/* <Footer /> */}
   </>
 );
