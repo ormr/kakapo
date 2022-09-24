@@ -14,7 +14,7 @@ export interface PostState {
   posts: Post[];
 }
 
-const stockImages = [
+export const stockImages = [
   'https://traveltimes.ru/wp-content/uploads/2021/05/2262378-1024x683.jpg',
   'https://ruschemicals.com/wp-content/uploads/2021/11/s1200-7.jpg',
   'https://travels.impress.io/app/uploads/sites/3/2020/09/sergey-pesterev-r6FU8zqrgdM-unsplash-1536x1025.jpg',
