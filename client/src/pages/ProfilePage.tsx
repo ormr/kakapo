@@ -1,8 +1,7 @@
 import React, { FC, ReactElement } from 'react';
 import { Box, Grid, Typography } from '@mui/material';
-import styles from './profile.module.scss';
 
-export const Profile: FC = (): ReactElement => {
+const ProfilePage: FC = (): ReactElement => {
 
   const profile = {
     name: 'Serafim',
@@ -46,7 +45,7 @@ export const Profile: FC = (): ReactElement => {
         <Box>
           <Typography variant="h4">Профиль пользователя</Typography>
         </Box>
-        <Box className={styles.image}>
+        <Box>
           <img src={image} />
         </Box>
         <Box>
@@ -66,3 +65,5 @@ export const Profile: FC = (): ReactElement => {
     </Grid>
   );
 };
+
+export default ProfilePage

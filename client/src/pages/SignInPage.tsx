@@ -1,7 +1,7 @@
 import React, { FC, ReactElement } from 'react';
 import { Grid, TextField, Typography } from '@mui/material';
 
-export const SignIn: FC = (): ReactElement => {
+const SignInPage: FC = (): ReactElement => {
   return (
     <Grid container justifyContent="center" alignItems="center">
       <Grid xs={4} item p={4}>
@@ -21,3 +21,5 @@ export const SignIn: FC = (): ReactElement => {
     </Grid>
   );
 };
+
+export default SignInPage;

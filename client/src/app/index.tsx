@@ -1,14 +1,14 @@
 import React, { FC, ReactElement } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { About } from '@src/components/About';
 import { Header } from '@src/components/Header';
 
-import { Main } from '@src/pages/Main';
-import { Profile } from '@src/pages/Profile';
-import { Create } from '@src/pages/Create';
-import { Detail } from '@src/pages/Detail';
-import { SignIn } from '@src/pages/SignIn';
-import { LogIn } from '@src/pages/LogIn';
+import MainPage from '@src/pages/MainPage';
+import DetailPage from '@src/pages/DetailPage';
+import CreatePage from '@src/pages/CreatePage';
+import SignInPage from '@src/pages/SignInPage';
+import LogInPage from '@src/pages/LogInPage';
+import ProfilePage from '@src/pages/ProfilePage';
+
 
 /*
   TODO:
@@ -22,13 +22,12 @@ export const App: FC = (): ReactElement => (
   <>
     <Header />
     <Routes>
-      <Route path="/" element={<Main />} />
-      <Route path="/:id" element={<Detail />} />
-      <Route path="/create" element={<Create />} />
-      <Route path="/about" element={<About />} />
-      <Route path="/sign-in" element={<SignIn />} />
-      <Route path="/log-in" element={<LogIn />} />
-      <Route path="/profile" element={<Profile />} />
+      <Route path="/" element={<MainPage />} />
+      <Route path="/:id" element={<DetailPage />} />
+      <Route path="/create" element={<CreatePage />} />
+      <Route path="/sign-in" element={<SignInPage />} />
+      <Route path="/log-in" element={<LogInPage />} />
+      <Route path="/profile" element={<ProfilePage />} />
     </Routes>
   </>
 );

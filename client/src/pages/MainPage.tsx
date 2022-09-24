@@ -1,7 +1,9 @@
 import React from 'react';
 
-export const Main = () => (
+const MainPage = () => (
   <div>
     <h1>Main</h1>
   </div>
 );
+
+export default MainPage;

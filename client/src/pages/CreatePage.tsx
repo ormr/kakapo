@@ -2,7 +2,7 @@ import React, { FC, ReactElement, useState } from 'react';
 import { Button, Container, Grid, Typography, Box } from '@mui/material';
 import MDEditor from '@uiw/react-md-editor';
 
-export const Create: FC = (): ReactElement => {
+const CreatePage: FC = (): ReactElement => {
   const [value, setValue] = useState<string>('');
   const handleChange = (e: string | undefined) => {
     setValue(`${e}`);
@@ -38,3 +38,5 @@ export const Create: FC = (): ReactElement => {
     </Container >
   );
 };
+
+export default CreatePage;
