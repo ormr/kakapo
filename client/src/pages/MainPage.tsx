@@ -1,28 +1,23 @@
 import React, { FC, ReactElement } from 'react';
-import { Grid } from '@mui/material';
-import { Container } from '@mui/system';
+import { Container, Box, Grid } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '@src/store/hooks';
 import { Post } from '@src/components/Post';
-import { addPost, stockImages } from '@src/features/posts/postSlice';
+import { decrease, increase } from '@src/features/count/countSlice';
 
 const MainPage: FC = (): ReactElement => {
   const { posts } = useAppSelector((state) => state.post);
+  const { value: countValue } = useAppSelector((state) => state.count);
   const dispatch = useAppDispatch();
-
-  const handleAdd = () => {
-    dispatch(addPost({
-      id: '1',
-      title: 'My essay in english',
-      description: "That's how I started this post",
-      createdAt: new Date().toDateString(),
-      image: stockImages[Math.floor(Math.random() * 5)],
-      author: 'Serafim Gavrilov',
-    }))
-  };  
 
   return (
     <Container>
-      <button onClick={handleAdd}>+</button>
+      <Box>
+        <Box>Count: {countValue}</Box>
+        <Box>
+          <button onClick={() => dispatch(increase())}>+</button>
+          <button onClick={() => dispatch(decrease())}>-</button>
+        </Box>
+      </Box>
       <Grid
         container
         mt={7}
