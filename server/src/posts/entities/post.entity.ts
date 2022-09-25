@@ -16,7 +16,7 @@ class Post {
   title: string;
 
   @Column()
-  text: string;
+  content: string;
 
   @CreateDateColumn()
   createdAt: Date;

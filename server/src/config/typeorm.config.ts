@@ -4,6 +4,7 @@ import User from '../users/entities/user.entity';
 import Post from '../posts/entities/post.entity';
 import { config } from 'dotenv';
 import { CreatePost1662979231566 } from '../migrations/1662979231566-CreatePost';
+import { migrations1664096717354 } from '../migrations/1664096717354-migrations';
 
 config();
 
@@ -16,8 +17,8 @@ export default new DataSource({
   username: 'admin',
   password: '123456',
   database: 'blog-db',
-  entities: [Post, User, Comment],
-  migrations: [CreatePost1662979231566]
+  entities: [Post, User],
+  migrations: [migrations1664096717354],
 });
 
 // export default new DataSource({

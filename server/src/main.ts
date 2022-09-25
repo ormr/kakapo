@@ -10,7 +10,7 @@ async function bootstrap() {
   const config = app.get(ConfigService);
   const mode = config.get<string>('MODE');
   const apiPort = config.get<number>('API_PORT');
-  const port = mode === 'dev' ? 3000 : apiPort;
+  const port = mode === 'dev' ? 3001 : apiPort;
   await app.listen(port, () => {
     console.log(`App started on port: ${port}`);
   });
