@@ -1,13 +1,18 @@
-import React, { FC, ReactElement } from 'react';
+import React, { FC, ReactElement, useEffect } from 'react';
 import { Container, Box, Grid } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '@src/store/hooks';
 import { Post } from '@src/components/Post';
 import { decrease, increase } from '@src/features/count/countSlice';
+import { getPosts } from '@src/features/posts/postSlice';
 
 const MainPage: FC = (): ReactElement => {
   const { posts } = useAppSelector((state) => state.post);
   const { value: countValue } = useAppSelector((state) => state.count);
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getPosts());
+  }, [])  
 
   return (
     <Container>

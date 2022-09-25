@@ -64,14 +64,17 @@ export const postState = createSlice({
   name: 'posts',
   initialState,
   reducers: {
+    getPosts: (state) => {
+      console.log(state);
+    },
+    setPosts: (state, action: PayloadAction<Post[]>) => {
+      state.posts = action.payload;
+    },
     addPost: (state, action: PayloadAction<Post>) => {
       state.posts.push(action.payload);
     },
-    // updatePost: (state, action: PayloadAction<Post>) => {
-    //   state.posts
-    // }
   },
 });
 
-export const { addPost } = postState.actions;
+export const { getPosts, setPosts, addPost } = postState.actions;
 export const postReducer = postState.reducer;

@@ -8,7 +8,7 @@ export interface Post {
 }
 
 export const PostsApi = (instance: AxiosInstance) => ({
-  getPosts: async (): Promise<Post> => {
+  getPosts: async (): Promise<Post[]> => {
     const { data } = await instance.get('/posts');
     return data;
   },
