@@ -1,4 +1,4 @@
-import { AxiosInstance } from "axios"
+import { AxiosInstance, AxiosResponse } from "axios"
 
 export interface Post {
   id: string;
@@ -8,9 +8,8 @@ export interface Post {
 }
 
 export const PostsApi = (instance: AxiosInstance) => ({
-  getPosts: async (): Promise<Post[]> => {
-    const { data } = await instance.get('/posts');
-    return data;
+  getPosts: async (): Promise<AxiosResponse<Post>> => {
+    return await instance.get('/posts');
   },
   getPost: async (id: string): Promise<Post> => {
     const { data } = await instance.get(`/posts/${id}`);

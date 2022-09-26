@@ -1,4 +1,4 @@
-import { AxiosInstance } from "axios";
+import { AxiosInstance, AxiosResponse } from "axios";
 
 export interface User {
   email: string;
@@ -9,20 +9,16 @@ export interface User {
 }
 
 export const AuthApi = (instance: AxiosInstance) => ({
-  authMe: async (): Promise<User> => {
-    const { data } = await instance.get('/authentication');
-    return data;
+  auth: async (): Promise<AxiosResponse<User>> => {
+    return await instance.get('/authentication');
   },
-  logIn: async (form: any): Promise<User> => {
-    const { data } = await instance.post('/authentication/log-in', form);
-    return data;
+  register: async (form: { name: string, email: string, password: string }): Promise<AxiosResponse<User>> => {
+    return await instance.post('/authentication/register', form);
   },
-  logOut: async (form: any): Promise<User> => {
-    const { data } = await instance.post('/authentication/log-out', form);
-    return data;
+  logIn: async (form: { email: string, password: string }): Promise<AxiosResponse<User>> => {
+    return await instance.post('/authentication/log-in', form);
   },
-  register: async (form: any): Promise<User> => {
-    const { data } = await instance.post('/authentication/register', form);
-    return data;
+  logOut: async (): Promise<AxiosResponse<User>> => {
+    return await instance.post('/authentication/log-out');
   },
 });
