@@ -1,7 +1,7 @@
 import {pathRewrite} from '../utils/helpers';
 
 const httpProxyTarget = {
-    port: 80,
+    port: 3001,
     protocol: 'http',
 };
 
@@ -11,19 +11,16 @@ const httpsProxyTarget = {
 };
 
 export const devServerProxyConfig = {
-    /*
-    // Example proxy configuration endpoins
-    '/world-time': {
-        target: `${httpsProxyTarget.protocol}://worldtimeapi.org:${httpsProxyTarget.port}`,
-        pathRewrite: pathRewrite('^/world-time/test', '/api'),
+    '**': {
+        target: `${httpProxyTarget.protocol}://localhost:${httpProxyTarget.port}`,
+        // pathRewrite: pathRewrite('^/world-time/test', '/api'),
         changeOrigin: true,
         secure: false,
     },
-    '/someurl/test': {
-        target: `${httpsProxyTarget.protocol}://reqres.in:${httpsProxyTarget.port}`,
-        pathRewrite: pathRewrite('^/someurl/test', '/api'),
-        changeOrigin: true,
-        secure: false,
-    },
-    */
+    // '/someurl/test': {
+    //     target: `${httpsProxyTarget.protocol}://reqres.in:${httpsProxyTarget.port}`,
+    //     pathRewrite: pathRewrite('^/someurl/test', '/api'),
+    //     changeOrigin: true,
+    //     secure: false,
+    // },
 };
