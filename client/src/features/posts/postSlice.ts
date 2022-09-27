@@ -4,13 +4,14 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 export interface Post {
   id: string;
   title: string;
-  description: string;
+  content: string;
   createdAt: string;
   image: string;
   author: string;
 }
 
 export interface PostState {
+  loading: boolean;
   posts: Post[];
 }
 
@@ -24,39 +25,40 @@ export const stockImages = [
 ];
 
 const initialState: PostState = {
+  loading: false,
   posts: [
-    {
-      id: '1',
-      title: 'My essay in english',
-      description: "That's how I started this post",
-      createdAt: new Date().toDateString(),
-      image: stockImages[Math.floor(Math.random() * 5)],
-      author: 'Serafim Gavrilov',
-    },
-    {
-      id: '2',
-      title: 'Another essay in english',
-      description: "That's how I started this post",
-      createdAt: new Date().toDateString(),
-      image: stockImages[Math.floor(Math.random() * 5)],
-      author: 'Vasiliy Gavrilov',
-    },
-    {
-      id: '3',
-      title: 'My best essay in english',
-      description: "That's how I started this post",
-      createdAt: new Date().toDateString(),
-      image: stockImages[Math.floor(Math.random() * 5)],
-      author: 'Ivan Gavrilov',
-    },
-    {
-      id: '3',
-      title: 'The final essay in english',
-      description: "That's how I started this post",
-      createdAt: new Date().toDateString(),
-      image: stockImages[Math.floor(Math.random() * 5)],
-      author: 'Sergey Gavrilov',
-    },
+    // {
+    //   id: '1',
+    //   title: 'My essay in english',
+    //   description: "That's how I started this post",
+    //   createdAt: new Date().toDateString(),
+    //   image: stockImages[Math.floor(Math.random() * 5)],
+    //   author: 'Serafim Gavrilov',
+    // },
+    // {
+    //   id: '2',
+    //   title: 'Another essay in english',
+    //   description: "That's how I started this post",
+    //   createdAt: new Date().toDateString(),
+    //   image: stockImages[Math.floor(Math.random() * 5)],
+    //   author: 'Vasiliy Gavrilov',
+    // },
+    // {
+    //   id: '3',
+    //   title: 'My best essay in english',
+    //   description: "That's how I started this post",
+    //   createdAt: new Date().toDateString(),
+    //   image: stockImages[Math.floor(Math.random() * 5)],
+    //   author: 'Ivan Gavrilov',
+    // },
+    // {
+    //   id: '3',
+    //   title: 'The final essay in english',
+    //   description: "That's how I started this post",
+    //   createdAt: new Date().toDateString(),
+    //   image: stockImages[Math.floor(Math.random() * 5)],
+    //   author: 'Sergey Gavrilov',
+    // },
   ],
 };
 
@@ -65,9 +67,10 @@ export const postState = createSlice({
   initialState,
   reducers: {
     getPosts: (state) => {
-      console.log(state);
+      state.loading = true;
     },
     setPosts: (state, action: PayloadAction<Post[]>) => {
+      state.loading = false;
       state.posts = action.payload;
     },
     addPost: (state, action: PayloadAction<Post>) => {

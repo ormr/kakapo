@@ -5,15 +5,10 @@ import { Post, setPosts } from "./postSlice";
 import { AxiosResponse } from "axios";
 
 function* fetchPostsRequest() {
-  // try {
   const data: AxiosResponse<Post[]> = yield call(PostsApi(Axios).getPosts);
 
-  console.log(data);
-    
-  // yield put(setPosts(data));
-  // } catch (error) {
-  //   yield put()
-  // }
+  // temp solution
+  yield put(setPosts(data as unknown as Post[]));
 }
 
 export function* postsSaga() {
