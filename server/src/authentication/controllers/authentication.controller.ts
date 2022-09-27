@@ -17,9 +17,9 @@ export class AuthenticationController {
     return await this.authenticationService.register(registrationData);
   }
 
+  @Post('log-in')
   @HttpCode(200)
   @UseGuards(LocalAuthenticationGuard)
-  @Post('log-in')
   async logIn(@Req() request: RequestWithUser) {
     const { user } = request;
     const cookie = this.authenticationService.getCookieWithJwtToken(user.id);
@@ -29,16 +29,16 @@ export class AuthenticationController {
     return user;
   }
 
-  @UseGuards(JwtAuthenticationGuard)
   @Post('log-out')
+  @UseGuards(JwtAuthenticationGuard)
   async logOut(@Req() request: RequestWithUser, @Res() response: Response) {
     request.res.setHeader('Set-Cookie', this.authenticationService.getCookieForLogOut());
 
     return response.sendStatus(200);
   }
 
-  @UseGuards(JwtAuthenticationGuard)
   @Get()
+  @UseGuards(JwtAuthenticationGuard)
   authenticate(@Req() request: RequestWithUser) {
     const user = request.user;
     user.password = undefined;

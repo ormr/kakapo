@@ -24,60 +24,54 @@ export const stockImages = [
   'https://res.klook.com/image/upload/cities/wjjvjtpdjqzdididt8lb.jpg',
 ];
 
+export interface Post {
+  id: string;
+  title: string;
+  content: string;
+  createdAt?: string;
+  image?: string;
+  author?: string;
+}
+
+export interface PostState {
+  error: boolean;
+  loading: boolean;
+  posts: Post[];
+}
+
 const initialState: PostState = {
+  error: false,
   loading: false,
-  posts: [
-    // {
-    //   id: '1',
-    //   title: 'My essay in english',
-    //   description: "That's how I started this post",
-    //   createdAt: new Date().toDateString(),
-    //   image: stockImages[Math.floor(Math.random() * 5)],
-    //   author: 'Serafim Gavrilov',
-    // },
-    // {
-    //   id: '2',
-    //   title: 'Another essay in english',
-    //   description: "That's how I started this post",
-    //   createdAt: new Date().toDateString(),
-    //   image: stockImages[Math.floor(Math.random() * 5)],
-    //   author: 'Vasiliy Gavrilov',
-    // },
-    // {
-    //   id: '3',
-    //   title: 'My best essay in english',
-    //   description: "That's how I started this post",
-    //   createdAt: new Date().toDateString(),
-    //   image: stockImages[Math.floor(Math.random() * 5)],
-    //   author: 'Ivan Gavrilov',
-    // },
-    // {
-    //   id: '3',
-    //   title: 'The final essay in english',
-    //   description: "That's how I started this post",
-    //   createdAt: new Date().toDateString(),
-    //   image: stockImages[Math.floor(Math.random() * 5)],
-    //   author: 'Sergey Gavrilov',
-    // },
-  ],
+  posts: [],
 };
 
 export const postState = createSlice({
   name: 'posts',
   initialState,
   reducers: {
-    getPosts: (state) => {
-      state.loading = true;
-    },
-    setPosts: (state, action: PayloadAction<Post[]>) => {
-      state.loading = false;
-      state.posts = action.payload;
-    },
-    addPost: (state, action: PayloadAction<Post>) => {
-      state.posts.push(action.payload);
-    },
+    getPosts: (state) => ({
+      ...state,
+      loading: true,
+    }),
+    setPosts: (state, action: PayloadAction<Post[]>) => ({
+      ...state,
+      loading: false,
+      posts: action.payload.map((item) => ({
+        ...item,
+        image: stockImages[Math.floor(Math.random() * 5)]
+      })),
+    }),
+    setPostsError: (state) => ({
+      ...state,
+      loading: false,
+      error: true,
+    }),
+    addPost: (state, action: PayloadAction<Post>) => ({
+      ...state,
+      posts: [...state.posts, action.payload],
+    }),
   },
 });
 
-export const { getPosts, setPosts, addPost } = postState.actions;
+export const { getPosts, setPosts, addPost, setPostsError } = postState.actions;
 export const postReducer = postState.reducer;

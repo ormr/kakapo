@@ -1,14 +1,17 @@
+import { AxiosResponse } from 'axios';
 import { call, put, takeEvery } from "redux-saga/effects";
 import { PostsApi } from "@src/services/api/PostsApi";
 import { Axios } from "@src/core/axios";
-import { Post, setPosts } from "./postSlice";
-import { AxiosResponse } from "axios";
+import { Post, setPosts, setPostsError } from "./postSlice";
 
 function* fetchPostsRequest() {
-  const data: AxiosResponse<Post[]> = yield call(PostsApi(Axios).getPosts);
+  try {
+    const { data } = yield call(PostsApi(Axios).getPosts);
 
-  // temp solution
-  yield put(setPosts(data as unknown as Post[]));
+    yield put(setPosts(data));
+  } catch (error) {
+    yield put(setPostsError())
+  }
 }
 
 export function* postsSaga() {

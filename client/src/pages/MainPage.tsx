@@ -6,13 +6,15 @@ import { decrease, increase } from '@src/features/count/countSlice';
 import { getPosts } from '@src/features/posts/postSlice';
 
 const MainPage: FC = (): ReactElement => {
-  const { posts } = useAppSelector((state) => state.post);
+  const { loading, posts } = useAppSelector((state) => state.post);
   const { value: countValue } = useAppSelector((state) => state.count);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(getPosts());
-  }, [])  
+  }, []);
+
+  console.log(loading);
 
   return (
     <Container>

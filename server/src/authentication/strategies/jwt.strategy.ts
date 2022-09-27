@@ -5,6 +5,7 @@ import { ConfigService } from '@nestjs/config';
 import { Request } from 'express';
 import { UsersService } from 'src/users/services/users.service';
 import { TokenPayload } from '../interfaces/tokenPayload.interface';
+
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
@@ -15,7 +16,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       jwtFromRequest: ExtractJwt.fromExtractors([(request: Request) => {
         return request?.cookies?.Authentication;
       }]),
-      secretOrKey: '126371263871263'
+      secretOrKey: 'topsecretpassword',
     });
   }
 

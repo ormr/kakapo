@@ -18,7 +18,7 @@ export const Post: FC<PostProps> = (props): ReactElement => {
   return (
     <Box className={styles.post}>
       <Box className={styles.header}>
-        <Author name={author} />
+        <Author name={author || 'asdashdj'} />
         <Box className={styles.date}>{createdAt}</Box>
       </Box>
       <Box>

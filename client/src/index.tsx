@@ -10,7 +10,7 @@ import '@styles/styles.css';
 import '@styles/styles.less';
 import '@styles/styles.scss';
 
-const root = createRoot(document.getElementById('root')!);
+const root = createRoot(document.getElementById('root') as HTMLElement);
 
 root.render(
   <Router>
