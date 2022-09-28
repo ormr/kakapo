@@ -1,7 +1,12 @@
-import React, { FC, ReactElement } from 'react';
+import React, { FC, ReactElement, useEffect } from 'react';
 import { Box, Grid, Typography } from '@mui/material';
+import { fetchUser } from '@src/features/user/userSlice';
 
 const ProfilePage: FC = (): ReactElement => {
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
 
   const profile = {
     name: 'Serafim',
