@@ -30,7 +30,7 @@ const makeStore = () => {
       getDefaultMiddleware({ thunk: false })
         .concat(sagaMiddleware)
         .concat(routerMiddleware)
-        .concat(logger)
+    // .concat(logger)
   });
 
   sagaMiddleware.run(rootSaga);
