@@ -3,6 +3,7 @@ import { PayloadAction } from '@reduxjs/toolkit';
 import { setUser, setUserError } from './userSlice';
 import { AuthApi } from '../../services/api/UserApi';
 import { Axios } from '../../core/axios';
+import { parseCookies } from 'nookies';
 
 interface User {
   name: string;
@@ -30,7 +31,7 @@ function* fetchUser() {
   }
 };
 
-function* fetchUserLogIn({ payload }: PayloadAction<User>) {
+function* requestUserLogIn({ payload }: PayloadAction<User>) {
   try {
     const { data } = yield call(AuthApi(Axios).logIn, payload);
 
@@ -42,6 +43,6 @@ function* fetchUserLogIn({ payload }: PayloadAction<User>) {
 
 export function* userSaga() {
   yield takeLatest('user/fetchUser', fetchUser);
-  yield takeLatest('user/fetchUserLogIn', fetchUserLogIn);
+  yield takeLatest('user/requestUserLogIn', requestUserLogIn);
   yield takeLatest('user/fetchUserRegister', fetchUserRegister);
 };

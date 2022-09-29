@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import { CssBaseline, ThemeProvider, Box } from '@mui/material'
 import { createTheme } from '@mui/material/styles'
 import { Outlet } from 'react-router-dom'
@@ -7,8 +7,11 @@ import { useAppDispatch } from '../../store/hooks';
 import { fetchUser } from '../../features/user/userSlice';
 
 export const Layout = () => {
-  const dispatch = useAppDispatch();
-  dispatch(fetchUser());
+  // const dispatch = useAppDispatch();
+
+  // useEffect(() => {
+  //   dispatch(fetchUser());
+  // }, []);
 
   const [mode, setMode] = useState<'light' | 'dark'>('light')
 

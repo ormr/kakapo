@@ -15,8 +15,6 @@ const { createReduxHistory, routerMiddleware, routerReducer } = createReduxHisto
   savePreviousLocations: 1,
 });
 
-console.log(Env.isDev());
-
 const makeStore = () => {
   const sagaMiddleware = createSagaMiddleware();
 

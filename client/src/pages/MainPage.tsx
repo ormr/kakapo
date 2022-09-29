@@ -13,8 +13,6 @@ const MainPage: FC = (): ReactElement => {
     dispatch(getPosts());
   }, []);
 
-  console.log(loading);
-
   return (
     <>
       <Container>
