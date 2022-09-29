@@ -1,8 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
 import createSagaMiddleware from "@redux-saga/core";
-import { countReducer } from "@src/features/count/countSlice";
-import { postReducer } from "@src/features/posts/postSlice";
 import { rootSaga } from "./rootSaga";
+import { postReducer } from "@src/features/posts/postSlice";
+import { userReducer } from "@src/features/user/userSlice";
 
 const makeStore = () => {
   const sagaMiddleware = createSagaMiddleware();
@@ -10,7 +10,7 @@ const makeStore = () => {
   const store = configureStore({
     reducer: {
       post: postReducer,
-      count: countReducer,
+      user: userReducer,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({ thunk: false })

@@ -13,9 +13,9 @@ import '@styles/styles.scss';
 const root = createRoot(document.getElementById('root') as HTMLElement);
 
 root.render(
-  <Router>
-    <Provider store={store}>
+  <Provider store={store}>
+    <Router>
       <App />
-    </Provider>
-  </Router>
+    </Router>
+  </Provider>
 );

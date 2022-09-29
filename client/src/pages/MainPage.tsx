@@ -2,12 +2,10 @@ import React, { FC, ReactElement, useEffect } from 'react';
 import { Container, Box, Grid } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '@src/store/hooks';
 import { Post } from '@src/components/Post';
-import { decrease, increase } from '@src/features/count/countSlice';
 import { getPosts } from '@src/features/posts/postSlice';
 
 const MainPage: FC = (): ReactElement => {
   const { loading, posts } = useAppSelector((state) => state.post);
-  const { value: countValue } = useAppSelector((state) => state.count);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -18,13 +16,6 @@ const MainPage: FC = (): ReactElement => {
 
   return (
     <Container>
-      <Box>
-        <Box>Count: {countValue}</Box>
-        <Box>
-          <button onClick={() => dispatch(increase())}>+</button>
-          <button onClick={() => dispatch(decrease())}>-</button>
-        </Box>
-      </Box>
       <Grid
         container
         mt={7}
