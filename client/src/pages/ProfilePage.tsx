@@ -4,9 +4,9 @@ import { fetchUser } from '@src/features/user/userSlice';
 
 const ProfilePage: FC = (): ReactElement => {
 
-  useEffect(() => {
-    fetchUser();
-  }, []);
+  // useEffect(() => {
+  //   fetchUser();
+  // }, []);
 
   const profile = {
     name: 'Serafim',
@@ -45,29 +45,31 @@ const ProfilePage: FC = (): ReactElement => {
   const { name, email, image, description } = profile;
 
   return (
-    <Grid container>
-      <Grid xs={12}>
-        <Box>
-          <Typography variant="h4">Профиль пользователя</Typography>
-        </Box>
-        <Box>
-          <img src={image} />
-        </Box>
-        <Box>
-          <Typography>
-            <Box>{name}</Box>
-            <Box>{description}</Box>
-            <Box>{email}</Box>
-          </Typography>
-        </Box>
-        <Box>
-          <Box>Посты пользователя</Box>
-          <Box>{userPosts.map((item) => <Box>{item.title}</Box>)}</Box>
-        </Box>
-        <Box>
-        </Box>
+    <>
+      <Grid container>
+        <Grid xs={12}>
+          <Box>
+            <Typography variant="h4">Профиль пользователя</Typography>
+          </Box>
+          <Box>
+            <img src={image} />
+          </Box>
+          <Box>
+            <Typography>
+              <Box>{name}</Box>
+              <Box>{description}</Box>
+              <Box>{email}</Box>
+            </Typography>
+          </Box>
+          <Box>
+            <Box>Посты пользователя</Box>
+            <Box>{userPosts.map((item) => <Box>{item.title}</Box>)}</Box>
+          </Box>
+          <Box>
+          </Box>
+        </Grid>
       </Grid>
-    </Grid>
+    </>
   );
 };
 

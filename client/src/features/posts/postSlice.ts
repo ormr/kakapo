@@ -1,20 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
-export interface Post {
-  id: string;
-  title: string;
-  content: string;
-  createdAt: string;
-  image: string;
-  author: string;
-}
-
-export interface PostState {
-  loading: boolean;
-  posts: Post[];
-}
-
 export const stockImages = [
   'https://traveltimes.ru/wp-content/uploads/2021/05/2262378-1024x683.jpg',
   'https://ruschemicals.com/wp-content/uploads/2021/11/s1200-7.jpg',

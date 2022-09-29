@@ -1,13 +1,13 @@
-import React, { FC, ReactElement } from 'react';
+import React, { FC, ReactElement, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Header } from '@src/components/Header';
+import { Layout } from '@src/components/Layout';
 
-import MainPage from '@src/pages/MainPage';
-import DetailPage from '@src/pages/DetailPage';
-import CreatePage from '@src/pages/CreatePage';
-import SignInPage from '@src/pages/SignInPage';
-import LogInPage from '@src/pages/LogInPage';
-import ProfilePage from '@src/pages/ProfilePage';
+const MainPage = React.lazy(() => import('@src/pages/MainPage'));
+const DetailPage = React.lazy(() => import('@src/pages/DetailPage'));
+const CreatePage = React.lazy(() => import('@src/pages/CreatePage'));
+const SignInPage = React.lazy(() => import('@src/pages/SignInPage'));
+const LogInPage = React.lazy(() => import('@src/pages/LogInPage'));
+const ProfilePage = React.lazy(() => import('@src/pages/ProfilePage'));
 
 
 /*
@@ -20,14 +20,17 @@ import ProfilePage from '@src/pages/ProfilePage';
 
 export const App: FC = (): ReactElement => (
   <>
-    <Header />
-    <Routes>
-      <Route path="/" element={<MainPage />} />
-      <Route path="/:id" element={<DetailPage />} />
-      <Route path="/create" element={<CreatePage />} />
-      <Route path="/sign-in" element={<SignInPage />} />
-      <Route path="/log-in" element={<LogInPage />} />
-      <Route path="/profile" element={<ProfilePage />} />
-    </Routes>
+    <Suspense fallback={<div>Loading...</div>}>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/" element={<MainPage />}></Route>
+          <Route path="/:id" element={<DetailPage />}></Route>
+          <Route path="/create" element={<CreatePage />}></Route>
+          <Route path="/sign-in" element={<SignInPage />}></Route>
+          <Route path="/log-in" element={<LogInPage />}></Route>
+          <Route path="/profile" element={<ProfilePage />}></Route>
+        </Route>
+      </Routes>
+    </Suspense>
   </>
 );

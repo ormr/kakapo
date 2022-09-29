@@ -1,9 +1,9 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { HistoryRouter as Router } from 'redux-first-history/rr6';
 
 import { App } from './app';
-import { store } from './store';
+import { history, store } from './store';
 import { Provider } from 'react-redux';
 
 import '@styles/styles.css';
@@ -14,7 +14,7 @@ const root = createRoot(document.getElementById('root') as HTMLElement);
 
 root.render(
   <Provider store={store}>
-    <Router>
+    <Router history={history}>
       <App />
     </Router>
   </Provider>
