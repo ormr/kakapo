@@ -2,7 +2,7 @@ import { Box } from '@mui/material';
 import React, { FC, ReactElement } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './post.module.scss';
-import { Post as PostProps } from '@src/features/posts/postSlice';
+import { Post as PostProps } from '../../features/posts/postSlice';
 import { Author } from './Author';
 
 export const Post: FC<PostProps> = (props): ReactElement => {

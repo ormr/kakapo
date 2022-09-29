@@ -4,9 +4,9 @@ import { createBrowserHistory } from 'history'
 import { createReduxHistoryContext } from 'redux-first-history'
 import logger from 'redux-logger';
 import { rootSaga } from "./rootSaga";
-import { postReducer } from "@src/features/posts/postSlice";
-import { userReducer } from "@src/features/user/userSlice";
-import { Env } from "@src/config/Env";
+import { Env } from "../config/Env";
+import { postReducer } from "../features/posts/postSlice";
+import { userReducer } from "../features/user/userSlice";
 
 
 const { createReduxHistory, routerMiddleware, routerReducer } = createReduxHistoryContext({

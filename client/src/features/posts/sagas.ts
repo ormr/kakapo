@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { call, put, takeEvery } from "redux-saga/effects";
-import { PostsApi } from "@src/services/api/PostsApi";
-import { Axios } from "@src/core/axios";
+import { Axios } from '../../core/axios';
+import { PostsApi } from '../../services/api/PostsApi';
 import { Post, setPosts, setPostsError } from "./postSlice";
 
 function* fetchPostsRequest() {

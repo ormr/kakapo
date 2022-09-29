@@ -1,8 +1,8 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { Axios } from '@src/core/axios';
-import { AuthApi } from '@src/services/api/UserApi';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { setUser, setUserError } from './userSlice';
+import { AuthApi } from '../../services/api/UserApi';
+import { Axios } from '../../core/axios';
 
 interface User {
   name: string;
