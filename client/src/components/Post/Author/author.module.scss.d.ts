@@ -2,14 +2,14 @@
 // Please do not change this file!
 declare namespace AuthorModuleScssNamespace {
   export interface IAuthorModuleScss {
-    item: string
-    name: string
+    item: string;
+    name: string;
   }
 }
 
 declare const AuthorModuleScssModule: AuthorModuleScssNamespace.IAuthorModuleScss & {
   /** WARNING: Only available when `css-loader` is used without `style-loader` or `mini-css-extract-plugin` */
-  locals: AuthorModuleScssNamespace.IAuthorModuleScss
-}
+  locals: AuthorModuleScssNamespace.IAuthorModuleScss;
+};
 
-export = AuthorModuleScssModule
+export = AuthorModuleScssModule;

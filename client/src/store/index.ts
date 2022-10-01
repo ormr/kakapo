@@ -1,22 +1,22 @@
-import { configureStore } from '@reduxjs/toolkit'
-import createSagaMiddleware from '@redux-saga/core'
-import { createBrowserHistory } from 'history'
-import { createReduxHistoryContext } from 'redux-first-history'
-import logger from 'redux-logger'
-import { rootSaga } from './rootSaga'
-import { Env } from '../config/Env'
-import { postReducer } from '../features/posts/postSlice'
-import { userReducer } from '../features/user/userSlice'
+import { configureStore } from "@reduxjs/toolkit";
+import createSagaMiddleware from "@redux-saga/core";
+import { createBrowserHistory } from "history";
+import { createReduxHistoryContext } from "redux-first-history";
+import logger from "redux-logger";
+import { rootSaga } from "./rootSaga";
+import { Env } from "../config/Env";
+import { postReducer } from "../features/posts/postSlice";
+import { userReducer } from "../features/user/userSlice";
 
 const { createReduxHistory, routerMiddleware, routerReducer } =
   createReduxHistoryContext({
     history: createBrowserHistory(),
     reduxTravelling: Env.isDev(),
     savePreviousLocations: 1,
-  })
+  });
 
 const makeStore = () => {
-  const sagaMiddleware = createSagaMiddleware()
+  const sagaMiddleware = createSagaMiddleware();
 
   const store = configureStore({
     reducer: {
@@ -29,18 +29,18 @@ const makeStore = () => {
         .concat(sagaMiddleware)
         .concat(routerMiddleware),
     // .concat(logger)
-  })
+  });
 
-  sagaMiddleware.run(rootSaga)
+  sagaMiddleware.run(rootSaga);
 
-  return store
-}
+  return store;
+};
 
-export const store = makeStore()
+export const store = makeStore();
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
-export type RootState = ReturnType<typeof store.getState>
+export type RootState = ReturnType<typeof store.getState>;
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
-export type AppDispatch = typeof store.dispatch
+export type AppDispatch = typeof store.dispatch;
 
-export const history = createReduxHistory(store)
+export const history = createReduxHistory(store);

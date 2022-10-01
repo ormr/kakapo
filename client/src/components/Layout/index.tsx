@@ -1,28 +1,28 @@
-import React, { useState, useMemo, useEffect } from 'react'
-import { CssBaseline, ThemeProvider, Box } from '@mui/material'
-import { createTheme } from '@mui/material/styles'
-import { Outlet } from 'react-router-dom'
-import { Header } from '../Header'
-import { useAppDispatch } from '../../store/hooks'
-import { fetchUser } from '../../features/user/userSlice'
+import React, { useState, useMemo, useEffect } from "react";
+import { CssBaseline, ThemeProvider, Box } from "@mui/material";
+import { createTheme } from "@mui/material/styles";
+import { Outlet } from "react-router-dom";
+import { Header } from "../Header";
+import { useAppDispatch } from "../../store/hooks";
+import { fetchUser } from "../../features/user/userSlice";
 
-export const Layout = () => {
+export function Layout() {
   // const dispatch = useAppDispatch();
 
   // useEffect(() => {
   //   dispatch(fetchUser());
   // }, []);
 
-  const [mode, setMode] = useState<'light' | 'dark'>('light')
+  const [mode, setMode] = useState<"light" | "dark">("light");
 
   const colorMode = useMemo(
     () => ({
       toggleColorMode: () => {
-        setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'))
+        setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
       },
     }),
-    [],
-  )
+    []
+  );
 
   const theme = useMemo(
     () =>
@@ -31,26 +31,24 @@ export const Layout = () => {
           mode,
         },
       }),
-    [mode],
-  )
+    [mode]
+  );
 
   return (
-    <>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Header />
-        <main>
-          <Box
-            sx={{
-              bgcolor: 'background.paper',
-              pt: 3,
-              pb: 3,
-            }}
-          >
-            <Outlet />
-          </Box>
-        </main>
-      </ThemeProvider>
-    </>
-  )
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Header />
+      <main>
+        <Box
+          sx={{
+            bgcolor: "background.paper",
+            pt: 3,
+            pb: 3,
+          }}
+        >
+          <Outlet />
+        </Box>
+      </main>
+    </ThemeProvider>
+  );
 }

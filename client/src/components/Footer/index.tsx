@@ -1,5 +1,3 @@
-import React, { FC, ReactElement } from 'react'
+import React, { FC, ReactElement } from "react";
 
-export const Footer: FC = (): ReactElement => {
-  return <div>Footer</div>
-}
+export const Footer: FC = (): ReactElement => <div>Footer</div>;
