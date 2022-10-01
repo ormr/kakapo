@@ -1,15 +1,15 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit'
 
 interface User {
-  id: string;
-  name: string;
-  email: string;
+  id: string
+  name: string
+  email: string
 }
 
 export interface UserState {
-  user?: User;
-  loading: boolean;
-  error: boolean;
+  user?: User
+  loading: boolean
+  error: boolean
 }
 
 const initialState: UserState = {
@@ -36,8 +36,8 @@ export const userState = createSlice({
       loading: false,
       error: true,
     }),
-  }
-});
+  },
+})
 
-export const { fetchUser, setUser, setUserError } = userState.actions;
-export const userReducer = userState.reducer;
+export const { fetchUser, setUser, setUserError } = userState.actions
+export const userReducer = userState.reducer

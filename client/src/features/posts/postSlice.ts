@@ -1,5 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
-import type { PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit'
+import type { PayloadAction } from '@reduxjs/toolkit'
 
 export const stockImages = [
   'https://traveltimes.ru/wp-content/uploads/2021/05/2262378-1024x683.jpg',
@@ -8,28 +8,28 @@ export const stockImages = [
   'https://placepic.ru/wp-content/uploads/2018/10/572143_main.jpg',
   'https://korona-severa.ru/wp-content/uploads/d/f/7/df795baa94fc629554cdd3228ae35712.jpeg',
   'https://res.klook.com/image/upload/cities/wjjvjtpdjqzdididt8lb.jpg',
-];
+]
 
 export interface Post {
-  id: string;
-  title: string;
-  content: string;
-  createdAt?: string;
-  image?: string;
-  author?: string;
+  id: string
+  title: string
+  content: string
+  createdAt?: string
+  image?: string
+  author?: string
 }
 
 export interface PostState {
-  error: boolean;
-  loading: boolean;
-  posts: Post[];
+  error: boolean
+  loading: boolean
+  posts: Post[]
 }
 
 const initialState: PostState = {
   error: false,
   loading: false,
   posts: [],
-};
+}
 
 export const postState = createSlice({
   name: 'posts',
@@ -44,7 +44,7 @@ export const postState = createSlice({
       loading: false,
       posts: action.payload.map((item) => ({
         ...item,
-        image: stockImages[Math.floor(Math.random() * 5)]
+        image: stockImages[Math.floor(Math.random() * 5)],
       })),
     }),
     setPostsError: (state) => ({
@@ -57,7 +57,7 @@ export const postState = createSlice({
       posts: [...state.posts, action.payload],
     }),
   },
-});
+})
 
-export const { getPosts, setPosts, addPost, setPostsError } = postState.actions;
-export const postReducer = postState.reducer;
+export const { getPosts, setPosts, addPost, setPostsError } = postState.actions
+export const postReducer = postState.reducer

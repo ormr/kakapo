@@ -1,12 +1,12 @@
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import Toolbar from '@mui/material/Toolbar';
-import Tooltip from '@mui/material/Tooltip';
-import Typography from '@mui/material/Typography';
-import * as React from 'react';
-import { Link } from 'react-router-dom';
-import { ToolbarUser } from './Tools/User';
+import AppBar from '@mui/material/AppBar'
+import Box from '@mui/material/Box'
+import Container from '@mui/material/Container'
+import Toolbar from '@mui/material/Toolbar'
+import Tooltip from '@mui/material/Tooltip'
+import Typography from '@mui/material/Typography'
+import * as React from 'react'
+import { Link } from 'react-router-dom'
+import { ToolbarUser } from './Tools/User'
 
 const settings = [
   {
@@ -17,19 +17,18 @@ const settings = [
     name: 'Logout',
     path: '/logout',
   },
-];
+]
 
 export const Header = () => {
-
   return (
-    <AppBar color="primary" position="static" sx={{ boxShadow: 'none' }}>
-      <Container maxWidth="xl">
+    <AppBar color='primary' position='static' sx={{ boxShadow: 'none' }}>
+      <Container maxWidth='xl'>
         <Toolbar disableGutters>
           <Typography
-            variant="h6"
+            variant='h6'
             noWrap
-            component="a"
-            href="/"
+            component='a'
+            href='/'
             sx={{
               mr: 2,
               flexGrow: 1,
@@ -44,10 +43,10 @@ export const Header = () => {
             Blog
           </Typography>
           <Typography
-            variant="h6"
+            variant='h6'
             noWrap
-            component="a"
-            href="/create"
+            component='a'
+            href='/create'
             sx={{
               mr: 2,
               flexGrow: 10,
@@ -59,10 +58,10 @@ export const Header = () => {
             Create post
           </Typography>
           <Typography
-            variant="h5"
+            variant='h5'
             noWrap
-            component="a"
-            href=""
+            component='a'
+            href=''
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
@@ -82,5 +81,5 @@ export const Header = () => {
         </Toolbar>
       </Container>
     </AppBar>
-  );
-};
+  )
+}

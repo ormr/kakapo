@@ -2,9 +2,9 @@ import React, { useState, useMemo, useEffect } from 'react'
 import { CssBaseline, ThemeProvider, Box } from '@mui/material'
 import { createTheme } from '@mui/material/styles'
 import { Outlet } from 'react-router-dom'
-import { Header } from '../Header';
-import { useAppDispatch } from '../../store/hooks';
-import { fetchUser } from '../../features/user/userSlice';
+import { Header } from '../Header'
+import { useAppDispatch } from '../../store/hooks'
+import { fetchUser } from '../../features/user/userSlice'
 
 export const Layout = () => {
   // const dispatch = useAppDispatch();
@@ -18,7 +18,7 @@ export const Layout = () => {
   const colorMode = useMemo(
     () => ({
       toggleColorMode: () => {
-        setMode(prevMode => (prevMode === 'light' ? 'dark' : 'light'))
+        setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'))
       },
     }),
     [],
@@ -53,4 +53,4 @@ export const Layout = () => {
       </ThemeProvider>
     </>
   )
-};
+}

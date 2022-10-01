@@ -12,4 +12,4 @@
 // export interface FetchSignInAction extends <UserActionsType>{
 
 // }
-export const astalavista = 123;
+export const astalavista = 123

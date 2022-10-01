@@ -1,26 +1,19 @@
-import React, { FC, ReactElement, useState } from 'react';
-import { Button, Container, Grid, Typography, Box } from '@mui/material';
-import MDEditor from '@uiw/react-md-editor';
+import React, { FC, ReactElement, useState } from 'react'
+import { Button, Container, Grid, Typography, Box } from '@mui/material'
+import MDEditor from '@uiw/react-md-editor'
 
 const CreatePage: FC = (): ReactElement => {
-  const [value, setValue] = useState<string>('');
+  const [value, setValue] = useState<string>('')
   const handleChange = (e: string | undefined) => {
-    setValue(`${e}`);
+    setValue(`${e}`)
   }
 
   return (
     <>
       <Container>
-        <Grid
-          spacing={4}
-          container
-          mt={4}
-          mb={4}
-        >
+        <Grid spacing={4} container mt={4} mb={4}>
           <Grid item xs={12}>
-            <Typography variant="h4">
-              Создать статью
-            </Typography>
+            <Typography variant='h4'>Создать статью</Typography>
           </Grid>
           <Grid item xs={12}>
             <form>
@@ -31,14 +24,14 @@ const CreatePage: FC = (): ReactElement => {
                 />
               </Box>
               <Box>
-                <Button variant="contained">Отправить</Button>
+                <Button variant='contained'>Отправить</Button>
               </Box>
             </form>
           </Grid>
         </Grid>
-      </Container >
+      </Container>
     </>
-  );
-};
+  )
+}
 
-export default CreatePage;
+export default CreatePage

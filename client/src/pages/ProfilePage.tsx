@@ -1,8 +1,7 @@
-import React, { FC, ReactElement, useEffect } from 'react';
-import { Box, Grid, Typography } from '@mui/material';
+import React, { FC, ReactElement, useEffect } from 'react'
+import { Box, Grid, Typography } from '@mui/material'
 
 const ProfilePage: FC = (): ReactElement => {
-
   // useEffect(() => {
   //   fetchUser();
   // }, []);
@@ -10,7 +9,8 @@ const ProfilePage: FC = (): ReactElement => {
   const profile = {
     name: 'Serafim',
     email: 'seraf.gavrilov@gmail.com',
-    image: 'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    image:
+      'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
     description: 'Фулл стек разработчик с уклоном во фронтенд',
   }
 
@@ -41,14 +41,14 @@ const ProfilePage: FC = (): ReactElement => {
     },
   ]
 
-  const { name, email, image, description } = profile;
+  const { name, email, image, description } = profile
 
   return (
     <>
       <Grid container>
         <Grid xs={12}>
           <Box>
-            <Typography variant="h4">Профиль пользователя</Typography>
+            <Typography variant='h4'>Профиль пользователя</Typography>
           </Box>
           <Box>
             <img src={image} />
@@ -62,14 +62,17 @@ const ProfilePage: FC = (): ReactElement => {
           </Box>
           <Box>
             <Box>Посты пользователя</Box>
-            <Box>{userPosts.map((item) => <Box>{item.title}</Box>)}</Box>
+            <Box>
+              {userPosts.map((item) => (
+                <Box>{item.title}</Box>
+              ))}
+            </Box>
           </Box>
-          <Box>
-          </Box>
+          <Box></Box>
         </Grid>
       </Grid>
     </>
-  );
-};
+  )
+}
 
 export default ProfilePage
