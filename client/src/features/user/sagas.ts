@@ -16,6 +16,7 @@ function* fetchUserRegister({ payload }: PayloadAction<User>) {
     const { data } = yield call(AuthApi(Axios).register, payload);
 
     yield put(setUser(data));
+    yield put(push('/log-in'));
   } catch (error) {
     yield put(setUserError());
   }
@@ -36,7 +37,7 @@ function* requestUserLogIn({ payload }: PayloadAction<User>) {
     const { data } = yield call(AuthApi(Axios).logIn, payload);
 
     yield put(setUser(data));
-    yield put(push('/'));
+    yield put(push('/profile'));
   } catch (error) {
     yield put(setUserError());
   }

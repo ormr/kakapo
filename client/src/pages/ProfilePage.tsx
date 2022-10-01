@@ -1,10 +1,12 @@
 import React, { FC, ReactElement } from 'react';
 import { Box, Grid, Typography } from '@mui/material';
+import { useAppSelector } from '../store/hooks';
 
 const ProfilePage: FC = (): ReactElement => {
-  // useEffect(() => {
-  //   fetchUser();
-  // }, []);
+  const userData = useAppSelector((state) => state.user.user);
+  const posts = useAppSelector((state) => state.post.posts);
+
+  console.log(userData);
 
   const profile = {
     name: 'Serafim',
@@ -13,33 +15,6 @@ const ProfilePage: FC = (): ReactElement => {
       'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
     description: 'Фулл стек разработчик с уклоном во фронтенд',
   };
-
-  const userPosts = [
-    {
-      id: '1',
-      title: 'My essay in english',
-      description: 'Thats how I started this post',
-      createdAt: new Date().toDateString(),
-    },
-    {
-      id: '2',
-      title: 'Another essay in english',
-      description: 'Thats how I started this post',
-      createdAt: new Date().toDateString(),
-    },
-    {
-      id: '3',
-      title: 'My best essay in english',
-      description: 'Thats how I started this post',
-      createdAt: new Date().toDateString(),
-    },
-    {
-      id: '3',
-      title: 'The final essay in english',
-      description: 'Thats how I started this post',
-      createdAt: new Date().toDateString(),
-    },
-  ];
 
   const { name, email, image, description } = profile;
 
@@ -62,7 +37,7 @@ const ProfilePage: FC = (): ReactElement => {
         <Box>
           <Box>Посты пользователя</Box>
           <Box>
-            {userPosts.map((item) => (
+            {posts.map((item) => (
               <Box>{item.title}</Box>
             ))}
           </Box>
