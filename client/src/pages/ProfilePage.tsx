@@ -1,5 +1,5 @@
-import React, { FC, ReactElement, useEffect } from "react";
-import { Box, Grid, Typography } from "@mui/material";
+import React, { FC, ReactElement, useEffect } from 'react';
+import { Box, Grid, Typography } from '@mui/material';
 
 const ProfilePage: FC = (): ReactElement => {
   // useEffect(() => {
@@ -7,36 +7,36 @@ const ProfilePage: FC = (): ReactElement => {
   // }, []);
 
   const profile = {
-    name: "Serafim",
-    email: "seraf.gavrilov@gmail.com",
+    name: 'Serafim',
+    email: 'seraf.gavrilov@gmail.com',
     image:
-      "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    description: "Фулл стек разработчик с уклоном во фронтенд",
+      'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    description: 'Фулл стек разработчик с уклоном во фронтенд',
   };
 
   const userPosts = [
     {
-      id: "1",
-      title: "My essay in english",
-      description: "That's how I started this post",
+      id: '1',
+      title: 'My essay in english',
+      description: 'That\'s how I started this post',
       createdAt: new Date().toDateString(),
     },
     {
-      id: "2",
-      title: "Another essay in english",
-      description: "That's how I started this post",
+      id: '2',
+      title: 'Another essay in english',
+      description: 'That\'s how I started this post',
       createdAt: new Date().toDateString(),
     },
     {
-      id: "3",
-      title: "My best essay in english",
-      description: "That's how I started this post",
+      id: '3',
+      title: 'My best essay in english',
+      description: 'That\'s how I started this post',
       createdAt: new Date().toDateString(),
     },
     {
-      id: "3",
-      title: "The final essay in english",
-      description: "That's how I started this post",
+      id: '3',
+      title: 'The final essay in english',
+      description: 'That\'s how I started this post',
       createdAt: new Date().toDateString(),
     },
   ];
@@ -50,7 +50,7 @@ const ProfilePage: FC = (): ReactElement => {
           <Typography variant="h4">Профиль пользователя</Typography>
         </Box>
         <Box>
-          <img src={image} />
+          <img src={image} alt="profile" />
         </Box>
         <Box>
           <Typography>

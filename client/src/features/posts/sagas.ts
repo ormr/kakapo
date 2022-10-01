@@ -1,8 +1,7 @@
-import { AxiosResponse } from "axios";
-import { call, put, takeEvery } from "redux-saga/effects";
-import { Axios } from "../../core/axios";
-import { PostsApi } from "../../services/api/PostsApi";
-import { Post, setPosts, setPostsError } from "./postSlice";
+import { call, put, takeEvery } from 'redux-saga/effects';
+import Axios from '../../core/axios';
+import { PostsApi } from '../../services/api/PostsApi';
+import { setPosts, setPostsError } from './postSlice';
 
 function* fetchPostsRequest() {
   try {
@@ -14,6 +13,6 @@ function* fetchPostsRequest() {
   }
 }
 
-export function* postsSaga() {
-  yield takeEvery("posts/getPosts", fetchPostsRequest);
+export default function* postsSaga() {
+  yield takeEvery('posts/getPosts', fetchPostsRequest);
 }

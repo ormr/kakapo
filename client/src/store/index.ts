@@ -1,12 +1,12 @@
-import { configureStore } from "@reduxjs/toolkit";
-import createSagaMiddleware from "@redux-saga/core";
-import { createBrowserHistory } from "history";
-import { createReduxHistoryContext } from "redux-first-history";
-import logger from "redux-logger";
-import { rootSaga } from "./rootSaga";
-import { Env } from "../config/Env";
-import { postReducer } from "../features/posts/postSlice";
-import { userReducer } from "../features/user/userSlice";
+import { configureStore } from '@reduxjs/toolkit';
+import createSagaMiddleware from '@redux-saga/core';
+import { createBrowserHistory } from 'history';
+import { createReduxHistoryContext } from 'redux-first-history';
+// import logger from "redux-logger";
+import rootSaga from './rootSaga';
+import Env from '../config/Env';
+import { postReducer } from '../features/posts/postSlice';
+import { userReducer } from '../features/user/userSlice';
 
 const { createReduxHistory, routerMiddleware, routerReducer } =
   createReduxHistoryContext({

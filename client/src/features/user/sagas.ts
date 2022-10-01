@@ -1,9 +1,9 @@
-import { call, put, takeLatest } from "redux-saga/effects";
-import { PayloadAction } from "@reduxjs/toolkit";
-import { parseCookies } from "nookies";
-import { setUser, setUserError } from "./userSlice";
-import { AuthApi } from "../../services/api/UserApi";
-import { Axios } from "../../core/axios";
+import { call, put, takeLatest } from 'redux-saga/effects';
+import { push } from 'redux-first-history';
+import { PayloadAction } from '@reduxjs/toolkit';
+import { setUser, setUserError } from './userSlice';
+import { AuthApi } from '../../services/api/UserApi';
+import Axios from '../../core/axios';
 
 interface User {
   name: string;
@@ -36,13 +36,14 @@ function* requestUserLogIn({ payload }: PayloadAction<User>) {
     const { data } = yield call(AuthApi(Axios).logIn, payload);
 
     yield put(setUser(data));
+    yield put(push('/'));
   } catch (error) {
     yield put(setUserError());
   }
 }
 
-export function* userSaga() {
-  yield takeLatest("user/fetchUser", fetchUser);
-  yield takeLatest("user/requestUserLogIn", requestUserLogIn);
-  yield takeLatest("user/fetchUserRegister", fetchUserRegister);
+export default function* userSaga() {
+  yield takeLatest('user/fetchUser', fetchUser);
+  yield takeLatest('user/requestUserLogIn', requestUserLogIn);
+  yield takeLatest('user/fetchUserRegister', fetchUserRegister);
 }

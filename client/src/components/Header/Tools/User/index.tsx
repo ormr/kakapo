@@ -1,25 +1,27 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { Box } from "@mui/material";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Box } from '@mui/material';
 
 // TODO:
 // Компонент отвечает за логику отображения ссылки на профиль либо кнопки авторизации
-export function ToolbarUser() {
+const ToolbarUser = () => {
   // const userNotLogIn
   const user = {
     // name: undefined,
-    name: "Serafim",
+    name: 'Serafim',
   };
 
   return (
     <Box>
       {user?.name ? (
-        <Link to="/profile" style={{ color: "white", textDecoration: "none" }}>
+        <Link to="/profile" style={{ color: 'white', textDecoration: 'none' }}>
           {user.name}
         </Link>
       ) : (
-        "Войти"
+        'Войти'
       )}
     </Box>
   );
-}
+};
+
+export default ToolbarUser;

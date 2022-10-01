@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 interface User {
   id: string;
@@ -19,7 +19,7 @@ const initialState: UserState = {
 };
 
 export const userState = createSlice({
-  name: "user",
+  name: 'user',
   initialState,
   reducers: {
     fetchUser: (state) => ({

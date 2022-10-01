@@ -1,9 +1,9 @@
-import React, { FC, ReactElement, useState } from "react";
-import { Button, Container, Grid, Typography, Box } from "@mui/material";
-import MDEditor from "@uiw/react-md-editor";
+import React, { FC, ReactElement, useState } from 'react';
+import { Button, Container, Grid, Typography, Box } from '@mui/material';
+import MDEditor from '@uiw/react-md-editor';
 
 const CreatePage: FC = (): ReactElement => {
-  const [value, setValue] = useState<string>("");
+  const [value, setValue] = useState<string>('');
   const handleChange = (e: string | undefined) => {
     setValue(`${e}`);
   };

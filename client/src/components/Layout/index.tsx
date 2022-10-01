@@ -1,24 +1,24 @@
-import React, { useState, useMemo, useEffect } from "react";
-import { CssBaseline, ThemeProvider, Box } from "@mui/material";
-import { createTheme } from "@mui/material/styles";
-import { Outlet } from "react-router-dom";
-import { Header } from "../Header";
-import { useAppDispatch } from "../../store/hooks";
-import { fetchUser } from "../../features/user/userSlice";
+import React, { useState, useEffect, useMemo, ReactElement, FC } from 'react';
+import { CssBaseline, ThemeProvider, Box } from '@mui/material';
+import { createTheme } from '@mui/material/styles';
+import { Outlet } from 'react-router-dom';
+import Header from '../Header';
+import { useAppDispatch } from '../../store/hooks';
+import { fetchUser } from '../../features/user/userSlice';
 
-export function Layout() {
-  // const dispatch = useAppDispatch();
+const Layout: FC = (): ReactElement => {
+  const dispatch = useAppDispatch();
 
-  // useEffect(() => {
-  //   dispatch(fetchUser());
-  // }, []);
+  useEffect(() => {
+    dispatch(fetchUser());
+  }, []);
 
-  const [mode, setMode] = useState<"light" | "dark">("light");
+  const [mode, setMode] = useState<'light' | 'dark'>('light');
 
   const colorMode = useMemo(
     () => ({
       toggleColorMode: () => {
-        setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
+        setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
       },
     }),
     []
@@ -37,11 +37,11 @@ export function Layout() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Header />
+      <Header colorMode={colorMode} />
       <main>
         <Box
           sx={{
-            bgcolor: "background.paper",
+            bgcolor: 'background.paper',
             pt: 3,
             pb: 3,
           }}
@@ -51,4 +51,6 @@ export function Layout() {
       </main>
     </ThemeProvider>
   );
-}
+};
+
+export default Layout;

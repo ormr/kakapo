@@ -1,15 +1,15 @@
-import React, { FC, ReactElement, Suspense } from "react";
-import { Routes, Route } from "react-router-dom";
-import { Layout } from "./components/Layout";
+import React, { ReactElement, Suspense } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Layout from './components/Layout';
 
-const MainPage = React.lazy(() => import("./pages/MainPage"));
-const DetailPage = React.lazy(() => import("./pages/DetailPage"));
-const CreatePage = React.lazy(() => import("./pages/CreatePage"));
-const SignInPage = React.lazy(() => import("./pages/SignInPage"));
-const LogInPage = React.lazy(() => import("./pages/LogInPage"));
-const ProfilePage = React.lazy(() => import("./pages/ProfilePage"));
+const MainPage = React.lazy(() => import('./pages/MainPage'));
+const DetailPage = React.lazy(() => import('./pages/DetailPage'));
+const CreatePage = React.lazy(() => import('./pages/CreatePage'));
+const SignInPage = React.lazy(() => import('./pages/SignInPage'));
+const LogInPage = React.lazy(() => import('./pages/LogInPage'));
+const ProfilePage = React.lazy(() => import('./pages/ProfilePage'));
 
-export const App: FC = (): ReactElement => (
+const App = (): ReactElement => (
   <Suspense fallback={<div>Loading...</div>}>
     <Routes>
       <Route element={<Layout />}>
@@ -23,3 +23,5 @@ export const App: FC = (): ReactElement => (
     </Routes>
   </Suspense>
 );
+
+export default App;

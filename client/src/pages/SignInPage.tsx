@@ -1,8 +1,8 @@
-import React, { FC, ReactElement } from "react";
-import * as yup from "yup";
-import { Grid, TextField, Typography, Button } from "@mui/material";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
+import React, { FC, ReactElement } from 'react';
+import * as yup from 'yup';
+import { Grid, TextField, Typography, Button } from '@mui/material';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
 
 const SignInSchema = yup.object().shape({
   name: yup.string().required(),
@@ -33,7 +33,7 @@ const SignInPage: FC = (): ReactElement => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <Grid xs={12} mb={2}>
             <TextField
-              {...register("name")}
+              {...register('name')}
               label="Имя"
               variant="outlined"
               fullWidth
@@ -41,7 +41,7 @@ const SignInPage: FC = (): ReactElement => {
           </Grid>
           <Grid xs={12} mb={2}>
             <TextField
-              {...register("email")}
+              {...register('email')}
               label="E-mail"
               variant="outlined"
               fullWidth
@@ -49,7 +49,7 @@ const SignInPage: FC = (): ReactElement => {
           </Grid>
           <Grid xs={12} mb={2}>
             <TextField
-              {...register("password")}
+              {...register('password')}
               label="Пароль"
               variant="outlined"
               fullWidth
@@ -57,7 +57,7 @@ const SignInPage: FC = (): ReactElement => {
           </Grid>
           <Grid xs={12} mb={2}>
             <TextField
-              {...register("password2")}
+              {...register('password2')}
               label="Повторите пароль"
               variant="outlined"
               fullWidth

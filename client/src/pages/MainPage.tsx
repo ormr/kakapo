@@ -1,9 +1,9 @@
-import React, { FC, ReactElement, useEffect } from "react";
-import { Container, Box, Grid } from "@mui/material";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { Post } from "../components/Post";
-import { getPosts } from "../features/posts/postSlice";
-import { fetchUser } from "../features/user/userSlice";
+import React, { FC, ReactElement, useEffect } from 'react';
+import { Container, Box, Grid } from '@mui/material';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { Post } from '../components/Post';
+import { getPosts } from '../features/posts/postSlice';
+import { fetchUser } from '../features/user/userSlice';
 
 const MainPage: FC = (): ReactElement => {
   const { loading, posts } = useAppSelector((state) => state.post);

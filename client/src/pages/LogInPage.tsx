@@ -1,15 +1,15 @@
-import { Grid, TextField, Typography, Button } from "@mui/material";
-import React, { FC, ReactElement } from "react";
-import { useForm } from "react-hook-form";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useDispatch } from "react-redux";
+import { Grid, TextField, Typography, Button } from '@mui/material';
+import React, { FC, ReactElement } from 'react';
+import { useForm } from 'react-hook-form';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useDispatch } from 'react-redux';
 
 const LoginFormSchema = yup.object().shape({
   email: yup.string().required(),
   password: yup
     .string()
-    .min(6, "Минимальная длина пароля 6 символов")
+    .min(6, 'Минимальная длина пароля 6 символов')
     .required(),
 });
 
@@ -24,7 +24,7 @@ const LogInPage: FC = (): ReactElement => {
   });
 
   const onSubmit = (data: any) => {
-    dispatch({ type: "user/requestUserLogIn", payload: data });
+    dispatch({ type: 'user/requestUserLogIn', payload: data });
   };
 
   return (
@@ -36,7 +36,7 @@ const LogInPage: FC = (): ReactElement => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <Grid item xs={12} mb={2}>
             <TextField
-              {...register("email")}
+              {...register('email')}
               label="E-mail"
               variant="outlined"
               fullWidth
@@ -44,7 +44,7 @@ const LogInPage: FC = (): ReactElement => {
           </Grid>
           <Grid item xs={12} mb={2}>
             <TextField
-              {...register("password")}
+              {...register('password')}
               type="password"
               label="Password"
               variant="outlined"
