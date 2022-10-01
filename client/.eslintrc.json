@@ -1,5 +1,6 @@
 {
   "env": {
+    "es6": true,
     "browser": true,
     "es2021": true
   },
@@ -8,11 +9,21 @@
     "airbnb-typescript",
     "prettier"
   ],
+  "plugins": [
+    "prettier"
+  ],
   "parserOptions": {
     "project": "./tsconfig.json",
     "sourceType": "module"
   },
   "rules": {
+    "prettier/prettier": [
+      "error",
+      {},
+      {
+        "usePrettierrc": true
+      }
+    ],
     "react/jsx-props-no-spreading": "off",
     "quotes": [
       "error",

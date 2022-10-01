@@ -18,25 +18,25 @@ const ProfilePage: FC = (): ReactElement => {
     {
       id: '1',
       title: 'My essay in english',
-      description: 'That\'s how I started this post',
+      description: 'Thats how I started this post',
       createdAt: new Date().toDateString(),
     },
     {
       id: '2',
       title: 'Another essay in english',
-      description: 'That\'s how I started this post',
+      description: 'Thats how I started this post',
       createdAt: new Date().toDateString(),
     },
     {
       id: '3',
       title: 'My best essay in english',
-      description: 'That\'s how I started this post',
+      description: 'Thats how I started this post',
       createdAt: new Date().toDateString(),
     },
     {
       id: '3',
       title: 'The final essay in english',
-      description: 'That\'s how I started this post',
+      description: 'Thats how I started this post',
       createdAt: new Date().toDateString(),
     },
   ];

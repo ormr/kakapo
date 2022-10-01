@@ -1,5 +1,12 @@
 import React, { FC, ReactElement } from 'react';
-import { AppBar, Box, Container, Toolbar, Typography, Button } from '@mui/material';
+import {
+  AppBar,
+  Box,
+  Container,
+  Toolbar,
+  Typography,
+  Button,
+} from '@mui/material';
 import ToolbarUser from './Tools/User';
 
 // const settings = [
@@ -16,7 +23,7 @@ import ToolbarUser from './Tools/User';
 interface HeaderProps {
   colorMode: {
     toggleColorMode: () => void;
-  }
+  };
 }
 
 const Header: FC<HeaderProps> = ({ colorMode }): ReactElement => (
@@ -74,7 +81,9 @@ const Header: FC<HeaderProps> = ({ colorMode }): ReactElement => (
         >
           Something
         </Typography>
-        <Button onClick={() => colorMode.toggleColorMode()}>Change theme</Button>
+        <Button onClick={() => colorMode.toggleColorMode()}>
+          Change theme
+        </Button>
         <Box sx={{ flexGrow: 0 }}>
           <ToolbarUser />
         </Box>
