@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 import { UsersModule } from 'src/users/users.module';
+import { JwtModule } from '@nestjs/jwt';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthenticationController } from './controllers/authentication.controller';
 import { AuthenticationService } from './services/authentication.service';
 import { LocalStrategy } from './strategies/local.stragegy';
-import { JwtModule, JwtService } from '@nestjs/jwt';
-import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtStrategy } from './strategies/jwt.strategy';
 
 @Module({
@@ -16,17 +16,17 @@ import { JwtStrategy } from './strategies/jwt.strategy';
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: async (configService: ConfigService) => ({
+      useFactory: async () => ({
         // TODO: It should be switched to using configService
         secret: 'topsecretpassword',
         signOptions: {
-        // TODO: It should be switched to using configService
+          // TODO: It should be switched to using configService
           expiresIn: `86400s`,
         },
       }),
     }),
   ],
   providers: [AuthenticationService, LocalStrategy, JwtStrategy],
-  controllers: [AuthenticationController]
+  controllers: [AuthenticationController],
 })
-export class AuthenticationModule { };
+export class AuthenticationModule {}

@@ -1,9 +1,9 @@
 import { DataSource } from 'typeorm';
-import { ConfigService } from '@nestjs/config';
+// import { ConfigService } from '@nestjs/config';
+import { config } from 'dotenv';
 import User from '../users/entities/user.entity';
 import Post from '../posts/entities/post.entity';
-import { config } from 'dotenv';
-import { CreatePost1662979231566 } from '../migrations/1662979231566-CreatePost';
+// import { CreatePost1662979231566 } from '../migrations/1662979231566-CreatePost';
 import { migrations1664096717354 } from '../migrations/1664096717354-migrations';
 
 config();

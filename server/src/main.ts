@@ -16,6 +16,7 @@ async function bootstrap() {
   const apiPort = config.get<number>('API_PORT');
   const port = mode === 'dev' ? 3001 : apiPort;
   await app.listen(port, () => {
+    // eslint-disable-next-line no-console
     console.log(`App started on port: ${port}`);
   });
 }

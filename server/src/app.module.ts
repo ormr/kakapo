@@ -12,31 +12,28 @@ import { CommentsModule } from './comments/comments.module';
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: async (config: ConfigService) => {
-        console.log(config.get('TYPEORM_PORT'))
-        return {
-          type: 'postgres',
-          host: config.get<string>('TYPEORM_HOST'),
-          username: config.get<string>('TYPEORM_USERNAME'),
-          password: config.get<string>('TYPEORM_PASSWORD'),
-          database: config.get<string>('TYPEORM_DATABASE'),
-          port: config.get<number>('TYPEORM_PORT'),
-          entities: [],
-          autoLoadEntities: true,
-          // entities: [__dirname + 'dist/**/*.entity{.ts,.js}'],
-          // synchronize: false,
-          // // autoLoadEntities: true,
-          // logging: true,
-          // logger: 'file',
-          // migrations: [__dirname + '/migrations/**/*{.ts,.js}'],
-          // migrationsRun: true,
-          // cli: {
-          //   // Location of migration should be inside src folder
-          //   // to be compiled into dist/ folder.
-          //   migrationsDir: 'src/migrations',
-          // },
-        }
-      },
+      useFactory: async (config: ConfigService) => ({
+        type: 'postgres',
+        host: config.get<string>('TYPEORM_HOST'),
+        username: config.get<string>('TYPEORM_USERNAME'),
+        password: config.get<string>('TYPEORM_PASSWORD'),
+        database: config.get<string>('TYPEORM_DATABASE'),
+        port: config.get<number>('TYPEORM_PORT'),
+        entities: [],
+        autoLoadEntities: true,
+        // entities: [__dirname + 'dist/**/*.entity{.ts,.js}'],
+        // synchronize: false,
+        // // autoLoadEntities: true,
+        // logging: true,
+        // logger: 'file',
+        // migrations: [__dirname + '/migrations/**/*{.ts,.js}'],
+        // migrationsRun: true,
+        // cli: {
+        //   // Location of migration should be inside src folder
+        //   // to be compiled into dist/ folder.
+        //   migrationsDir: 'src/migrations',
+        // },
+      }),
     }),
     UsersModule,
     PostsModule,
@@ -44,4 +41,4 @@ import { CommentsModule } from './comments/comments.module';
     AuthenticationModule,
   ],
 })
-export class AppModule { }
+export class AppModule {}

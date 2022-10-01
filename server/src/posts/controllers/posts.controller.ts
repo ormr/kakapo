@@ -1,4 +1,13 @@
-import { Controller, Get, Param, Post, Body, Put, Delete, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Post,
+  Body,
+  Put,
+  Delete,
+  UseGuards,
+} from '@nestjs/common';
 import { JwtAuthenticationGuard } from 'src/authentication/guards/jwt-authentication.guard';
 import { CreatePostDto } from 'src/posts/dto/create-post.dto';
 import { UpdatePostDto } from 'src/posts/dto/update-post.dto';
@@ -10,7 +19,7 @@ export class PostsController {
   constructor(
     private readonly postsService: PostService,
     private readonly userService: UsersService
-  ) { }
+  ) {}
 
   @Get()
   async getAllPosts() {

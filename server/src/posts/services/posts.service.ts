@@ -10,8 +10,8 @@ import { Repository } from 'typeorm';
 export class PostService {
   constructor(
     @InjectRepository(Post)
-    private readonly postRepository: Repository<Post>,
-  ) { }
+    private readonly postRepository: Repository<Post>
+  ) {}
 
   async createPost(post: CreatePostDto, user: User): Promise<Post> {
     const newPost = {
@@ -19,15 +19,15 @@ export class PostService {
       user,
     };
 
-    return await this.postRepository.save(newPost);
+    return this.postRepository.save(newPost);
   }
 
   async getOnePost(id: string): Promise<Post> {
-    return await this.postRepository.findOne({ where: { id } });
+    return this.postRepository.findOne({ where: { id } });
   }
 
   async getAllPosts(): Promise<Post[]> {
-    return await this.postRepository.find();
+    return this.postRepository.find();
   }
 
   async removePost(id: string): Promise<string> {
@@ -40,9 +40,9 @@ export class PostService {
       {
         id,
       },
-      { ...updatePostInput },
+      { ...updatePostInput }
     );
 
-    return await this.getOnePost(updatePostInput.id);
+    return this.getOnePost(updatePostInput.id);
   }
 }

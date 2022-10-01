@@ -10,12 +10,12 @@ import { TokenPayload } from '../interfaces/tokenPayload.interface';
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
     private readonly configService: ConfigService,
-    private readonly userService: UsersService,
+    private readonly userService: UsersService
   ) {
     super({
-      jwtFromRequest: ExtractJwt.fromExtractors([(request: Request) => {
-        return request?.cookies?.Authentication;
-      }]),
+      jwtFromRequest: ExtractJwt.fromExtractors([
+        (request: Request) => request?.cookies?.Authentication,
+      ]),
       secretOrKey: 'topsecretpassword',
     });
   }

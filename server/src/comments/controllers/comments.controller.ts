@@ -7,8 +7,8 @@ import { CommentsService } from '../services/comments.service';
 export class CommentsController {
   constructor(
     private readonly commentsService: CommentsService,
-    private readonly usersService: UsersService,
-  ) { }
+    private readonly usersService: UsersService
+  ) {}
 
   @Get()
   async getAllComments() {
