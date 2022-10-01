@@ -1,5 +1,5 @@
 import { Grid, TextField, Typography, Button } from '@mui/material';
-import React, { FC, ReactElement } from 'react';
+import React, { FC, ReactElement, ReactNode } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -37,6 +37,8 @@ const LogInPage: FC = (): ReactElement => {
           <Grid item xs={12} mb={2}>
             <TextField
               {...register('email')}
+              error={!!errors?.email}
+              helperText={errors?.email?.message as ReactNode}
               label="E-mail"
               variant="outlined"
               fullWidth
@@ -45,6 +47,8 @@ const LogInPage: FC = (): ReactElement => {
           <Grid item xs={12} mb={2}>
             <TextField
               {...register('password')}
+              error={!!errors?.password}
+              helperText={errors?.password?.message as ReactNode}
               type="password"
               label="Password"
               variant="outlined"

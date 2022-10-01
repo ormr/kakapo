@@ -19,7 +19,7 @@ const CreatePage: FC = (): ReactElement => {
             <Box mb={4}>
               <MDEditor
                 value={value}
-                onChange={(value) => handleChange(value)}
+                onChange={(newValue) => handleChange(newValue)}
               />
             </Box>
             <Box>

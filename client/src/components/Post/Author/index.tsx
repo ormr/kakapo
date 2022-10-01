@@ -16,4 +16,8 @@ const Author: FC<AuthorProps> = ({ name, image }) => (
   </Box>
 );
 
+Author.defaultProps = {
+  image: undefined,
+};
+
 export default Author;

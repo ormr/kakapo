@@ -13,6 +13,7 @@
     "sourceType": "module"
   },
   "rules": {
+    "react/jsx-props-no-spreading": "off",
     "quotes": [
       "error",
       "single"

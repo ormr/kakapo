@@ -1,4 +1,4 @@
-import React, { FC, ReactElement } from 'react';
+import React, { FC, ReactElement, ReactNode } from 'react';
 import * as yup from 'yup';
 import { Grid, TextField, Typography, Button } from '@mui/material';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -20,9 +20,7 @@ const SignInPage: FC = (): ReactElement => {
     resolver: yupResolver(SignInSchema),
   });
 
-  const onSubmit = (data: any) => {
-    console.log(data);
-  };
+  const onSubmit = () => {};
 
   return (
     <Grid container justifyContent="center" alignItems="center">
@@ -34,6 +32,8 @@ const SignInPage: FC = (): ReactElement => {
           <Grid xs={12} mb={2}>
             <TextField
               {...register('name')}
+              error={!!errors?.name}
+              helperText={errors?.name?.message as ReactNode}
               label="Имя"
               variant="outlined"
               fullWidth
@@ -42,6 +42,8 @@ const SignInPage: FC = (): ReactElement => {
           <Grid xs={12} mb={2}>
             <TextField
               {...register('email')}
+              error={!!errors?.email}
+              helperText={errors?.email?.message as ReactNode}
               label="E-mail"
               variant="outlined"
               fullWidth
@@ -50,6 +52,8 @@ const SignInPage: FC = (): ReactElement => {
           <Grid xs={12} mb={2}>
             <TextField
               {...register('password')}
+              error={!!errors?.password}
+              helperText={errors?.password?.message as ReactNode}
               label="Пароль"
               variant="outlined"
               fullWidth
@@ -58,6 +62,8 @@ const SignInPage: FC = (): ReactElement => {
           <Grid xs={12} mb={2}>
             <TextField
               {...register('password2')}
+              error={!!errors?.password2}
+              helperText={errors?.password2?.message as ReactNode}
               label="Повторите пароль"
               variant="outlined"
               fullWidth
