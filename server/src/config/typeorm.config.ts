@@ -3,8 +3,8 @@ import { DataSource } from 'typeorm';
 import { config } from 'dotenv';
 import User from '../users/entities/user.entity';
 import Post from '../posts/entities/post.entity';
-// import { CreatePost1662979231566 } from '../migrations/1662979231566-CreatePost';
 import { migrations1664096717354 } from '../migrations/1664096717354-migrations';
+import { migrations1664702608623 } from '../migrations/1664702608623-migrations';
 
 config();
 
@@ -18,7 +18,7 @@ export default new DataSource({
   password: '123456',
   database: 'blog-db',
   entities: [Post, User],
-  migrations: [migrations1664096717354],
+  migrations: [migrations1664096717354, migrations1664702608623],
 });
 
 // export default new DataSource({
