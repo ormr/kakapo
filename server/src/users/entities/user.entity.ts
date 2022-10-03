@@ -4,7 +4,6 @@ import {
   Entity,
   JoinColumn,
   OneToOne,
-  // OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -18,7 +17,6 @@ class User {
   @Column({ unique: true })
   email: string;
 
-  @Column({ nullable: true })
   name: string;
 
   @Column({ nullable: true })
