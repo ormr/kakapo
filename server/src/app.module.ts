@@ -5,6 +5,7 @@ import { UsersModule } from './users/users.module';
 import { PostsModule } from './posts/posts.module';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { CommentsModule } from './comments/comments.module';
+import { LocalFilesModule } from './localFiles/localFile.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { CommentsModule } from './comments/comments.module';
     PostsModule,
     CommentsModule,
     AuthenticationModule,
+    LocalFilesModule,
   ],
 })
 export class AppModule {}

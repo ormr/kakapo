@@ -3,8 +3,10 @@ import { DataSource } from 'typeorm';
 import { config } from 'dotenv';
 import User from '../users/entities/user.entity';
 import Post from '../posts/entities/post.entity';
+import LocalFile from '../localFiles/entities/localFile.entity';
 import { migrations1664096717354 } from '../migrations/1664096717354-migrations';
 import { migrations1664702608623 } from '../migrations/1664702608623-migrations';
+import { AddedMulter1664768147918 } from '../migrations/1664768147918-AddedMulter';
 
 config();
 
@@ -17,8 +19,12 @@ export default new DataSource({
   username: 'admin',
   password: '123456',
   database: 'blog-db',
-  entities: [Post, User],
-  migrations: [migrations1664096717354, migrations1664702608623],
+  entities: [Post, User, LocalFile],
+  migrations: [
+    migrations1664096717354,
+    migrations1664702608623,
+    AddedMulter1664768147918,
+  ],
 });
 
 // export default new DataSource({

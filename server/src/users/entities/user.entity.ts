@@ -1,12 +1,14 @@
-// import Post from '../../posts/entities/post.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  OneToOne,
   // OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import LocalFile from '../../localFiles/entities/localFile.entity';
 
 @Entity('users')
 class User {
@@ -30,6 +32,15 @@ class User {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @JoinColumn({ name: 'avatarId' })
+  @OneToOne(() => LocalFile, {
+    nullable: true,
+  })
+  public avatar?: LocalFile;
+
+  @Column({ nullable: true })
+  public avatarId?: string;
 
   // @OneToMany(() => Post, (post: Post) => post.userId)
   // posts: Post[];

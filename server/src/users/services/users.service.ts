@@ -1,6 +1,8 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import LocalFilesService from 'src/localFiles/services/localFiles.service';
+import { LocalFileDto } from 'src/localFiles/dto/localFile.dto';
 import User from '../entities/user.entity';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
@@ -9,7 +11,8 @@ import { UpdateUserDto } from '../dto/update-user.dto';
 export class UsersService {
   constructor(
     @InjectRepository(User)
-    private readonly userRepository: Repository<User>
+    private readonly userRepository: Repository<User>,
+    private localFilesService: LocalFilesService
   ) {}
 
   async create(createUserInput: CreateUserDto): Promise<User> {
@@ -51,5 +54,12 @@ export class UsersService {
   async removeUser(id: string): Promise<string> {
     await this.userRepository.delete({ id });
     return id;
+  }
+
+  async addAvatar(userId: string, fileData: LocalFileDto) {
+    const avatar = await this.localFilesService.saveLocalFileData(fileData);
+    await this.userRepository.update(userId, {
+      avatarId: avatar.id,
+    });
   }
 }
