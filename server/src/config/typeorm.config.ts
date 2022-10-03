@@ -4,9 +4,9 @@ import { config } from 'dotenv';
 import User from '../users/entities/user.entity';
 import Post from '../posts/entities/post.entity';
 import LocalFile from '../localFiles/entities/localFile.entity';
-import { migrations1664096717354 } from '../migrations/1664096717354-migrations';
-import { migrations1664702608623 } from '../migrations/1664702608623-migrations';
-import { AddedMulter1664768147918 } from '../migrations/1664768147918-AddedMulter';
+import {
+  CreateTablePostTableUserTableLocalFile1664781077583
+} from '../migrations/1664781077583-CreateTablePostTableUserTableLocalFile';
 
 config();
 
@@ -21,9 +21,7 @@ export default new DataSource({
   database: 'blog-db',
   entities: [Post, User, LocalFile],
   migrations: [
-    migrations1664096717354,
-    migrations1664702608623,
-    AddedMulter1664768147918,
+    CreateTablePostTableUserTableLocalFile1664781077583
   ],
 });
 
