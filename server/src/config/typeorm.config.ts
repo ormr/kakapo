@@ -4,8 +4,8 @@ import User from '../users/entities/user.entity';
 import Post from '../posts/entities/post.entity';
 import LocalFile from '../localFiles/entities/localFile.entity';
 import {
-  CreateTablePostTableUserTableLocalFile1664783796873
-} from '../migrations/1664783796873-CreateTablePostTableUserTableLocalFile';
+  AddedNewColumnImageToTablePost1664809599304
+} from '../migrations/1664809599304-AddedNewColumnImageToTablePost';
 
 config();
 
@@ -18,6 +18,6 @@ export default new DataSource({
   database: 'blog-db',
   entities: [Post, User, LocalFile],
   migrations: [
-    CreateTablePostTableUserTableLocalFile1664783796873
+    AddedNewColumnImageToTablePost1664809599304
   ],
 });

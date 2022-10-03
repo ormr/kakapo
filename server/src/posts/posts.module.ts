@@ -6,10 +6,11 @@ import User from '../users/entities/user.entity';
 import Post from './entities/post.entity';
 import { PostService } from './services/posts.service';
 import { PostsController } from './controllers/posts.controller';
+import { LocalFilesModule } from 'src/localFiles/localFile.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Post, User]), UsersModule],
+  imports: [TypeOrmModule.forFeature([Post, User]), UsersModule, LocalFilesModule],
   providers: [PostService],
   controllers: [PostsController],
 })
-export class PostsModule {}
+export class PostsModule { }
