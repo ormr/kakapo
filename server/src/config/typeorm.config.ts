@@ -4,8 +4,8 @@ import User from '../users/entities/user.entity';
 import Post from '../posts/entities/post.entity';
 import LocalFile from '../localFiles/entities/localFile.entity';
 import {
-  CreateTablePostTableUserTableLocalFile1664782367498
-} from '../migrations/1664782367498-CreateTablePostTableUserTableLocalFile';
+  CreateTablePostTableUserTableLocalFile1664783796873
+} from '../migrations/1664783796873-CreateTablePostTableUserTableLocalFile';
 
 config();
 
@@ -18,6 +18,6 @@ export default new DataSource({
   database: 'blog-db',
   entities: [Post, User, LocalFile],
   migrations: [
-    CreateTablePostTableUserTableLocalFile1664782367498
+    CreateTablePostTableUserTableLocalFile1664783796873
   ],
 });
