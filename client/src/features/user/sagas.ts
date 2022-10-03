@@ -1,50 +1,48 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { push } from 'redux-first-history';
 import { PayloadAction } from '@reduxjs/toolkit';
-import { setUser, setUserError } from './userSlice';
 import { AuthApi } from '../../services/api/UserApi';
 import Axios from '../../core/axios';
+import { receiveUserData, setUserFailure, setUserLoading } from './actions';
+import { LogInData, RegisterData, UserActionsType } from './types';
 
-interface User {
-  name: string;
-  email: string;
-  password: string;
-}
 
-function* fetchUserRegister({ payload }: PayloadAction<User>) {
+function* fetchUserRegister({ payload }: PayloadAction<RegisterData>) {
   try {
     const { data } = yield call(AuthApi(Axios).register, payload);
 
-    yield put(setUser(data));
+    yield put(receiveUserData(data));
     yield put(push('/log-in'));
   } catch (error) {
-    yield put(setUserError());
+    yield put(setUserFailure());
   }
 }
 
-function* fetchUser() {
+function* requestUserData() {
   try {
+    yield put(setUserLoading());
     const { data } = yield call(AuthApi(Axios).auth);
 
-    yield put(setUser(data));
+    yield put(receiveUserData(data));
   } catch (error) {
-    yield put(setUserError());
+    yield put(setUserFailure());
   }
 }
 
-function* requestUserLogIn({ payload }: PayloadAction<User>) {
+function* requestUserLogIn({ payload }: PayloadAction<LogInData>) {
   try {
     const { data } = yield call(AuthApi(Axios).logIn, payload);
 
-    yield put(setUser(data));
+    yield put(receiveUserData(data));
     yield put(push('/profile'));
   } catch (error) {
-    yield put(setUserError());
+    yield put(setUserFailure());
   }
 }
 
 export default function* userSaga() {
-  yield takeLatest('user/fetchUser', fetchUser);
-  yield takeLatest('user/requestUserLogIn', requestUserLogIn);
-  yield takeLatest('user/fetchUserRegister', fetchUserRegister);
+  yield takeLatest(UserActionsType.REQUEST_USER_DATA, requestUserData);
+  yield takeLatest(UserActionsType.REQUEST_LOG_IN, requestUserLogIn);
+  yield takeLatest(UserActionsType.REQUEST_REGISTER, fetchUserRegister);
 }
+

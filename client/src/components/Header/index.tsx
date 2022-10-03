@@ -7,29 +7,20 @@ import {
   Typography,
   Button,
 } from '@mui/material';
+import LightModeIcon from '@mui/icons-material/LightModeOutlined';
+import DarkModeIcon from '@mui/icons-material/DarkModeOutlined';
 import ToolbarUser from './Tools/User';
 import { useAppSelector } from '../../store/hooks';
 
-// const settings = [
-//   {
-//     name: 'Profile',
-//     path: '/profile',
-//   },
-//   {
-//     name: 'Logout',
-//     path: '/logout',
-//   },
-// ];
-
 interface HeaderProps {
   colorMode: {
+    mode: string;
     toggleColorMode: () => void;
   };
 }
 
 const Header: FC<HeaderProps> = ({ colorMode }): ReactElement => {
-  const userData = useAppSelector((state) => state.user.user);
-  console.log(userData);
+  const userData = useAppSelector((state) => state.user.data);
 
   return (
     <AppBar color="primary" position="static" sx={{ boxShadow: 'none' }}>
@@ -86,11 +77,13 @@ const Header: FC<HeaderProps> = ({ colorMode }): ReactElement => {
           >
             Something
           </Typography>
-          <Button onClick={() => colorMode.toggleColorMode()}>
-            Change theme
-          </Button>
+          <Box>
+            <Button onClick={() => colorMode.toggleColorMode()}>
+              {colorMode.mode ? <LightModeIcon sx={{ fill: '#FFF' }} /> : <DarkModeIcon />}
+            </Button>
+          </Box>
           <Box sx={{ flexGrow: 0 }}>
-            <ToolbarUser />
+            <ToolbarUser userData={userData} />
           </Box>
         </Toolbar>
       </Container>

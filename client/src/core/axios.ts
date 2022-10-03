@@ -1,7 +1,9 @@
 import axios from 'axios';
 
+export const BASE_URL = 'http://localhost:3001';
+
 const Axios = axios.create({
-  baseURL: 'http://localhost:3001',
+  baseURL: BASE_URL,
   withCredentials: true,
 });
 

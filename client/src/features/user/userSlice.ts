@@ -1,19 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
-
-interface User {
-  id: string;
-  name: string;
-  email: string;
-}
+import { User } from '../../services/api/UserApi';
 
 export interface UserState {
-  user?: User;
+  data?: User;
   loading: boolean;
   error: boolean;
 }
 
 const initialState: UserState = {
-  user: undefined,
+  data: undefined,
   loading: false,
   error: false,
 };
@@ -22,22 +17,18 @@ export const userState = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    fetchUser: (state) => ({
-      ...state,
-      loading: true,
-    }),
-    setUser: (state, action) => ({
-      ...state,
-      loading: false,
-      user: action.payload,
-    }),
-    setUserError: (state) => ({
-      ...state,
-      loading: false,
-      error: true,
-    }),
+    setLoading: (state) => {
+      state.loading = true;
+    },
+    receiveUserData: (state, action) => {
+      state.data = action.payload;
+      state.loading = false;
+    },
+    setFailure: (state) => {
+      state.loading = false;
+      state.error = true;
+    },
   },
 });
 
-export const { fetchUser, setUser, setUserError } = userState.actions;
 export const userReducer = userState.reducer;

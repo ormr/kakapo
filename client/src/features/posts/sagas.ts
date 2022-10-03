@@ -1,18 +1,21 @@
-import { call, put, takeEvery } from 'redux-saga/effects';
+import { call, put, takeLatest } from 'redux-saga/effects';
 import Axios from '../../core/axios';
 import { PostsApi } from '../../services/api/PostsApi';
-import { setPosts, setPostsError } from './postSlice';
+import { receivePosts, setPostsFailure, setPostsLoading } from './actions';
+import PostActionsType from './types';
 
-function* fetchPostsRequest() {
+function* requestPosts() {
+  console.log('123');
   try {
+    yield put(setPostsLoading())
     const { data } = yield call(PostsApi(Axios).getPosts);
-
-    yield put(setPosts(data));
+    yield put(receivePosts(data));
   } catch (error) {
-    yield put(setPostsError());
+    yield put(setPostsFailure());
   }
 }
 
 export default function* postsSaga() {
-  yield takeEvery('posts/getPosts', fetchPostsRequest);
+  yield takeLatest(PostActionsType.REQUEST_POSTS, requestPosts);
 }
+

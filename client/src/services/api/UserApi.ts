@@ -1,11 +1,13 @@
 import { AxiosInstance, AxiosResponse } from 'axios';
 
 export interface User {
+  id: string;
   email: string;
   name: string;
-  password?: string;
-  createdAt: Date;
-  updatedAt: Date;
+  description: string;
+  createdAt: string;
+  updatedAt: string;
+  avatarId: string;
 }
 
 export const AuthApi = (instance: AxiosInstance) => ({

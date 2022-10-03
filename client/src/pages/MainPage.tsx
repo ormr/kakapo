@@ -2,16 +2,15 @@ import React, { FC, ReactElement, useEffect } from 'react';
 import { Container, Grid } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import Post from '../components/Post';
-import { getPosts } from '../features/posts/postSlice';
-// import { fetchUser } from '../features/user/userSlice';
+import { requestPosts } from '../features/posts/actions';
 
 const MainPage: FC = (): ReactElement => {
   const { posts } = useAppSelector((state) => state.post);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(getPosts());
-  }, []);
+    dispatch(requestPosts());
+  }, [dispatch]);
 
   return (
     <Container>

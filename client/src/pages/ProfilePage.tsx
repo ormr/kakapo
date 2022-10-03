@@ -1,22 +1,19 @@
 import React, { FC, ReactElement } from 'react';
 import { Box, Grid, Typography } from '@mui/material';
 import { useAppSelector } from '../store/hooks';
+import { BASE_URL } from '../core/axios';
 
 const ProfilePage: FC = (): ReactElement => {
-  const userData = useAppSelector((state) => state.user.user);
+  const userData = useAppSelector((state) => state.user.data);
   const posts = useAppSelector((state) => state.post.posts);
 
-  console.log(userData);
+  const {
+    name,
+    email,
+    description,
+    avatarId,
+  } = userData || {};
 
-  const profile = {
-    name: 'Serafim',
-    email: 'seraf.gavrilov@gmail.com',
-    image:
-      'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-    description: 'Фулл стек разработчик с уклоном во фронтенд',
-  };
-
-  const { name, email, image, description } = profile;
 
   return (
     <Grid container>
@@ -25,7 +22,7 @@ const ProfilePage: FC = (): ReactElement => {
           <Typography variant="h4">Профиль пользователя</Typography>
         </Box>
         <Box>
-          <img src={image} alt="profile" />
+          <img src={`${BASE_URL}/local-files/${avatarId}`} alt="profile" />
         </Box>
         <Box>
           <Typography>

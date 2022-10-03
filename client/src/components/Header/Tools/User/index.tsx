@@ -1,27 +1,29 @@
-import React from 'react';
+import React, { FC, ReactElement } from 'react';
 import { Link } from 'react-router-dom';
 import { Box } from '@mui/material';
+import { User } from '../../../../services/api/UserApi';
 
 // TODO:
 // Компонент отвечает за логику отображения ссылки на профиль либо кнопки авторизации
-const ToolbarUser = () => {
-  // const userNotLogIn
-  const user = {
-    // name: undefined,
-    name: 'Serafim',
-  };
 
-  return (
-    <Box>
-      {user?.name ? (
-        <Link to="/profile" style={{ color: 'white', textDecoration: 'none' }}>
-          {user.name}
-        </Link>
-      ) : (
-        'Войти'
-      )}
-    </Box>
-  );
-};
+interface ToolbarUserProps {
+  userData?: User;
+}
+
+const ToolbarUser: FC<ToolbarUserProps> = ({ userData }): ReactElement => (
+  <Box>
+    {userData?.name ? (
+      <Link to="/profile" style={{ color: 'white', textDecoration: 'none' }}>
+        {userData?.name}
+      </Link>
+    ) : (
+      'Войти'
+    )}
+  </Box>
+);
+
+ToolbarUser.defaultProps = {
+  userData: undefined,
+}
 
 export default ToolbarUser;
