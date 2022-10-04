@@ -46,7 +46,7 @@ export class PostsController {
     return this.postsService.createPost(postInput, user);
   }
 
-  @Post('image')
+  @Post(':id')
   @UseGuards(JwtAuthenticationGuard)
   @UseInterceptors(
     LocalFilesInterceptor({
@@ -67,12 +67,11 @@ export class PostsController {
       },
     })
   )
-  // TODO: Иправить на передачу id поста а не user'a
   async addImage(
-    @Req() request: RequestWithUser,
+    @Param('id') id: string,
     @UploadedFile() file: Express.Multer.File
   ) {
-    this.postsService.addImage(request.user.id, {
+    this.postsService.addImage(id, {
       path: file.path,
       filename: file.originalname,
       mimetype: file.mimetype,
