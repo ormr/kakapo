@@ -4,9 +4,10 @@ import { Link } from 'react-router-dom';
 import styles from './post.module.scss';
 import { Post as PostProps } from '../../features/posts/postSlice';
 import Author from './Author';
+import { BASE_URL } from '../../core/axios';
 
 const Post: FC<PostProps> = (props): ReactElement => {
-  const { id, title, content, createdAt, author, image } = props;
+  const { id, title, content, createdAt, author, imageId } = props;
 
   return (
     <Box className={styles.post}>
@@ -17,7 +18,7 @@ const Post: FC<PostProps> = (props): ReactElement => {
       <Box>
         <Box className={styles.image}>
           <Link to={id}>
-            <img src={image} alt="post" />
+            <img src={`${BASE_URL}/local-files/${imageId}`} alt="post" />
           </Link>
         </Box>
         <Box className={styles.title}>{title}</Box>

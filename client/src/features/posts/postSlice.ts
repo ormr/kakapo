@@ -1,12 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
+import PostActionsType from './types';
 
 export interface Post {
   id: string;
   title: string;
   content: string;
   createdAt?: string;
-  image?: string;
+  imageId?: string;
   author?: string;
 }
 
@@ -30,8 +31,8 @@ export const postState = createSlice({
       state.loading = true;
     },
     receivePosts: (state, action: PayloadAction<Post[]>) => {
-      state.loading = false;
       state.posts = action.payload;
+      state.loading = false;
     },
     setFailure: (state) => {
       state.loading = false;
@@ -41,6 +42,14 @@ export const postState = createSlice({
       state.posts = [...state.posts, action.payload];
     },
   },
+  // extraReducers: {
+  //   [PostActionsType.RECEIVE_POSTS]: (state, action: PayloadAction) => {
+  //     return {
+  //       posts: action.payload,
+  //       loading: false,
+  //     }
+  //   }
+  // }
 });
 
 export const postReducer = postState.reducer;

@@ -1,8 +1,8 @@
 enum PostActionsType {
-  RECEIVE_POSTS = 'post/receivePosts',
-  REQUEST_POSTS = 'post/requestPosts',
-  SET_LOADING = 'post/setLoading',
-  SET_FAILURE = 'post/setFailure',
+  RECEIVE_POSTS = 'posts/receivePosts',
+  REQUEST_POSTS = 'posts/requestPosts',
+  SET_LOADING = 'posts/setLoading',
+  SET_FAILURE = 'posts/setFailure',
 };
 
 export default PostActionsType;
