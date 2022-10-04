@@ -3,8 +3,10 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
+  ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import User from '../../users/entities/user.entity';
 import LocalFile from '../../localFiles/entities/localFile.entity';
@@ -32,8 +34,11 @@ class Post {
   @CreateDateColumn()
   createdAt: Date;
 
-  @OneToOne(() => User)
-  user: User;
+  @UpdateDateColumn()
+  updatedAt: Date;
+
+  @ManyToOne(() => User, (author: User) => author.posts)
+  public author: User;
 }
 
 export default Post;

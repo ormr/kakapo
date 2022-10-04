@@ -3,11 +3,13 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import LocalFile from '../../localFiles/entities/localFile.entity';
+import Post from '../../posts/entities/post.entity';
 
 @Entity('users')
 class User {
@@ -41,8 +43,8 @@ class User {
   @Column({ nullable: true })
   public avatarId?: string;
 
-  // @OneToMany(() => Post, (post: Post) => post.userId)
-  // posts: Post[];
+  @OneToMany(() => Post, (post: Post) => post.author)
+  posts?: Post[];
 }
 
 export default User;

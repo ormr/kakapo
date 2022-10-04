@@ -17,12 +17,7 @@ export class PostService {
   ) { }
 
   async createPost(post: CreatePostDto, user: User): Promise<Post> {
-    const newPost = {
-      ...post,
-      user,
-    };
-
-    return this.postRepository.save(newPost);
+    return this.postRepository.save({ ...post, author: user });
   }
 
   async getOnePost(id: string): Promise<Post> {
@@ -30,7 +25,7 @@ export class PostService {
   }
 
   async getAllPosts(): Promise<Post[]> {
-    return this.postRepository.find();
+    return this.postRepository.find({ relations: ['author'] });
   }
 
   async removePost(id: string): Promise<string> {

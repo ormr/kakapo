@@ -39,11 +39,10 @@ export class PostsController {
 
   @Post()
   @UseGuards(JwtAuthenticationGuard)
-  async createPost(@Body() post: CreatePostDto) {
-    const { userId, ...postInput } = post;
-    const user = await this.userService.getById(userId);
+  async createPost(@Req() request: RequestWithUser, @Body() post: CreatePostDto) {
+    const user = await this.userService.getById(request.user.id);
 
-    return this.postsService.createPost(postInput, user);
+    return this.postsService.createPost(post, user);
   }
 
   @Post(':id')
