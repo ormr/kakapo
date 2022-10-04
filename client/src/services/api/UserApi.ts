@@ -29,5 +29,7 @@ export const AuthApi = (instance: AxiosInstance) => ({
       withCredentials: true,
     }),
   logOut: async (): Promise<AxiosResponse<User>> =>
-    instance.post('/authentication/log-out'),
+    instance.post('/authentication/log-out', {
+      withCredentials: true,
+    }),
 });

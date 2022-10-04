@@ -11,6 +11,7 @@ import LightModeIcon from '@mui/icons-material/LightModeOutlined';
 import DarkModeIcon from '@mui/icons-material/DarkModeOutlined';
 import ToolbarUser from './Tools/User';
 import { useAppSelector } from '../../store/hooks';
+import { Link } from 'react-router-dom';
 
 interface HeaderProps {
   colorMode: {
@@ -20,8 +21,6 @@ interface HeaderProps {
 }
 
 const Header: FC<HeaderProps> = ({ colorMode }): ReactElement => {
-  const userData = useAppSelector((state) => state.user.data);
-
   return (
     <AppBar color="primary" position="static" sx={{ boxShadow: 'none' }}>
       <Container maxWidth="xl">
@@ -29,8 +28,6 @@ const Header: FC<HeaderProps> = ({ colorMode }): ReactElement => {
           <Typography
             variant="h6"
             noWrap
-            component="a"
-            href="/"
             sx={{
               mr: 2,
               flexGrow: 1,
@@ -42,13 +39,13 @@ const Header: FC<HeaderProps> = ({ colorMode }): ReactElement => {
               textDecoration: 'none',
             }}
           >
-            Blog
+            <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>Blog</Link>
           </Typography>
           <Typography
             variant="h6"
             noWrap
-            component="a"
-            href="/create"
+            // component="a"
+            // href="/create"
             sx={{
               mr: 2,
               flexGrow: 10,
@@ -57,7 +54,9 @@ const Header: FC<HeaderProps> = ({ colorMode }): ReactElement => {
               textDecoration: 'none',
             }}
           >
-            Create post
+            <Link to="/create" style={{ color: 'white', textDecoration: 'none' }}>
+              Create post
+            </Link>
           </Typography>
           <Typography
             variant="h5"
@@ -79,11 +78,11 @@ const Header: FC<HeaderProps> = ({ colorMode }): ReactElement => {
           </Typography>
           <Box>
             <Button onClick={() => colorMode.toggleColorMode()}>
-              {colorMode.mode ? <LightModeIcon sx={{ fill: '#FFF' }} /> : <DarkModeIcon />}
+              {colorMode.mode === 'light' ? <DarkModeIcon sx={{ fill: '#FFF' }} /> : <LightModeIcon sx={{ fill: '#FFF' }} />}
             </Button>
           </Box>
           <Box sx={{ flexGrow: 0 }}>
-            <ToolbarUser userData={userData} />
+            <ToolbarUser />
           </Box>
         </Toolbar>
       </Container>

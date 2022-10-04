@@ -13,7 +13,6 @@ const Layout: FC = (): ReactElement => {
     dispatch(requestUserData());
   }, []);
 
-
   const [mode, setMode] = useState<'light' | 'dark'>('light');
 
   const colorMode = useMemo(
@@ -23,7 +22,7 @@ const Layout: FC = (): ReactElement => {
         setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
       },
     }),
-    []
+    [mode]
   );
 
   const theme = useMemo(

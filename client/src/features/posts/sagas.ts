@@ -5,7 +5,6 @@ import { receivePosts, setPostsFailure, setPostsLoading } from './actions';
 import PostActionsType from './types';
 
 function* requestPosts() {
-  console.log('123');
   try {
     yield put(setPostsLoading())
     const { data } = yield call(PostsApi(Axios).getPosts);

@@ -28,7 +28,11 @@ export const requestUserData = () => ({
   type: UserActionsType.REQUEST_USER_DATA,
 });
 
-export const signOut = () => ({
-  type: UserActionsType.SIGN_OUT,
+export const requestLogOut = () => ({
+  type: UserActionsType.REQUEST_LOG_OUT,
+});
+
+export const clearUserData = () => ({
+  type: UserActionsType.CLEAR_USER_DATA,
 });
 

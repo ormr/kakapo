@@ -5,7 +5,8 @@ export enum UserActionsType {
   REQUEST_LOG_IN = 'user/fetchLogIn',
   REQUEST_REGISTER = 'user/fetchRegister',
   REQUEST_USER_DATA = 'user/requestUserData',
-  SIGN_OUT = 'user/signOut',
+  REQUEST_LOG_OUT = 'user/requestLogOut',
+  CLEAR_USER_DATA = 'user/clearUserData',
 };
 
 export interface LogInData {

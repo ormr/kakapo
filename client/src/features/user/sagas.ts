@@ -3,7 +3,7 @@ import { push } from 'redux-first-history';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { AuthApi } from '../../services/api/UserApi';
 import Axios from '../../core/axios';
-import { receiveUserData, setUserFailure, setUserLoading } from './actions';
+import { clearUserData, receiveUserData, setUserFailure, setUserLoading } from './actions';
 import { LogInData, RegisterData, UserActionsType } from './types';
 
 
@@ -40,9 +40,19 @@ function* requestUserLogIn({ payload }: PayloadAction<LogInData>) {
   }
 }
 
+function* requestLogOut() {
+  try {
+    yield call(AuthApi(Axios).logOut)
+    yield put(clearUserData());
+  } catch (error) {
+    yield put(setUserFailure());
+  }
+}
+
 export default function* userSaga() {
   yield takeLatest(UserActionsType.REQUEST_USER_DATA, requestUserData);
   yield takeLatest(UserActionsType.REQUEST_LOG_IN, requestUserLogIn);
   yield takeLatest(UserActionsType.REQUEST_REGISTER, fetchUserRegister);
+  yield takeLatest(UserActionsType.REQUEST_LOG_OUT, requestLogOut);
 }
 

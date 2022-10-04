@@ -28,6 +28,9 @@ export const userState = createSlice({
       state.loading = false;
       state.error = true;
     },
+    clearUserData: (state) => {
+      state.data = undefined;
+    }
   },
 });
 
