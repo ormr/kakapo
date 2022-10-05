@@ -17,3 +17,8 @@ export const setPostsFailure = () => ({
 export const setPostsLoading = () => ({
   type: PostActionsType.SET_LOADING,
 });
+
+export const requestCreatePost = (payload: any) => ({
+  type: PostActionsType.REQUEST_CREATE_POST,
+  payload,
+});

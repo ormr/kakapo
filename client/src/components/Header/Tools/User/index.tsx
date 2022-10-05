@@ -20,16 +20,6 @@ import { useAppSelector } from '../../../../store/hooks';
 //   userData?: User;
 // }
 
-// {userData?.name ? (
-//   <Link to="/profile" style={{ color: 'white', textDecoration: 'none' }}>
-//     {userData?.name}
-//   </Link>
-// ) : (
-//   <Link to="/log-in" style={{ color: 'white', textDecoration: 'none' }}>
-//     Войти
-//   </Link>
-// )}
-
 interface Menu {
   id: string;
   name?: string;

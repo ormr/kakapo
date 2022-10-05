@@ -22,7 +22,7 @@ const ProfilePage: FC = (): ReactElement => {
           <Typography variant="h4">Профиль пользователя</Typography>
         </Box>
         <Box>
-          <img src={`${BASE_URL}/local-files/${avatarId}`} alt="profile" />
+          <img src={`${BASE_URL}/local-files/${avatarId}`} alt="profile" style={{ maxWidth: '200px' }} />
         </Box>
         <Box>
           <Typography>
