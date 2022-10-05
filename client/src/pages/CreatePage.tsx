@@ -9,6 +9,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { requestCreatePost } from '../features/posts/actions';
 import { useAppDispatch } from '../store/hooks';
 import Textarea from '@uiw/react-md-editor/lib/components/TextArea/Textarea';
+import Editor from '../components/Editor';
 
 const CreateFormSchema = yup.object().shape({
   title: yup.string().required(),
@@ -36,36 +37,7 @@ const CreatePage: FC = (): ReactElement => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <Container>
         <Grid spacing={4} container mt={4} mb={4}>
-          <Grid item xs={12}>
-            <Typography variant="h4">Создать статью</Typography>
-          </Grid>
-          <Grid item>
-            <Typography variant="h6">Превью</Typography>
-            <Box>
-              <Input {...register('preview')} name="preview" type="file" />
-            </Box>
-          </Grid>
-          <Grid item xs={12}>
-            <Box>
-              <Typography variant="h6">Заголовок</Typography>
-              <TextField />
-            </Box>
-          </Grid>
-          <Grid item xs={12}>
-            <Box mb={4}>
-              <Typography variant="h6">Текст</Typography>
-              <MDEditor
-                value={value}
-                onChange={(newValue) => handleChange(newValue)}
-                previewOptions={{
-                  rehypePlugins: [[rehypeSanitize]],
-                }}
-              />
-            </Box>
-            <Box>
-              <Button variant="contained">Отправить</Button>
-            </Box>
-          </Grid>
+          <Editor />
         </Grid>
       </Container>
     </form>
