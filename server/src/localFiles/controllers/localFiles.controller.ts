@@ -15,7 +15,12 @@ import LocalFilesService from '../services/localFiles.service';
 @Controller('local-files')
 @UseInterceptors(ClassSerializerInterceptor)
 export default class LocalFilesController {
-  constructor(private readonly localFilesService: LocalFilesService) {}
+  constructor(private readonly localFilesService: LocalFilesService) { }
+
+  @Get()
+  async getAllLocalFiles() {
+    return this.localFilesService.getAllFiles();
+  }
 
   @Get(':id')
   async getDatabaseFileById(

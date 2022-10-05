@@ -12,7 +12,7 @@ const Post: FC<PostProps> = (props): ReactElement => {
   return (
     <Box className={styles.post}>
       <Box className={styles.header}>
-        <Author name={author || 'asdashdj'} />
+        <Author name={author?.name || 'Author'} image={`${BASE_URL}/local-files/${author?.avatarId}`} />
         <Box className={styles.date}>{createdAt}</Box>
       </Box>
       <Box>

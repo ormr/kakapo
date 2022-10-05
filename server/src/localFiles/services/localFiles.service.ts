@@ -9,7 +9,7 @@ class LocalFilesService {
   constructor(
     @InjectRepository(LocalFile)
     private localFilesRepository: Repository<LocalFile>
-  ) {}
+  ) { }
 
   async getFileById(fileId: string) {
     const file = await this.localFilesRepository.findOne({
@@ -23,6 +23,10 @@ class LocalFilesService {
     }
 
     return file;
+  }
+
+  async getAllFiles() {
+    return await this.localFilesRepository.find();
   }
 
   async saveLocalFileData(fileData: LocalFileDto) {

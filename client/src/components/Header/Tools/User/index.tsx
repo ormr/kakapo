@@ -109,7 +109,13 @@ const ToolbarUser: FC = (): ReactElement => {
         {menu.map((menuItem) => (
           <MenuItem>
             <Typography textAlign="center">
-              <Link to={menuItem.route || ''} style={{ textDecoration: 'none', color: 'black' }} onClick={() => handleClick(menuItem)}>{menuItem.name}</Link>
+              <Link
+                to={menuItem.route || ''}
+                style={{ textDecoration: 'none', color: 'black' }}
+                onClick={() => handleClick(menuItem)}
+              >
+                {menuItem.name}
+              </Link>
             </Typography>
           </MenuItem>
         ))}

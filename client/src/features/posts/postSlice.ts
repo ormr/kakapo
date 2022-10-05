@@ -2,13 +2,20 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import PostActionsType from './types';
 
+interface Author {
+  id: string;
+  name: string;
+  email: string;
+  avatarId: string;
+}
+
 export interface Post {
   id: string;
   title: string;
   content: string;
   createdAt?: string;
   imageId?: string;
-  author?: string;
+  author?: Author;
 }
 
 export interface PostState {
