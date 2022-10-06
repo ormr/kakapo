@@ -1,6 +1,5 @@
 import React, { FC, ReactElement, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { User } from '../../../../services/api/UserApi';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
@@ -8,9 +7,10 @@ import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import { useDispatch } from 'react-redux';
 import { BASE_URL } from '../../../../core/axios';
 import { requestLogOut } from '../../../../features/user/actions';
-import { useDispatch } from 'react-redux';
+import { User } from '../../../../services/api/UserApi';
 import { useAppSelector } from '../../../../store/hooks';
 
 // TODO:
@@ -32,32 +32,35 @@ const initialMenu = [
     id: 'login',
     name: 'Войти',
     route: '/log-in',
-  }
+  },
 ];
 
 const ToolbarUser: FC = (): ReactElement => {
   const userData = useAppSelector((state) => state.user.data);
   const dispatch = useDispatch();
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
+    null
+  );
   const [menu, setMenu] = React.useState<Menu[]>(initialMenu);
 
   useEffect(() => {
     if (userData) {
-      setMenu([{
-        id: 'profile',
-        name: userData.name,
-        route: '/profile',
-      },
-      {
-        id: 'logout',
-        name: 'Выйти',
-        action: () => dispatch(requestLogOut())
-      }]);
+      setMenu([
+        {
+          id: 'profile',
+          name: userData.name,
+          route: '/profile',
+        },
+        {
+          id: 'logout',
+          name: 'Выйти',
+          action: () => dispatch(requestLogOut()),
+        },
+      ]);
     } else {
       setMenu(initialMenu);
     }
   }, [userData]);
-
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -70,14 +73,20 @@ const ToolbarUser: FC = (): ReactElement => {
   const handleClick = (menuItem: Menu) => {
     handleCloseUserMenu();
     return menuItem.action && menuItem.action();
-  }
-
+  };
 
   return (
     <>
       <Tooltip title="Open settings">
         <IconButton onClick={handleOpenUserMenu}>
-          {userData?.avatarId ? <Avatar alt="Profile" src={`${BASE_URL}/local-files/${userData?.avatarId}`} /> : <AccountCircle />}
+          {userData?.avatarId ? (
+            <Avatar
+              alt="Profile"
+              src={`${BASE_URL}/local-files/${userData?.avatarId}`}
+            />
+          ) : (
+            <AccountCircle />
+          )}
         </IconButton>
       </Tooltip>
       <Menu
@@ -111,11 +120,11 @@ const ToolbarUser: FC = (): ReactElement => {
         ))}
       </Menu>
     </>
-  )
+  );
 };
 
 ToolbarUser.defaultProps = {
   userData: undefined,
-}
+};
 
 export default ToolbarUser;

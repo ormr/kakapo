@@ -6,7 +6,7 @@ import PostActionsType from './types';
 
 function* requestPosts() {
   try {
-    yield put(setPostsLoading())
+    yield put(setPostsLoading());
     const { data } = yield call(PostsApi(Axios).getPosts);
     yield put(receivePosts(data));
   } catch (error) {
@@ -17,4 +17,3 @@ function* requestPosts() {
 export default function* postsSaga() {
   yield takeLatest(PostActionsType.REQUEST_POSTS, requestPosts);
 }
-

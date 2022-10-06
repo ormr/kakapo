@@ -7,7 +7,7 @@ export enum UserActionsType {
   REQUEST_USER_DATA = 'user/requestUserData',
   REQUEST_LOG_OUT = 'user/requestLogOut',
   CLEAR_USER_DATA = 'user/clearUserData',
-};
+}
 
 export interface LogInData {
   name: string;

@@ -1,30 +1,32 @@
-import { $getListDepth, $isListItemNode, $isListNode } from "@lexical/list";
-import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
+import { useEffect } from 'react';
+import { $getListDepth, $isListItemNode, $isListNode } from '@lexical/list';
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import {
   $getSelection,
   $isElementNode,
   $isRangeSelection,
   INDENT_CONTENT_COMMAND,
-  COMMAND_PRIORITY_HIGH
-} from "lexical";
-import React, { useEffect } from "react";
+  COMMAND_PRIORITY_HIGH,
+} from 'lexical';
 
-function getElementNodesInSelection(selection: any) {
+const getElementNodesInSelection = (selection: any) => {
   const nodesInSelection = selection.getNodes();
 
   if (nodesInSelection.length === 0) {
     return new Set([
       selection.anchor.getNode().getParentOrThrow(),
-      selection.focus.getNode().getParentOrThrow()
+      selection.focus.getNode().getParentOrThrow(),
     ]);
   }
 
   return new Set(
-    nodesInSelection.map((n: any) => ($isElementNode(n) ? n : n.getParentOrThrow()))
+    nodesInSelection.map((n: any) =>
+      $isElementNode(n) ? n : n.getParentOrThrow()
+    )
   );
-}
+};
 
-function isIndentPermitted(maxDepth: any) {
+const isIndentPermitted = (maxDepth: any) => {
   const selection = $getSelection();
 
   if (!$isRangeSelection(selection)) {
@@ -35,7 +37,6 @@ function isIndentPermitted(maxDepth: any) {
 
   let totalDepth = 0;
 
-  // @ts-ignore
   for (const elementNode of elementNodesInSelection) {
     if ($isListNode(elementNode)) {
       totalDepth = Math.max($getListDepth(elementNode) + 1, totalDepth);
@@ -43,7 +44,7 @@ function isIndentPermitted(maxDepth: any) {
       const parent = elementNode.getParent();
       if (!$isListNode(parent)) {
         throw new Error(
-          "ListMaxIndentLevelPlugin: A ListItemNode must have a ListNode for a parent."
+          'ListMaxIndentLevelPlugin: A ListItemNode must have a ListNode for a parent.'
         );
       }
 
@@ -52,18 +53,22 @@ function isIndentPermitted(maxDepth: any) {
   }
 
   return totalDepth <= maxDepth;
-}
+};
 
-export default function ListMaxIndentLevelPlugin({ maxDepth }: any) {
+const ListMaxIndentLevelPlugin = ({ maxDepth }: any) => {
   const [editor] = useLexicalComposerContext();
 
-  useEffect(() => {
-    return editor.registerCommand(
-      INDENT_CONTENT_COMMAND,
-      () => !isIndentPermitted(maxDepth ?? 7),
-      COMMAND_PRIORITY_HIGH
-    );
-  }, [editor, maxDepth]);
+  useEffect(
+    () =>
+      editor.registerCommand(
+        INDENT_CONTENT_COMMAND,
+        () => !isIndentPermitted(maxDepth ?? 7),
+        COMMAND_PRIORITY_HIGH
+      ),
+    [editor, maxDepth]
+  );
 
   return null;
-}
+};
+
+export default ListMaxIndentLevelPlugin;

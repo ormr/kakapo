@@ -7,13 +7,7 @@ const ProfilePage: FC = (): ReactElement => {
   const userData = useAppSelector((state) => state.user.data);
   const posts = useAppSelector((state) => state.post.posts);
 
-  const {
-    name,
-    email,
-    description,
-    avatarId,
-  } = userData || {};
-
+  const { name, email, description, avatarId } = userData || {};
 
   return (
     <Grid container>
@@ -22,7 +16,11 @@ const ProfilePage: FC = (): ReactElement => {
           <Typography variant="h4">Профиль пользователя</Typography>
         </Box>
         <Box>
-          <img src={`${BASE_URL}/local-files/${avatarId}`} alt="profile" style={{ maxWidth: '200px' }} />
+          <img
+            src={`${BASE_URL}/local-files/${avatarId}`}
+            alt="profile"
+            style={{ maxWidth: '200px' }}
+          />
         </Box>
         <Box>
           <Typography>

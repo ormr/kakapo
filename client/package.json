@@ -6,7 +6,15 @@
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
     "@hookform/resolvers": "^2.9.8",
+    "@lexical/code": "^0.5.0",
+    "@lexical/link": "^0.5.0",
+    "@lexical/list": "^0.5.0",
+    "@lexical/markdown": "^0.5.0",
     "@lexical/react": "^0.5.0",
+    "@lexical/rich-text": "^0.5.0",
+    "@lexical/selection": "^0.5.0",
+    "@lexical/table": "^0.5.0",
+    "@lexical/utils": "^0.5.0",
     "@mui/icons-material": "^5.10.3",
     "@mui/material": "^5.10.4",
     "@redux-saga/core": "^1.2.1",
@@ -50,7 +58,7 @@
     "eject": "react-scripts eject",
     "lint": "eslint src/**/*.{js,jsx,ts,tsx,json}",
     "lint:fix": "eslint --fix 'src/**/*.{js,jsx,ts,tsx,json}'",
-    "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./prettier.yaml"
+    "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc.yaml"
   },
   "eslintConfig": {
     "extends": [

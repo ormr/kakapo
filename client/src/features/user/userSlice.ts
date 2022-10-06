@@ -30,7 +30,7 @@ export const userState = createSlice({
     },
     clearUserData: (state) => {
       state.data = undefined;
-    }
+    },
   },
 });
 

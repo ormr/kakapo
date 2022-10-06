@@ -44,6 +44,7 @@
           "state"
         ]
       }
-    ]
+    ],
+    "no-restricted-syntax": "off"
   }
 }
