@@ -14,7 +14,7 @@ const App = (): ReactElement => (
     <Routes>
       <Route element={<Layout />}>
         <Route path="/" element={<MainPage />} />
-        <Route path="/:id" element={<DetailPage />} />
+        <Route path="/posts/:id" element={<DetailPage />} />
         <Route path="/create" element={<CreatePage />} />
         <Route path="/sign-in" element={<SignInPage />} />
         <Route path="/log-in" element={<LogInPage />} />

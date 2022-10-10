@@ -39,7 +39,9 @@ const Header: FC<HeaderProps> = ({ colorMode }): ReactElement => {
               textDecoration: 'none',
             }}
           >
-            <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>Blog</Link>
+            <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>
+              Blog
+            </Link>
           </Typography>
           <Typography
             variant="h6"
@@ -54,8 +56,11 @@ const Header: FC<HeaderProps> = ({ colorMode }): ReactElement => {
               textDecoration: 'none',
             }}
           >
-            <Link to="/create" style={{ color: 'white', textDecoration: 'none' }}>
-              Create post
+            <Link
+              to="/create"
+              style={{ color: 'white', textDecoration: 'none' }}
+            >
+              Create a post
             </Link>
           </Typography>
           <Typography
@@ -78,7 +83,11 @@ const Header: FC<HeaderProps> = ({ colorMode }): ReactElement => {
           </Typography>
           <Box>
             <Button onClick={() => colorMode.toggleColorMode()}>
-              {colorMode.mode === 'light' ? <DarkModeIcon sx={{ fill: '#FFF' }} /> : <LightModeIcon sx={{ fill: '#FFF' }} />}
+              {colorMode.mode === 'light' ? (
+                <DarkModeIcon sx={{ fill: '#FFF' }} />
+              ) : (
+                <LightModeIcon sx={{ fill: '#FFF' }} />
+              )}
             </Button>
           </Box>
           <Box sx={{ flexGrow: 0 }}>

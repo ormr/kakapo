@@ -1,10 +1,17 @@
 import React, { FC, ReactElement, useState } from 'react';
 import * as yup from 'yup';
-import { Button, Container, Grid, Typography, Box, TextField } from '@mui/material';
+import {
+  Button,
+  Container,
+  Grid,
+  Typography,
+  Box,
+  TextField,
+} from '@mui/material';
 import MDEditor from '@uiw/react-md-editor';
 import Input from '@mui/material/Input';
 import rehypeSanitize from 'rehype-sanitize';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { requestCreatePost } from '../features/posts/actions';
 import { useAppDispatch } from '../store/hooks';
@@ -12,25 +19,24 @@ import Textarea from '@uiw/react-md-editor/lib/components/TextArea/Textarea';
 
 const CreateFormSchema = yup.object().shape({
   title: yup.string().required(),
-  preview: yup.mixed().required(),
+  coverImage: yup.mixed().required(),
   content: yup.string().required(),
 });
 
 const CreatePage: FC = (): ReactElement => {
-  const [value, setValue] = useState<string>('');
-  const handleChange = (e: string | undefined) => {
-    setValue(`${e}`);
-  };
-
-  const { register, handleSubmit, formState: { errors } } = useForm({
-    resolver: yupResolver(CreateFormSchema)
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(CreateFormSchema),
   });
   const dispatch = useAppDispatch();
 
   const onSubmit = (data: any) => {
-    dispatch(requestCreatePost(data))
+    dispatch(requestCreatePost({ ...data, coverImage: data.coverImage[0] }));
   };
-
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -39,31 +45,44 @@ const CreatePage: FC = (): ReactElement => {
           <Grid item xs={12}>
             <Typography variant="h4">Создать статью</Typography>
           </Grid>
-          <Grid item>
+          <Grid item xs={12}>
             <Typography variant="h6">Превью</Typography>
             <Box>
-              <Input {...register('preview')} name="preview" type="file" />
+              <Input {...register('coverImage')} type="file" />
             </Box>
           </Grid>
           <Grid item xs={12}>
             <Box>
-              <Typography variant="h6">Заголовок</Typography>
-              <TextField />
+              <TextField
+                {...register('title')}
+                placeholder="Заголовок"
+                style={{ width: '100%' }}
+              />
             </Box>
           </Grid>
           <Grid item xs={12}>
-            <Box mb={4}>
+            <Box mb={1}>
               <Typography variant="h6">Текст</Typography>
-              <MDEditor
-                value={value}
-                onChange={(newValue) => handleChange(newValue)}
-                previewOptions={{
-                  rehypePlugins: [[rehypeSanitize]],
-                }}
+            </Box>
+            <Box data-color-mode="light" mb={4}>
+              <Controller
+                control={control}
+                name="content"
+                render={({ field: { onChange, value } }) => (
+                  <MDEditor
+                    value={value}
+                    onChange={(newValue) => onChange(newValue)}
+                    previewOptions={{
+                      rehypePlugins: [[rehypeSanitize]],
+                    }}
+                  />
+                )}
               />
             </Box>
             <Box>
-              <Button variant="contained">Отправить</Button>
+              <Button type="submit" variant="contained">
+                Отправить
+              </Button>
             </Box>
           </Grid>
         </Grid>

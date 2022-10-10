@@ -25,7 +25,7 @@ export class PostsController {
   constructor(
     private readonly postsService: PostService,
     private readonly userService: UsersService
-  ) { }
+  ) {}
 
   @Get()
   async getAllPosts() {
@@ -39,7 +39,10 @@ export class PostsController {
 
   @Post()
   @UseGuards(JwtAuthenticationGuard)
-  async createPost(@Req() request: RequestWithUser, @Body() post: CreatePostDto) {
+  async createPost(
+    @Req() request: RequestWithUser,
+    @Body() post: CreatePostDto
+  ) {
     const user = await this.userService.getById(request.user.id);
 
     return this.postsService.createPost(post, user);

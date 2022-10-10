@@ -17,7 +17,7 @@ const Post: FC<PostProps> = (props): ReactElement => {
       </Box>
       <Box>
         <Box className={styles.image}>
-          <Link to={id}>
+          <Link to={`/posts/${id}`}>
             <img src={`${BASE_URL}/local-files/${imageId}`} alt="post" />
           </Link>
         </Box>

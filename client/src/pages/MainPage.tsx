@@ -17,7 +17,6 @@ const MainPage: FC = (): ReactElement => {
       <Grid container mt={7} direction="column" alignItems="center">
         {posts.map((item) => (
           <Grid item xs={12} mb={3}>
-            {/* eslint-disable-next-line react/jsx-props-no-spreading */}
             <Post {...item} />
           </Grid>
         ))}

@@ -4,6 +4,7 @@ enum PostActionsType {
   SET_LOADING = 'posts/setLoading',
   SET_FAILURE = 'posts/setFailure',
   REQUEST_CREATE_POST = 'posts/requestCreatePost',
-};
+  REQUEST_GET_POST_BY_ID = 'posts/requestGetPostById',
+}
 
 export default PostActionsType;
