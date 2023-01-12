@@ -1,4 +1,3 @@
-import { Grid, TextField, Typography, Button } from '@mui/material';
 import React, { FC, ReactElement, ReactNode } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
@@ -29,41 +28,7 @@ const LogInPage: FC = (): ReactElement => {
   };
 
   return (
-    <Grid container justifyContent="center" alignItems="center">
-      <Grid item xs={4} p={4}>
-        <Grid xs={12} mb={2}>
-          <Typography variant="h4">Авторизация</Typography>
-        </Grid>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Grid item xs={12} mb={2}>
-            <TextField
-              {...register('email')}
-              error={!!errors?.email}
-              helperText={errors?.email?.message as ReactNode}
-              label="E-mail"
-              variant="outlined"
-              fullWidth
-            />
-          </Grid>
-          <Grid item xs={12} mb={2}>
-            <TextField
-              {...register('password')}
-              error={!!errors?.password}
-              helperText={errors?.password?.message as ReactNode}
-              type="password"
-              label="Password"
-              variant="outlined"
-              fullWidth
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Button type="submit" variant="contained">
-              Подтвердить
-            </Button>
-          </Grid>
-        </form>
-      </Grid>
-    </Grid>
+    <div>Log in page </div>
   );
 };
 

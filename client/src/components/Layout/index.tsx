@@ -1,12 +1,13 @@
-import React, { useState, useEffect, useMemo, ReactElement, FC } from 'react';
-import { CssBaseline, ThemeProvider, Box } from '@mui/material';
-import { createTheme } from '@mui/material/styles';
-import { Outlet } from 'react-router-dom';
-import Header from '../Header';
+import React, { useState, useEffect, useMemo, ReactElement, FC, ReactNode } from 'react';
 import { useAppDispatch } from '../../store/hooks';
 import { requestUserData } from '../../features/user/actions';
+import Header from '../Header';
 
-const Layout: FC = (): ReactElement => {
+interface LayoutProps {
+  children: ReactNode;
+};
+
+const Layout: FC<LayoutProps> = ({ children }) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -25,32 +26,12 @@ const Layout: FC = (): ReactElement => {
     [mode]
   );
 
-  const theme = useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode,
-        },
-      }),
-    [mode]
-  );
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Header colorMode={colorMode} />
-      <main>
-        <Box
-          sx={{
-            bgcolor: 'background.paper',
-            pt: 3,
-            pb: 3,
-          }}
-        >
-          <Outlet />
-        </Box>
-      </main>
-    </ThemeProvider>
+    <div>
+      <Header />
+      <main>{children}</main>
+    </div>
   );
 };
 
