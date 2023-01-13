@@ -1,10 +1,8 @@
 import React, { ReactElement, Suspense } from 'react';
 import {
-  BrowserRouter,
   Routes,
   Route,
 } from 'react-router-dom';
-import { HistoryRouter as Router } from 'redux-first-history/rr6';
 import Layout from './components/Layout';
 
 const MainPage = React.lazy(() => import('./pages/MainPage'));

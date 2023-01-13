@@ -1,6 +1,7 @@
 import React, { FC, ReactNode } from 'react';
 import EarthIcon from '../../assets/EarthIcon';
 import PaperPlaneIcon from '../../assets/PaperPlane';
+import Avatar from '../Avatar';
 import Container from '../Container';
 
 const Header = () => (
@@ -11,19 +12,6 @@ const Header = () => (
       <Tools />
     </div>
   </Container>
-);
-
-interface AvatarProps {
-  imageSrc: string;
-}
-
-const Avatar: FC<AvatarProps> = ({ imageSrc }) => (
-  <div className="h-10 w-10">
-    <img
-      className="h-full w-full rounded-full object-cover object-center"
-      src={imageSrc}
-      alt="" />
-  </div>
 );
 
 const Tools = () => (

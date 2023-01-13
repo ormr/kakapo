@@ -1,22 +1,26 @@
 import React, { FC } from 'react';
+import { Post as IPost } from '../../services/api/PostsApi';
+import Container from '../Container';
 import Layout from '../Layout';
+import Post from '../Post';
 
-// interface Post {
-//   id: 123,
-//   content: '1231233',
-//   createdAt: new Date(),
-//   imageId: '123123';
-//   author: {
-//     id: 123,
-//   };
-// }
+interface FeedProps {
+  posts: IPost[];
+};
 
-
-const Feed: FC = () => (
-  <div>
-    <header>
-    </header>
-  </div>
+const Feed: FC<FeedProps> = ({ posts }) => (
+  <Container>
+    <div className="flex flex-col gap-6">
+      {posts.map((postItem: any) => (
+        <Post
+          id={'dcee576c-8436-4b1e-9482-2a6d15698ab3'}
+          content="Lorem ipsum dolor sit amet"
+          userName="User"
+          createdAt="12/12/2022"
+        />
+      ))}
+    </div>
+  </Container>
 );
 
 export default Feed;
