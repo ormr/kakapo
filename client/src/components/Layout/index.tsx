@@ -71,20 +71,32 @@ const CreatePost = () => {
     setPlainText(value.replace(/<\/?[^>]+(>|$)/g, ''));
   };
 
+  const [attachments, setAttachments] = useState<number[]>([]);
+
+  const handleAddAttachment = (attachment: AttachmentType) => {
+    setAttachments((prevAttachments) => [...prevAttachments, 1]);
+  };
+
   return (
     <div className="absolute top-0 bottom-0 right-0 left-0 bg-neutral-700 bg-opacity-50">
-      <div className="w-full h-72 fixed bottom-0 bg-white py-6 px-3">
+      <div className="w-full fixed bottom-0 bg-white py-6 px-3">
         <h3 className="mb-3 font-bold">Create post</h3>
         <Textarea value={rawText.current} onChange={handleChange} />
+        <div className="w-full">{
+          attachments.map((attachment) => (
+            <Attachment type={AttachmentType.IMAGE} fileName="hel" />
+          ))
+        }
+        </div>
         <div className="w-full flex items-center gap-3.5 mt-2 mb-4">
           <p className="text-xs text-gray-400">Add:</p>
-          <button>
+          <button onClick={() => handleAddAttachment(AttachmentType.IMAGE)}>
             <ImageIcon />
           </button>
-          <button>
+          <button onClick={() => handleAddAttachment(AttachmentType.VIDEO)}>
             <VideoIcon />
           </button>
-          <button>
+          <button onClick={() => handleAddAttachment(AttachmentType.FILE)}>
             <PaperclipIcon />
           </button>
           <Progressbar value={plainText.length} maxValue={maxValue} />
@@ -96,6 +108,25 @@ const CreatePost = () => {
     </div>
   );
 };
+
+enum AttachmentType {
+  IMAGE = 'image',
+  VIDEO = 'video',
+  FILE = 'file',
+}
+
+interface AttachmentProps {
+  type: AttachmentType;
+  fileName: string;
+}
+
+const Attachment: FC<AttachmentProps> = ({ type, fileName }) => {
+  return (
+    <div>
+      {type}
+    </div>
+  );
+}
 
 interface TextareaProps {
   value: string;
