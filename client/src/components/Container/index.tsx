@@ -5,7 +5,7 @@ interface ContainerProps {
 }
 
 const Container: FC<ContainerProps> = ({ children }) => (
-  <div className="px-3">
+  <div className="px-10">
     {children}
   </div>
 );
