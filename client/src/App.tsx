@@ -1,8 +1,5 @@
 import React, { ReactElement, Suspense } from 'react';
-import {
-  Routes,
-  Route,
-} from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 
 const MainPage = React.lazy(() => import('./pages/MainPage'));
@@ -19,8 +16,8 @@ const App = (): ReactElement => (
         <Route path="/" element={<MainPage />} />
         <Route path="/:id" element={<DetailPage />} />
         {/* <Route path="/create" element={<CreatePage />} /> */}
-        <Route path="/sign-in" element={<SignInPage />} />
-        <Route path="/log-in" element={<LogInPage />} />
+        <Route path="/register" element={<SignInPage />} />
+        <Route path="/login" element={<LogInPage />} />
         <Route path="/profile" element={<ProfilePage />} />
       </Routes>
     </Layout>

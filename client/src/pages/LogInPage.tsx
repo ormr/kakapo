@@ -4,6 +4,7 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useDispatch } from 'react-redux';
 import { requestLogIn } from '../features/user/actions';
+import LoginForm from '../components/forms/LoginForm';
 
 const LoginFormSchema = yup.object().shape({
   email: yup.string().required(),
@@ -15,21 +16,8 @@ const LoginFormSchema = yup.object().shape({
 
 const LogInPage: FC = (): ReactElement => {
   const dispatch = useDispatch();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(LoginFormSchema),
-  });
 
-  const onSubmit = (data: any) => {
-    dispatch(requestLogIn(data));
-  };
-
-  return (
-    <div>Log in page </div>
-  );
+  return <LoginForm />;
 };
 
 export default LogInPage;

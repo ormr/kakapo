@@ -4,7 +4,7 @@ import { requestUserData } from '../../features/user/actions';
 import Header from '../Header';
 import PlusIcon from '../../assets/PlusIcon';
 import 'react-circular-progressbar/dist/styles.css';
-import AddPostForm from '../AddPostForm';
+import AddPostForm from '../forms/AddPostForm';
 import clsx from 'clsx';
 
 interface LayoutProps {
