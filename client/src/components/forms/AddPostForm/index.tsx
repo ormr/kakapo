@@ -67,7 +67,9 @@ const AddPostForm: FC<AddPostFormProps> = ({ onFormClose }) => {
         <Button
           onClick={handleSubmit(onSubmit)}
           disabled={watch('text').length > maxValue || !watch('text').length}
-        />
+        >
+          Post
+        </Button>
       </div>
     </div>
   );

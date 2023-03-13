@@ -1,45 +1,57 @@
-import React, { ChangeEvent, FC } from 'react';
+import React, { FC } from 'react';
 import * as yup from 'yup';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import Input from '../../Input';
+import Button from '../../Button';
 
-const SignInSchema = yup.object().shape({
-  name: yup.string().required(),
+const LoginSchema = yup.object().shape({
   email: yup.string().required(),
   password: yup.string().required(),
-  password2: yup.string().required(),
 });
 
-interface InputProps {
-  value: string;
-  onChange: (value: ChangeEvent<HTMLInputElement>) => void;
+const defaultValues = {
+  email: '',
+  password: '',
 }
 
-const Input: FC<InputProps> = ({ value, onChange }) => {
-  return <input value={value} onChange={onChange} />;
-};
-
-const LoginForm = () => {
+const LoginForm: FC = () => {
   const {
     control,
     handleSubmit,
-    formState: { errors },
   } = useForm({
-    resolver: yupResolver(SignInSchema),
+    defaultValues,
+    resolver: yupResolver(LoginSchema),
   });
 
-  const onSubmit = () => {};
+  const onSubmit = () => {
+
+  };
 
   return (
-    <div>
-      <Controller
-        control={control}
-        name="name"
-        render={({ field: { value, onChange } }) => (
-          <Input value={value} onChange={onChange} />
-        )}
-      />
-    </div>
+    <form>
+      <label>
+        Email: 
+        <Controller
+          control={control}
+          name="email"
+          render={({ field: { value, onChange } }) => (
+            <Input value={value} onChange={onChange} />
+          )}
+        />
+      </label>
+      <label>
+        Password: 
+        <Controller
+          control={control}
+          name="password"
+          render={({ field: { value, onChange } }) => (
+            <Input value={value} onChange={onChange} />
+          )}
+        />
+      </label>
+      <Button>Log In</Button>
+    </form>
   );
 };
 

@@ -5,6 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useDispatch } from 'react-redux';
 import { requestLogIn } from '../features/user/actions';
 import LoginForm from '../components/forms/LoginForm';
+import Container from '../components/Container';
 
 const LoginFormSchema = yup.object().shape({
   email: yup.string().required(),
@@ -17,7 +18,11 @@ const LoginFormSchema = yup.object().shape({
 const LogInPage: FC = (): ReactElement => {
   const dispatch = useDispatch();
 
-  return <LoginForm />;
+  return (
+    <Container>
+      <LoginForm />
+    </Container>
+  );
 };
 
 export default LogInPage;
