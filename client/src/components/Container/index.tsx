@@ -5,9 +5,7 @@ interface ContainerProps {
 }
 
 const Container: FC<ContainerProps> = ({ children }) => (
-  <div className="px-10">
-    {children}
-  </div>
+  <div className="px-10">{children}</div>
 );
 
 export default Container;
