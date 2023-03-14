@@ -15,7 +15,6 @@ const App = (): ReactElement => (
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/:id" element={<DetailPage />} />
-        {/* <Route path="/create" element={<CreatePage />} /> */}
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LogInPage />} />
         <Route path="/profile" element={<ProfilePage />} />

@@ -8,10 +8,11 @@ import Label from '../../Label';
 import Checkbox from '../../Checkbox';
 
 const SignInSchema = yup.object().shape({
-  firstName: yup.string().required(),
-  lastName: yup.string().required(),
-  userName: yup.string().required(),
+  // firstname: yup.string().required(),
+  // lastname: yup.string().required(),
+  name: yup.string().required(),
   email: yup.string().required(),
+  // marketingAccept: yup.boolean().required(),
   password: yup.string().required(),
   password2: yup.string().required(),
 });
@@ -20,10 +21,31 @@ interface RegisterFormProps {
   onSubmit: (data: any) => void;
 }
 
+const defaultValues = {
+  // firstname: '',
+  // lastname: '',
+  name: '',
+  email: '',
+  // marketingAccept: false,
+  password: '',
+  password2: '',
+};
+
 const RegisterForm: FC<RegisterFormProps> = ({ onSubmit }) => {
-  const { register, handleSubmit } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues,
     resolver: yupResolver(SignInSchema),
   });
+
+  const prepareSubmit = (data: any) => {
+    const { password2, ...userData } = data;
+
+    onSubmit(userData);
+  };
 
   return (
     <section className="bg-white">
@@ -65,57 +87,78 @@ const RegisterForm: FC<RegisterFormProps> = ({ onSubmit }) => {
             </p>
 
             <form
-              onSubmit={handleSubmit(onSubmit)}
+              onSubmit={handleSubmit(prepareSubmit)}
               className="mt-8 grid grid-cols-6 gap-6"
             >
-              <div className="col-span-6 sm:col-span-3">
-                <Label>
-                  First Name
-                  <Input {...register('firstName')} />
-                </Label>
-              </div>
+              {/* <div className="col-span-6 sm:col-span-3"> */}
+              {/*   <Label> */}
+              {/*     First Name */}
+              {/*     <Input */}
+              {/*       {...register('firstname')} */}
+              {/*       errorMessage={errors.firstname?.message} */}
+              {/*     /> */}
+              {/*   </Label> */}
+              {/* </div> */}
 
-              <div className="col-span-6 sm:col-span-3">
-                <Label>
-                  Last Name
-                  <Input {...register('lastName')} />
-                </Label>
-              </div>
+              {/* <div className="col-span-6 sm:col-span-3"> */}
+              {/*   <Label> */}
+              {/*     Last Name */}
+              {/*     <Input */}
+              {/*       {...register('lastname')} */}
+              {/*       errorMessage={errors.lastname?.message} */}
+              {/*     /> */}
+              {/*   </Label> */}
+              {/* </div> */}
 
               <div className="col-span-6">
                 <Label>
                   Username
-                  <Input {...register('username')} />
+                  <Input
+                    {...register('name')}
+                    errorMessage={errors.name?.message}
+                  />
                 </Label>
               </div>
 
               <div className="col-span-6">
                 <Label>
                   Email
-                  <Input {...register('email')} type="email" />
+                  <Input
+                    {...register('email')}
+                    type="email"
+                    errorMessage={errors.email?.message}
+                  />
                 </Label>
               </div>
 
               <div className="col-span-6 sm:col-span-3">
                 <Label>
                   Password
-                  <Input {...register('password')} type="password" />
+                  <Input
+                    {...register('password')}
+                    type="password"
+                    errorMessage={errors.password?.message}
+                  />
                 </Label>
               </div>
 
               <div className="col-span-6 sm:col-span-3">
                 <Label>
                   Password Confirmation
-                  <Input {...register('password2')} type="password" />
+                  <Input
+                    {...register('password2')}
+                    type="password"
+                    errorMessage={errors.password2?.message}
+                  />
                 </Label>
               </div>
 
-              <div className="col-span-6">
-                <Checkbox
-                  {...register('marketingAccept')}
-                  label="I want to receive emails about events, product updates and company announcements."
-                />
-              </div>
+              {/* <div className="col-span-6"> */}
+              {/*   <Checkbox */}
+              {/*     {...register('marketingAccept')} */}
+              {/*     label="I want to receive emails about events, product updates and company announcements." */}
+              {/*   /> */}
+              {/* </div> */}
 
               <div className="col-span-6">
                 <p className="text-sm text-gray-500">
@@ -132,7 +175,10 @@ const RegisterForm: FC<RegisterFormProps> = ({ onSubmit }) => {
               </div>
 
               <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
-                <button className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500">
+                <button
+                  type="submit"
+                  className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
+                >
                   Create an account
                 </button>
 
