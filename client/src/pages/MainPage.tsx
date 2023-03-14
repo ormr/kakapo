@@ -1,8 +1,8 @@
 import React, { FC, ReactElement, useEffect } from 'react';
-import { Container, Grid } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import Post from '../components/Post';
 import { requestPosts } from '../features/posts/actions';
+import Post from '../components/Post';
+import Container from '../components/Container';
 
 const MainPage: FC = (): ReactElement => {
   const { posts } = useAppSelector((state) => state.post);
@@ -14,14 +14,18 @@ const MainPage: FC = (): ReactElement => {
 
   return (
     <Container>
-      <Grid container mt={7} direction="column" alignItems="center">
-        {posts.map((item) => (
-          <Grid item xs={12} mb={3}>
-            <Post {...item} />
-          </Grid>
-        ))}
-      </Grid>
+      <div className="flex flex-col gap-6">
+        {posts.length ? posts.map((postItem: any) => (
+          <Post
+            id={'dcee576c-8436-4b1e-9482-2a6d15698ab3'}
+            content="Lorem ipsum dolor sit amet"
+            userName="User"
+            createdAt="12/12/2022"
+          />
+        )) : 'Постов пока нет'}
+      </div>
     </Container>
+
   );
 };
 

@@ -1,12 +1,17 @@
-import React, { useState, useEffect, useMemo, ReactElement, FC } from 'react';
-import { CssBaseline, ThemeProvider, Box } from '@mui/material';
-import { createTheme } from '@mui/material/styles';
-import { Outlet } from 'react-router-dom';
-import Header from '../Header';
+import React, { useState, useEffect, useMemo, FC, ReactNode } from 'react';
 import { useAppDispatch } from '../../store/hooks';
 import { requestUserData } from '../../features/user/actions';
+import Header from '../Header';
+import PlusIcon from '../../assets/PlusIcon';
+import 'react-circular-progressbar/dist/styles.css';
+import AddPostForm from '../forms/AddPostForm';
+import clsx from 'clsx';
 
-const Layout: FC = (): ReactElement => {
+interface LayoutProps {
+  children: ReactNode;
+}
+
+const Layout: FC<LayoutProps> = ({ children }) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -25,32 +30,29 @@ const Layout: FC = (): ReactElement => {
     [mode]
   );
 
-  const theme = useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode,
-        },
-      }),
-    [mode]
-  );
-
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Header colorMode={colorMode} />
-      <main>
-        <Box
-          sx={{
-            bgcolor: 'background.paper',
-            pt: 3,
-            pb: 3,
-          }}
+    <div className={clsx(colorMode.mode)}>
+      <Header />
+      <main>{children}</main>
+      <TogglePostForm />
+    </div>
+  );
+};
+
+const TogglePostForm = () => {
+  const [showPost, setShowPost] = useState(false);
+  return (
+    <div>
+      <div className="fixed bottom-3 right-3">
+        <button
+          className="rounded-full bg-neutral-800 text-white p-3"
+          onClick={() => setShowPost(true)}
         >
-          <Outlet />
-        </Box>
-      </main>
-    </ThemeProvider>
+          <PlusIcon />
+        </button>
+      </div>
+      {showPost && <AddPostForm onFormClose={() => setShowPost(false)} />}
+    </div>
   );
 };
 
