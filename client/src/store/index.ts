@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { createBrowserHistory } from 'history';
 import { createReduxHistoryContext } from 'redux-first-history';
-// import logger from "redux-logger";
 import Env from '../config/Env';
 import { postReducer } from '../features/posts/postSlice';
 import { userReducer } from '../features/user/userSlice';
-import { postApi } from '../features/post/api';
 import { setupListeners } from '@reduxjs/toolkit/query';
+import { postApi } from '../features/post/api';
+import { authApi } from '../features/user/api';
 
 const { createReduxHistory, routerMiddleware, routerReducer } =
   createReduxHistoryContext({
@@ -18,15 +18,16 @@ const { createReduxHistory, routerMiddleware, routerReducer } =
 const makeStore = () => {
   const store = configureStore({
     reducer: {
-      // post: postReducer,
       user: userReducer,
       router: routerReducer,
+      [authApi.reducerPath]: authApi.reducer,
       [postApi.reducerPath]: postApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware()
         .concat(routerMiddleware)
-        .concat(postApi.middleware),
+        .concat(authApi.middleware)
+        .concat(postApi.middleware)
   });
 
   return store;

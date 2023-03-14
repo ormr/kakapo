@@ -1,21 +1,23 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { BASE_URL } from '../../core/axios';
+import { Post } from './postSlice';
 
 export const postApi = createApi({
   reducerPath: 'postApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3001/' }),
+  baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
   endpoints: (builder) => ({
-    getPosts: builder.query({
+    getPosts: builder.query<Post[], void>({
       query: () => `posts`,
     }),
-    getPost: builder.query({
+    getPost: builder.query<Post, string>({
       query: (id) => `posts/${id}`,
     }),
     createPost: builder.mutation({
-      query(data) {
+      query(body) {
         return {
           url: 'posts',
           method: 'POST',
-          data,
+          body,
         };
       },
     }),

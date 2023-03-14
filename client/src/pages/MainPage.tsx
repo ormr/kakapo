@@ -6,7 +6,7 @@ import Container from '../components/Container';
 import { useGetPostsQuery } from '../features/post/api';
 
 const MainPage: FC = (): ReactElement => {
-  const { data: posts, error, isLoading } = useGetPostsQuery('posts');
+  const { data: posts, error, isLoading } = useGetPostsQuery();
 
   return (
     <Container>

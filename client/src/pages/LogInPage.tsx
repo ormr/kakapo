@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { requestLogIn } from '../features/user/actions';
 import LoginForm from '../components/forms/LoginForm';
 import Container from '../components/Container';
+import { useLoginMutation } from '../features/user/api';
 
 const LoginFormSchema = yup.object().shape({
   email: yup.string().required(),
@@ -16,13 +17,9 @@ const LoginFormSchema = yup.object().shape({
 });
 
 const LogInPage: FC = (): ReactElement => {
-  const dispatch = useDispatch();
+  const [login, { isLoading }] = useLoginMutation();
 
-  const handleSubmit = (data: any) => {
-    dispatch(requestLogIn(data));
-  };
-
-  return <LoginForm onSubmit={handleSubmit} />;
+  return <LoginForm onSubmit={(data) => login(data)} />;
 };
 
 export default LogInPage;
