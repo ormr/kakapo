@@ -16,7 +16,7 @@ export const PostsApi = (instance: AxiosInstance) => ({
   getPosts: async (): Promise<AxiosResponse<Post>> => instance.get('/posts'),
   getPost: async (id: string): Promise<Post> =>
     await instance.get(`/posts/${id}`),
-  createPost: async (form: CreatePost): Promise<Post> => 
+  createPost: async (form: CreatePost): Promise<Post> =>
     await instance.post('/posts', form),
   deletePost: async (id: string): Promise<void> =>
     instance.delete(`/rooms/${id}`),

@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-import createSagaMiddleware from '@redux-saga/core';
 import { createBrowserHistory } from 'history';
 import { createReduxHistoryContext } from 'redux-first-history';
 // import logger from "redux-logger";
-import rootSaga from './rootSaga';
 import Env from '../config/Env';
 import { postReducer } from '../features/posts/postSlice';
 import { userReducer } from '../features/user/userSlice';
+import { postApi } from '../features/post/api';
+import { setupListeners } from '@reduxjs/toolkit/query';
 
 const { createReduxHistory, routerMiddleware, routerReducer } =
   createReduxHistoryContext({
@@ -16,27 +16,25 @@ const { createReduxHistory, routerMiddleware, routerReducer } =
   });
 
 const makeStore = () => {
-  const sagaMiddleware = createSagaMiddleware();
-
   const store = configureStore({
     reducer: {
-      post: postReducer,
+      // post: postReducer,
       user: userReducer,
       router: routerReducer,
+      [postApi.reducerPath]: postApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware({ thunk: false })
-        .concat(sagaMiddleware)
-        .concat(routerMiddleware),
-    // .concat(logger)
+      getDefaultMiddleware()
+        .concat(routerMiddleware)
+        .concat(postApi.middleware),
   });
-
-  sagaMiddleware.run(rootSaga);
 
   return store;
 };
 
 export const store = makeStore();
+
+setupListeners(store.dispatch);
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;

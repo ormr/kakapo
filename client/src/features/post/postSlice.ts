@@ -49,6 +49,14 @@ export const postState = createSlice({
       state.posts = [...state.posts, action.payload];
     },
   },
+  // extraReducers: {
+  //   [PostActionsType.RECEIVE_POSTS]: (state, action: PayloadAction) => {
+  //     return {
+  //       posts: action.payload,
+  //       loading: false,
+  //     }
+  //   }
+  // }
 });
 
 export const postReducer = postState.reducer;

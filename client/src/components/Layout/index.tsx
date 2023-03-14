@@ -6,17 +6,14 @@ import PlusIcon from '../../assets/PlusIcon';
 import 'react-circular-progressbar/dist/styles.css';
 import AddPostForm from '../forms/AddPostForm';
 import clsx from 'clsx';
+import { useAuthQuery } from '../../features/user/api';
 
 interface LayoutProps {
   children: ReactNode;
 }
 
 const Layout: FC<LayoutProps> = ({ children }) => {
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(requestUserData());
-  }, []);
+  useAuthQuery('auth');
 
   const [mode, setMode] = useState<'light' | 'dark'>('light');
 
