@@ -8,19 +8,22 @@ interface CheckboxProps {
   label: string;
 }
 
-const Checkbox: FC<CheckboxProps> = ({ id, name, value, onChange, label }) => (
-  <label className="flex gap-4">
-    <input
-      id={id}
-      name={name}
-      value={value}
-      onChange={onChange}
-      type="checkbox"
-      className="h-5 w-5 rounded-md border-gray-200 bg-white shadow-sm"
-    />
+const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
+  ({ id, name, value, onChange, label }, ref) => (
+    <label className="flex gap-4">
+      <input
+        ref={ref}
+        id={id}
+        name={name}
+        value={value}
+        onChange={onChange}
+        type="checkbox"
+        className="h-5 w-5 rounded-md border-gray-200 bg-white shadow-sm"
+      />
 
-    <span className="text-sm text-gray-700">{label}</span>
-  </label>
+      <span className="text-sm text-gray-700">{label}</span>
+    </label>
+  )
 );
 
 export default Checkbox;
