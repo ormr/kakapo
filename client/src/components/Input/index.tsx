@@ -1,17 +1,26 @@
-import React, { ChangeEvent, FC } from 'react';
+import React, { ChangeEvent, FC, HTMLInputTypeAttribute } from 'react';
 
 interface InputProps {
   id?: string;
-  type?: string;
+  type?: HTMLInputTypeAttribute;
   placeholder?: string;
-  value: string;
+  name?: string;
+  value?: string | ReadonlyArray<string> | number | undefined;
   onChange: (value: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Input: FC<InputProps> = ({ id, type = 'text', placeholder, value, onChange }) => (
+const Input: FC<InputProps> = ({
+  id,
+  type = 'text',
+  name,
+  placeholder,
+  value,
+  onChange,
+}) => (
   <input
     id={id}
     type={type}
+    name={name}
     value={value}
     placeholder={placeholder}
     onChange={onChange}

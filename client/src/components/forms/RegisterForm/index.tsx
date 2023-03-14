@@ -4,31 +4,34 @@ import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Input from '../../Input';
 import { Link } from 'react-router-dom';
+import Label from '../../Label';
+import Checkbox from '../../Checkbox';
 
 const SignInSchema = yup.object().shape({
-  name: yup.string().required(),
+  firstName: yup.string().required(),
+  lastName: yup.string().required(),
+  userName: yup.string().required(),
   email: yup.string().required(),
   password: yup.string().required(),
   password2: yup.string().required(),
 });
 
+interface RegisterFormProps {
+  onSubmit: (data: any) => void;
+}
 
-const RegisterForm = () => {
-  const { control } = useForm({
+const RegisterForm: FC<RegisterFormProps> = ({ onSubmit }) => {
+  const { register, handleSubmit } = useForm({
     resolver: yupResolver(SignInSchema),
   });
-
-  const onSubmit = () => { };
 
   return (
     <section className="bg-white">
       <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
-        <aside
-          className="relative block h-16 lg:order-last lg:col-span-5 lg:h-full xl:col-span-6"
-        >
+        <aside className="relative block h-16 lg:order-last lg:col-span-5 lg:h-full xl:col-span-6">
           <img
             alt="Pattern"
-            src="https://images.unsplash.com/photo-1605106702734-205df224ecce?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
+            src="/background-1.jfif"
             className="absolute inset-0 h-full w-full object-cover"
           />
         </aside>
@@ -53,132 +56,92 @@ const RegisterForm = () => {
               </svg>
             </a>
 
-            <h1
-              className="mt-6 text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl"
-            >
+            <h1 className="mt-6 text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl">
               Welcome to GorongGoring
             </h1>
 
             <p className="mt-4 leading-relaxed text-gray-500">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eligendi nam
-              dolorum aliquam, quibusdam aperiam voluptatum.
+              Create your account
             </p>
 
-            <form action="#" className="mt-8 grid grid-cols-6 gap-6">
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="mt-8 grid grid-cols-6 gap-6"
+            >
               <div className="col-span-6 sm:col-span-3">
-                <label
-                  htmlFor="FirstName"
-                  className="block text-sm font-medium text-gray-700"
-                >
+                <Label>
                   First Name
-                </label>
-
-                <input
-                  type="text"
-                  id="FirstName"
-                  name="first_name"
-                  className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
-                />
+                  <Input {...register('firstName')} />
+                </Label>
               </div>
 
               <div className="col-span-6 sm:col-span-3">
-                <label
-                  htmlFor="LastName"
-                  className="block text-sm font-medium text-gray-700"
-                >
+                <Label>
                   Last Name
-                </label>
-
-                <input
-                  type="text"
-                  id="LastName"
-                  name="last_name"
-                  className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
-                />
+                  <Input {...register('lastName')} />
+                </Label>
               </div>
 
               <div className="col-span-6">
-                <label htmlFor="Email" className="block text-sm font-medium text-gray-700">
+                <Label>
+                  Username
+                  <Input {...register('username')} />
+                </Label>
+              </div>
+
+              <div className="col-span-6">
+                <Label>
                   Email
-                </label>
-
-                <input
-                  type="email"
-                  id="Email"
-                  name="email"
-                  className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
-                />
+                  <Input {...register('email')} type="email" />
+                </Label>
               </div>
 
               <div className="col-span-6 sm:col-span-3">
-                <label
-                  htmlFor="Password"
-                  className="block text-sm font-medium text-gray-700"
-                >
+                <Label>
                   Password
-                </label>
-
-                <input
-                  type="password"
-                  id="Password"
-                  name="password"
-                  className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
-                />
+                  <Input {...register('password')} type="password" />
+                </Label>
               </div>
 
               <div className="col-span-6 sm:col-span-3">
-                <label
-                  htmlFor="PasswordConfirmation"
-                  className="block text-sm font-medium text-gray-700"
-                >
+                <Label>
                   Password Confirmation
-                </label>
-
-                <input
-                  type="password"
-                  id="PasswordConfirmation"
-                  name="password_confirmation"
-                  className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
-                />
+                  <Input {...register('password2')} type="password" />
+                </Label>
               </div>
 
               <div className="col-span-6">
-                <label htmlFor="MarketingAccept" className="flex gap-4">
-                  <input
-                    type="checkbox"
-                    id="MarketingAccept"
-                    name="marketing_accept"
-                    className="h-5 w-5 rounded-md border-gray-200 bg-white shadow-sm"
-                  />
-
-                  <span className="text-sm text-gray-700">
-                    I want to receive emails about events, product updates and
-                    company announcements.
-                  </span>
-                </label>
+                <Checkbox
+                  {...register('marketingAccept')}
+                  label="I want to receive emails about events, product updates and company announcements."
+                />
               </div>
 
               <div className="col-span-6">
                 <p className="text-sm text-gray-500">
                   By creating an account, you agree to our
-                  <a href="#" className="text-gray-700 underline">
+                  <Link to="/" className="text-gray-700 underline mx-1">
                     terms and conditions
-                  </a>
+                  </Link>
                   and
-                  <a href="#" className="text-gray-700 underline">privacy policy</a>.
+                  <Link to="/" className="text-gray-700 underline mx-1">
+                    privacy policy
+                  </Link>
+                  .
                 </p>
               </div>
 
               <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
-                <button
-                  className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
-                >
+                <button className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500">
                   Create an account
                 </button>
 
                 <p className="mt-4 text-sm text-gray-500 sm:mt-0">
                   Already have an account?
-                  <Link to="/login" className="text-gray-700 underline">Log in</Link>.
+                  <Link to="/login" className="text-gray-700 underline ml-1">
+                    Log in
+                  </Link>
+                  .
                 </p>
               </div>
             </form>

@@ -18,11 +18,7 @@ const LoginFormSchema = yup.object().shape({
 const LogInPage: FC = (): ReactElement => {
   const dispatch = useDispatch();
 
-  return (
-    <Container>
-      <LoginForm />
-    </Container>
-  );
+  return <LoginForm onSubmit={() => console.log('!')} />;
 };
 
 export default LogInPage;
