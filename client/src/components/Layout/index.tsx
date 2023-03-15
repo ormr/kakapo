@@ -7,20 +7,22 @@ import clsx from 'clsx';
 import { useAuthQuery } from '../../services/api/AuthApi';
 import { useAppDispatch } from '../../store/hooks';
 import { setCredentials } from '../../features/auth/authSlice';
+import { useNavigate } from 'react-router-dom';
 
 interface LayoutProps {
   children: ReactNode;
 }
 
 const Layout: FC<LayoutProps> = ({ children }) => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { isLoading, data } = useAuthQuery();
+  const { isLoading, data: user } = useAuthQuery();
 
   useEffect(() => {
     if (!isLoading) {
-      dispatch(setCredentials(data));
+      dispatch(setCredentials({ user }));
     }
-  }, [isLoading, data]);
+  }, [isLoading, user]);
 
   const [mode, setMode] = useState<'light' | 'dark'>('light');
 
@@ -38,24 +40,6 @@ const Layout: FC<LayoutProps> = ({ children }) => {
     <div className={clsx(colorMode.mode)}>
       <Header />
       <main>{children}</main>
-      <TogglePostForm />
-    </div>
-  );
-};
-
-const TogglePostForm = () => {
-  const [showPost, setShowPost] = useState(false);
-  return (
-    <div>
-      <div className="fixed bottom-3 right-3">
-        <button
-          className="rounded-full bg-neutral-800 text-white p-3"
-          onClick={() => setShowPost(true)}
-        >
-          <PlusIcon />
-        </button>
-      </div>
-      {showPost && <AddPostForm onFormClose={() => setShowPost(false)} />}
     </div>
   );
 };

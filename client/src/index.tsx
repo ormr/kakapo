@@ -6,6 +6,8 @@ import { HistoryRouter as Router } from 'redux-first-history/rr6';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { history, store } from './store';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -15,6 +17,7 @@ root.render(
     <Provider store={store}>
       <Router history={history}>
         <App />
+        <ToastContainer />
       </Router>
     </Provider>
   </React.StrictMode>

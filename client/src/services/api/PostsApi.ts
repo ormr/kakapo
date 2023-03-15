@@ -17,12 +17,12 @@ export interface Post {
   author?: Author;
 }
 
-export const postApi = createApi({
-  reducerPath: 'postApi',
+export const postsApi = createApi({
+  reducerPath: 'postsApi',
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
   endpoints: (builder) => ({
     getPosts: builder.query<Post[], void>({
-      query: () => `posts`,
+      query: () => 'posts',
     }),
     getPostById: builder.query<Post, string>({
       query: (id) => `posts/${id}`,
@@ -58,4 +58,4 @@ export const {
   useGetPostByIdQuery,
   useCreatePostMutation,
   useAddImageToPostMutation,
-} = postApi;
+} = postsApi;
