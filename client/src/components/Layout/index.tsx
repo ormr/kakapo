@@ -1,19 +1,26 @@
-import React, { useState, useEffect, useMemo, FC, ReactNode } from 'react';
-import { useAppDispatch } from '../../store/hooks';
-import { requestUserData } from '../../features/user/actions';
+import React, { useState, useMemo, FC, ReactNode, useEffect } from 'react';
 import Header from '../Header';
 import PlusIcon from '../../assets/PlusIcon';
 import 'react-circular-progressbar/dist/styles.css';
 import AddPostForm from '../forms/AddPostForm';
 import clsx from 'clsx';
-import { useAuthQuery } from '../../features/user/api';
+import { useAuthQuery } from '../../services/api/AuthApi';
+import { useAppDispatch } from '../../store/hooks';
+import { setCredentials } from '../../features/auth/authSlice';
 
 interface LayoutProps {
   children: ReactNode;
 }
 
 const Layout: FC<LayoutProps> = ({ children }) => {
-  useAuthQuery('auth');
+  const dispatch = useAppDispatch();
+  const { isLoading, data } = useAuthQuery();
+
+  useEffect(() => {
+    if (!isLoading) {
+      dispatch(setCredentials(data));
+    }
+  }, [isLoading, data]);
 
   const [mode, setMode] = useState<'light' | 'dark'>('light');
 

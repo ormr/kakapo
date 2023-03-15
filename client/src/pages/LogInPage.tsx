@@ -1,25 +1,22 @@
-import React, { FC, ReactElement, ReactNode } from 'react';
-import { useForm } from 'react-hook-form';
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useDispatch } from 'react-redux';
-import { requestLogIn } from '../features/user/actions';
+import React, { FC, ReactElement } from 'react';
+import { useNavigate } from 'react-router-dom';
 import LoginForm from '../components/forms/LoginForm';
-import Container from '../components/Container';
-import { useLoginMutation } from '../features/user/api';
-
-const LoginFormSchema = yup.object().shape({
-  email: yup.string().required(),
-  password: yup
-    .string()
-    .min(6, 'Минимальная длина пароля 6 символов')
-    .required(),
-});
+import { setCredentials } from '../features/auth/authSlice';
+import { useLoginMutation } from '../services/api/AuthApi';
+import { useAppDispatch } from '../store/hooks';
 
 const LogInPage: FC = (): ReactElement => {
-  const [login, { isLoading }] = useLoginMutation();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const [login] = useLoginMutation();
 
-  return <LoginForm onSubmit={(data) => login(data)} />;
+  const handleSubmit = async (formState: any) => {
+    const user = await login(formState).unwrap();
+    dispatch(setCredentials(user));
+    navigate('/profile');
+  };
+
+  return <LoginForm onSubmit={handleSubmit} />;
 };
 
 export default LogInPage;

@@ -1,8 +1,7 @@
-import React, { FC, ReactElement } from 'react';
-import { useAppSelector } from '../store/hooks';
-import { BASE_URL } from '../core/axios';
+import React, { FC } from 'react';
 
-const ProfilePage: FC = (): ReactElement => {
+const ProfilePage: FC = () => {
+  console.log('!');
   return <div>Profile</div>;
 };
 

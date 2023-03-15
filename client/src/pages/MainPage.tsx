@@ -1,9 +1,7 @@
 import React, { FC, ReactElement, useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { requestPosts } from '../features/posts/actions';
 import Post from '../components/Post';
 import Container from '../components/Container';
-import { useGetPostsQuery } from '../features/post/api';
+import { useGetPostsQuery } from '../services/api/PostsApi';
 
 const MainPage: FC = (): ReactElement => {
   const { data: posts, error, isLoading } = useGetPostsQuery();

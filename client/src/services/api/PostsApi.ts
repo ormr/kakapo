@@ -1,29 +1,61 @@
-import { AxiosInstance, AxiosResponse } from 'axios';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { BASE_URL } from '../../core/axios';
+
+interface Author {
+  id: string;
+  name: string;
+  email: string;
+  avatarId: string;
+}
 
 export interface Post {
   id: string;
   title: string;
   content: string;
-  createdAt: string;
+  createdAt?: string;
+  imageId?: string;
+  author?: Author;
 }
 
-interface CreatePost {
-  title: string;
-  content: string;
-}
+export const postApi = createApi({
+  reducerPath: 'postApi',
+  baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+  endpoints: (builder) => ({
+    getPosts: builder.query<Post[], void>({
+      query: () => `posts`,
+    }),
+    getPostById: builder.query<Post, string>({
+      query: (id) => `posts/${id}`,
+    }),
+    createPost: builder.mutation<void, any>({
+      query: (body) => ({
+        url: 'posts',
+        method: 'POST',
+        body,
+      }),
+    }),
+    addImageToPost: builder.mutation<any, any>({
+      query: (data) => {
+        const { id, coverImage } = data;
 
-export const PostsApi = (instance: AxiosInstance) => ({
-  getPosts: async (): Promise<AxiosResponse<Post>> => instance.get('/posts'),
-  getPost: async (id: string): Promise<Post> =>
-    await instance.get(`/posts/${id}`),
-  createPost: async (form: CreatePost): Promise<Post> =>
-    await instance.post('/posts', form),
-  deletePost: async (id: string): Promise<void> =>
-    instance.delete(`/rooms/${id}`),
-  addedImage: async ({ id, coverImage }: any): Promise<any> =>
-    instance.post(`/posts/${id}`, coverImage, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
+        const formData = new FormData();
+        formData.append('file', coverImage);
+
+        return {
+          url: `posts/${id}`,
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+          body: coverImage,
+        };
       },
     }),
+  }),
 });
+
+export const {
+  useGetPostsQuery,
+  useGetPostByIdQuery,
+  useCreatePostMutation,
+  useAddImageToPostMutation,
+} = postApi;

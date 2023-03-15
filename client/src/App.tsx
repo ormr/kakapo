@@ -3,8 +3,6 @@ import { Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 
 const MainPage = React.lazy(() => import('./pages/MainPage'));
-// const DetailPage = React.lazy(() => import('./pages/DetailPage'));
-// const CreatePage = React.lazy(() => import('./pages/CreatePage'));
 const RegisterPage = React.lazy(() => import('./pages/RegisterPage'));
 const LogInPage = React.lazy(() => import('./pages/LogInPage'));
 const ProfilePage = React.lazy(() => import('./pages/ProfilePage'));

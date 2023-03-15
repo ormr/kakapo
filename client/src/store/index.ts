@@ -1,12 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { createBrowserHistory } from 'history';
 import { createReduxHistoryContext } from 'redux-first-history';
-import Env from '../config/Env';
-import { postReducer } from '../features/posts/postSlice';
-import { userReducer } from '../features/user/userSlice';
 import { setupListeners } from '@reduxjs/toolkit/query';
-import { postApi } from '../features/post/api';
-import { authApi } from '../features/user/api';
+import Env from '../config/Env';
+import { authReducer } from '../features/auth/authSlice';
+import { postApi } from '../services/api/PostsApi';
+import { authApi } from '../services/api/AuthApi';
 
 const { createReduxHistory, routerMiddleware, routerReducer } =
   createReduxHistoryContext({
@@ -18,7 +17,7 @@ const { createReduxHistory, routerMiddleware, routerReducer } =
 const makeStore = () => {
   const store = configureStore({
     reducer: {
-      user: userReducer,
+      auth: authReducer,
       router: routerReducer,
       [authApi.reducerPath]: authApi.reducer,
       [postApi.reducerPath]: postApi.reducer,
@@ -27,7 +26,7 @@ const makeStore = () => {
       getDefaultMiddleware()
         .concat(routerMiddleware)
         .concat(authApi.middleware)
-        .concat(postApi.middleware)
+        .concat(postApi.middleware),
   });
 
   return store;
