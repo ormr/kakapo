@@ -13,8 +13,8 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setCredentials: (state, { payload: { user } }) => {
-      state.user = user;
+    setCredentials: (state, { payload }) => {
+      state.user = payload;
     },
     clearUserData: (state) => {
       state.user = undefined;
