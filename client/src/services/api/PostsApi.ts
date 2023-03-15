@@ -10,16 +10,19 @@ interface Author {
 
 export interface Post {
   id: string;
-  title: string;
   content: string;
-  createdAt?: string;
+  createdAt: string;
   imageId?: string;
-  author?: Author;
+  author: Author;
 }
 
 export const postsApi = createApi({
   reducerPath: 'postsApi',
-  baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: BASE_URL,
+    prepareHeaders: (headers) => headers,
+    credentials: 'include',
+  }),
   endpoints: (builder) => ({
     getPosts: builder.query<Post[], void>({
       query: () => 'posts',
@@ -27,7 +30,7 @@ export const postsApi = createApi({
     getPostById: builder.query<Post, string>({
       query: (id) => `posts/${id}`,
     }),
-    createPost: builder.mutation<void, any>({
+    createPost: builder.mutation<any, any>({
       query: (body) => ({
         url: 'posts',
         method: 'POST',

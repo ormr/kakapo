@@ -10,6 +10,7 @@ const MainPage = React.lazy(() => import('./pages/MainPage'));
 const RegisterPage = React.lazy(() => import('./pages/RegisterPage'));
 const LogInPage = React.lazy(() => import('./pages/LogInPage'));
 const ProfilePage = React.lazy(() => import('./pages/ProfilePage'));
+const NotFoundPage = React.lazy(() => import('./pages/NotFoundPage'));
 
 const App = (): ReactElement => {
   const dispatch = useAppDispatch();
@@ -37,6 +38,7 @@ const App = (): ReactElement => {
               </ProtectedRoute>
             }
           />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Layout>
     </Suspense>

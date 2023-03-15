@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 
 interface PostProps {
   id: string;
-  userName: string;
+  userName?: string;
   createdAt: string;
   content: string;
 }

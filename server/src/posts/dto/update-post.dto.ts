@@ -1,9 +1,5 @@
 export class UpdatePostDto {
   id: string;
-
-  title: string;
-
-  text: string;
-
+  content: string;
   updatedBy: string;
 }

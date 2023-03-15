@@ -9,13 +9,14 @@ import Progressbar from './ProgressBar';
 import FileLoader, { AttachmentType } from '../../FileLoader';
 import FileLoaderButton from '../../FileLoader/FileLoaderButton';
 import { useForm, Controller } from 'react-hook-form';
+import { useCreatePostMutation } from '../../../services/api/PostsApi';
 
 interface AddPostFormProps {
   onFormClose: VoidFunction;
 }
 
 const defaultValues = {
-  text: '',
+  content: '',
 };
 
 /*
@@ -30,7 +31,11 @@ const AddPostForm: FC<AddPostFormProps> = ({ onFormClose }) => {
     defaultValues,
   });
 
-  const onSubmit = (data: any) => {
+  const [createPost, { isLoading }] = useCreatePostMutation();
+
+  const onSubmit = async (formState: any) => {
+    const post = await createPost(formState).unwrap();
+    console.log(post);
     onFormClose();
   };
 
@@ -45,7 +50,7 @@ const AddPostForm: FC<AddPostFormProps> = ({ onFormClose }) => {
         <h3 className="mb-3 font-bold">Create post</h3>
         <Controller
           control={control}
-          name="text"
+          name="content"
           render={({ field: { value, onChange } }) => (
             <TextArea value={value} onChange={onChange} />
           )}
@@ -62,11 +67,11 @@ const AddPostForm: FC<AddPostFormProps> = ({ onFormClose }) => {
               <PaperclipIcon />
             </FileLoaderButton>
           </FileLoader>
-          <Progressbar value={watch('text').length} maxValue={maxValue} />
+          <Progressbar value={watch('content').length} maxValue={maxValue} />
         </div>
         <Button
           onClick={handleSubmit(onSubmit)}
-          disabled={watch('text').length > maxValue || !watch('text').length}
+          disabled={watch('content').length > maxValue || !watch('content').length}
         >
           Post
         </Button>

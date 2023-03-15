@@ -17,9 +17,6 @@ class Post {
   id: string;
 
   @Column()
-  title: string;
-
-  @Column()
   content: string;
 
   @JoinColumn({ name: 'imageId' })

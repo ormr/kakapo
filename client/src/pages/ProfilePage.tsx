@@ -6,7 +6,9 @@ const ProfilePage: FC = () => {
   const { user } = useAppSelector((app) => app.auth);
   return (
     <Container>
-      <section className="flex">{JSON.stringify(user, null, 2)}</section>
+      <section className="px-40">
+        {JSON.stringify(user, null, 2)}
+      </section>
     </Container>
   );
 };

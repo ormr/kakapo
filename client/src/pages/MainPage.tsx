@@ -13,12 +13,12 @@ const MainPage: FC = (): ReactElement => {
       <Container>
         <div className="flex flex-col gap-6">
           {posts?.length
-            ? posts.map((postItem: any) => (
+            ? posts.map((post) => (
                 <Post
-                  id={'dcee576c-8436-4b1e-9482-2a6d15698ab3'}
-                  content="Lorem ipsum dolor sit amet"
-                  userName="User"
-                  createdAt="12/12/2022"
+                  id={post.id}
+                  content={post.content}
+                  userName={post.author.name}
+                  createdAt={post.createdAt}
                 />
               ))
             : 'Постов пока нет'}
