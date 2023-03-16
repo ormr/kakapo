@@ -37,6 +37,11 @@ export class PostsController {
     return this.postsService.getOnePost(id);
   }
 
+  @Get('/user/:id')
+  async getPostsByUserId(@Param('id') userId: string) {
+    return this.postsService.getPostsByUserId(userId);
+  }
+
   @Post()
   @UseGuards(JwtAuthenticationGuard)
   async createPost(

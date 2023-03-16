@@ -14,7 +14,7 @@ export class PostService {
     @InjectRepository(Post)
     private readonly postRepository: Repository<Post>,
     private localFilesService: LocalFilesService
-  ) { }
+  ) {}
 
   async createPost(post: CreatePostDto, user: User): Promise<Post> {
     return this.postRepository.save({ ...post, author: user });
@@ -26,6 +26,16 @@ export class PostService {
 
   async getAllPosts(): Promise<Post[]> {
     return this.postRepository.find({ relations: ['author'] });
+  }
+
+  async getPostsByUserId(id: string): Promise<Post[]> {
+    return this.postRepository.find({
+      where: {
+        author: {
+          id,
+        },
+      },
+    });
   }
 
   async removePost(id: string): Promise<string> {
