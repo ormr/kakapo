@@ -18,6 +18,7 @@ const MainPage: FC = (): ReactElement => {
                   id={post.id}
                   content={post.content}
                   userName={post.author.name}
+                  avatarId={post.author?.avatarId}
                   createdAt={post.createdAt}
                 />
               ))

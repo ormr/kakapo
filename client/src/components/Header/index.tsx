@@ -12,7 +12,7 @@ return (
   <Container>
     <div className="flex justify-between items-center py-5">
       <Link to="/profile">
-        <Avatar imageSrc={user?.avatarId ? `/local-files/${user?.avatarId}` : "/default-picture.jpg"} />
+        <Avatar id={user?.avatarId} />
       </Link>
       <Link to="/">
         <Logo />

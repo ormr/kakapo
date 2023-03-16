@@ -1,15 +1,16 @@
 import React, { FC } from 'react';
 
 interface AvatarProps {
-  imageSrc: string;
+  id?: string;
 }
 
-const Avatar: FC<AvatarProps> = ({ imageSrc }) => (
+const Avatar: FC<AvatarProps> = ({ id }) => (
   <div className="h-10 w-10">
     <img
       className="h-full w-full rounded-full object-cover object-center"
-      src={imageSrc}
-      alt="" />
+      src={id ? `/local-files/${id}` : '/default-picture.jpg'}
+      alt="avatar"
+    />
   </div>
 );
 
