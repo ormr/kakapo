@@ -23,9 +23,17 @@ export const postsApi = createApi({
     prepareHeaders: (headers) => headers,
     credentials: 'include',
   }),
+  tagTypes: ['Posts'],
   endpoints: (builder) => ({
     getPosts: builder.query<Post[], void>({
       query: () => 'posts',
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ id }) => ({ type: 'Posts', id } as const)),
+              { type: 'Posts', id: 'LIST' },
+            ]
+          : [{ type: 'Posts', id: 'LIST' }],
     }),
     getPostById: builder.query<Post, string>({
       query: (id) => `posts/${id}`,
@@ -36,6 +44,7 @@ export const postsApi = createApi({
         method: 'POST',
         body,
       }),
+      invalidatesTags: [{ type: 'Posts', id: 'LIST' }],
     }),
     addImageToPost: builder.mutation<any, any>({
       query: (data) => {

@@ -12,7 +12,6 @@ const Header = () => (
         <Avatar imageSrc="/default-picture.jpg" />
       </Link>
       <Link to="/">
-        {' '}
         <Logo />
       </Link>
       <Tools />
