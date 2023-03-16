@@ -27,7 +27,6 @@ const App = (): ReactElement => {
       <Layout>
         <Routes>
           <Route path="/" element={<MainPage />} />
-          {/* <Route path="/:id" element={<DetailPage />} /> */}
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LogInPage />} />
           <Route
