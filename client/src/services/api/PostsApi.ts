@@ -55,6 +55,7 @@ export const postsApi = createApi({
 
         return {
           url: `posts/${id}`,
+          method: 'POST',
           headers: {
             'Content-Type': 'multipart/form-data',
           },

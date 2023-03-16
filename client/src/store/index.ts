@@ -7,6 +7,7 @@ import { authReducer } from '../features/auth/authSlice';
 import { postsApi } from '../services/api/PostsApi';
 import { authApi } from '../services/api/AuthApi';
 import { errorLoggerMiddleware } from './middleware/errorLogger';
+import { usersApi } from '../services/api/UsersApi';
 
 const { createReduxHistory, routerMiddleware, routerReducer } =
   createReduxHistoryContext({
@@ -22,13 +23,15 @@ const makeStore = () => {
       router: routerReducer,
       [authApi.reducerPath]: authApi.reducer,
       [postsApi.reducerPath]: postsApi.reducer,
+      [usersApi.reducerPath]: usersApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware()
         .concat(routerMiddleware)
         .concat(errorLoggerMiddleware)
         .concat(authApi.middleware)
-        .concat(postsApi.middleware),
+        .concat(postsApi.middleware)
+        .concat(usersApi.middleware),
   });
 
   return store;
