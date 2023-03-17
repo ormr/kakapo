@@ -4,31 +4,36 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import User from '../../users/entities/user.entity';
+import Comment from '../../comments/entities/comment.entity';
 import LocalFile from '../../localFiles/entities/localFile.entity';
 
 @Entity('posts')
 class Post {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  public id: string;
 
   @Column()
-  content: string;
+  public content: string;
 
   @JoinColumn({ name: 'imageId' })
   @OneToOne(() => LocalFile, {
     nullable: true,
   })
-  public image?: LocalFile
+  public image?: LocalFile;
+
+  @OneToMany(() => Comment, (comment: Comment) => comment.post)
+  public comments: Comment[];
 
   @Column({ nullable: true })
   public imageId?: string;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 
   @UpdateDateColumn()

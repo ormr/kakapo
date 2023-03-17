@@ -1,13 +1,16 @@
 import React, { FC } from 'react';
 import Container from '../components/Container';
+import Post from '../components/Post';
 import UploadProfilePicture from '../components/UploadProfilePicture';
 import { BASE_URL } from '../core/axios';
+import { useGetPostsByUserIdQuery } from '../services/api/PostsApi';
 import { useAddProfilePictureMutation } from '../services/api/UsersApi';
 import { useAppSelector } from '../store/hooks';
 
 const ProfilePage: FC = () => {
   const { user } = useAppSelector((app) => app.auth);
   const [addProfilePicture] = useAddProfilePictureMutation();
+  const { data: posts } = useGetPostsByUserIdQuery(user?.id);
 
   return (
     <Container>
@@ -27,9 +30,13 @@ const ProfilePage: FC = () => {
           </div>
         </div>
       </section>
-      <section>
-        <h1>Posts:</h1>
-        <div></div>
+      <section className="mx-auto">
+        <h1 className="text-center my-2 text-black">Posts:</h1>
+        <div className="flex flex-col gap-6">
+          {posts?.length
+            ? posts.map((post) => <Post key={post.id} {...post} />)
+            : 'Постов пока нет'}
+        </div>
       </section>
     </Container>
   );

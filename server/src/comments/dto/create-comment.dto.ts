@@ -1,7 +1,13 @@
+import { Type } from 'class-transformer';
+import { IsNotEmpty, IsString, ValidateNested } from 'class-validator';
+import ObjectWithIdDto from 'src/utils/types/objectWithId.dto';
+
 export class CreateCommentDto {
-  postId: string;
+  @IsString()
+  @IsNotEmpty()
+  content: string;
 
-  text: string;
-
-  userId?: string;
+  @ValidateNested()
+  @Type(() => ObjectWithIdDto)
+  post: ObjectWithIdDto;
 }

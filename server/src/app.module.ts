@@ -22,6 +22,7 @@ import { LocalFilesModule } from './localFiles/localFile.module';
         port: config.get<number>('TYPEORM_PORT'),
         entities: [],
         autoLoadEntities: true,
+        synchronize: true,
         // entities: [__dirname + 'dist/**/*.entity{.ts,.js}'],
         // synchronize: false,
         // // autoLoadEntities: true,

@@ -9,8 +9,12 @@ import { PostsController } from './controllers/posts.controller';
 import { LocalFilesModule } from 'src/localFiles/localFile.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Post, User]), UsersModule, LocalFilesModule],
+  imports: [
+    TypeOrmModule.forFeature([Post, User]),
+    UsersModule,
+    LocalFilesModule,
+  ],
   providers: [PostService],
   controllers: [PostsController],
 })
-export class PostsModule { }
+export class PostsModule {}

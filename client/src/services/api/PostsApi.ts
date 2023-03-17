@@ -35,6 +35,16 @@ export const postsApi = createApi({
             ]
           : [{ type: 'Posts', id: 'LIST' }],
     }),
+    getPostsByUserId: builder.query<Post[], string | undefined>({
+      query: (id) => `posts/user/${id}`,
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ id }) => ({ type: 'Posts', id } as const)),
+              { type: 'Posts', id: 'LIST' },
+            ]
+          : [{ type: 'Posts', id: 'LIST' }],
+    }),
     getPostById: builder.query<Post, string>({
       query: (id) => `posts/${id}`,
     }),
@@ -69,6 +79,7 @@ export const postsApi = createApi({
 export const {
   useGetPostsQuery,
   useGetPostByIdQuery,
+  useGetPostsByUserIdQuery,
   useCreatePostMutation,
   useAddImageToPostMutation,
 } = postsApi;

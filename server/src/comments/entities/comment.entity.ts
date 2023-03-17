@@ -1,14 +1,30 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import Post from '../../posts/entities/post.entity';
 import User from '../../users/entities/user.entity';
 
 @Entity('comments')
-export class Comment {
+class Comment {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  public id: string;
 
   @Column()
-  text: string;
+  public content: string;
 
-  @Column(() => User)
-  author: User;
+  @CreateDateColumn({ type: 'timestamp' })
+  createdAt: Date;
+
+  @ManyToOne(() => Post, (post: Post) => post.comments)
+  public post: Post;
+
+  @ManyToOne(() => User, (author: User) => author.posts)
+  public author: User;
 }
+
+export default Comment;

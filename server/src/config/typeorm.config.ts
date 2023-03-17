@@ -2,10 +2,9 @@ import { DataSource } from 'typeorm';
 import { config } from 'dotenv';
 import User from '../users/entities/user.entity';
 import Post from '../posts/entities/post.entity';
+import Comment from '../comments/entities/comment.entity';
 import LocalFile from '../localFiles/entities/localFile.entity';
-import {
-  RemovedPostTitle1678907507513
-} from '../migrations/1678907507513-RemovedPostTitle';
+import { RemovedPostTitle1678907507513 } from '../migrations/1678907507513-RemovedPostTitle';
 
 config();
 
@@ -16,8 +15,6 @@ export default new DataSource({
   username: 'admin',
   password: '123456',
   database: 'blog-db',
-  entities: [Post, User, LocalFile],
-  migrations: [
-    RemovedPostTitle1678907507513
-  ],
+  entities: [Post, User, LocalFile, Comment],
+  migrations: [RemovedPostTitle1678907507513],
 });

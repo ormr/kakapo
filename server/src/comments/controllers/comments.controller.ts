@@ -1,14 +1,20 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
-import { UsersService } from 'src/users/services/users.service';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
+import { JwtAuthenticationGuard } from 'src/authentication/guards/jwt-authentication.guard';
+import { RequestWithUser } from 'src/authentication/interfaces/requestWithUser.interface';
 import { CreateCommentDto } from '../dto/create-comment.dto';
-import { CommentsService } from '../services/comments.service';
+import CommentsService from '../services/comments.service';
 
 @Controller('comments')
-export class CommentsController {
-  constructor(
-    private readonly commentsService: CommentsService,
-    private readonly usersService: UsersService
-  ) {}
+class CommentsController {
+  constructor(private readonly commentsService: CommentsService) {}
 
   @Get()
   async getAllComments() {
@@ -16,10 +22,13 @@ export class CommentsController {
   }
 
   @Post()
-  async createComment(@Body() createCommentDto: CreateCommentDto) {
-    const { userId, ...comment } = createCommentDto;
-    const author = await this.usersService.getById(userId);
-
-    return this.commentsService.createComment(comment, author);
+  @UseGuards(JwtAuthenticationGuard)
+  async createComment(
+    @Body() createCommentDto: CreateCommentDto,
+    @Req() req: RequestWithUser
+  ) {
+    return this.commentsService.createComment(createCommentDto, req.user);
   }
 }
+
+export default CommentsController;

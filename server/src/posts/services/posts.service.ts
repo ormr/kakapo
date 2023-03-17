@@ -21,11 +21,23 @@ export class PostService {
   }
 
   async getOnePost(id: string): Promise<Post> {
-    return this.postRepository.findOne({ where: { id } });
+    return this.postRepository.findOne({
+      where: { id },
+      relations: {
+        comments: {
+          author: true,
+        },
+        author: true,
+      },
+    });
   }
 
   async getAllPosts(): Promise<Post[]> {
-    return this.postRepository.find({ relations: ['author'] });
+    return this.postRepository
+      .createQueryBuilder('post')
+      .leftJoinAndSelect('post.author', 'author')
+      .loadRelationCountAndMap('post.commentsCount', 'post.comments')
+      .getMany();
   }
 
   async getPostsByUserId(id: string): Promise<Post[]> {
@@ -35,6 +47,7 @@ export class PostService {
           id,
         },
       },
+      relations: ['author'],
     });
   }
 
