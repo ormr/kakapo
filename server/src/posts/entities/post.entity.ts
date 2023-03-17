@@ -11,6 +11,7 @@ import {
 } from 'typeorm';
 import User from '../../users/entities/user.entity';
 import Comment from '../../comments/entities/comment.entity';
+import Like from '../../likes/entities/like.entity';
 import LocalFile from '../../localFiles/entities/localFile.entity';
 
 @Entity('posts')
@@ -29,6 +30,9 @@ class Post {
 
   @OneToMany(() => Comment, (comment: Comment) => comment.post)
   public comments: Comment[];
+
+  @OneToMany(() => Like, (like: Like) => like.post)
+  public likes: Like[];
 
   @Column({ nullable: true })
   public imageId?: string;

@@ -6,6 +6,7 @@ import { PostsModule } from './posts/posts.module';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { CommentsModule } from './comments/comments.module';
 import { LocalFilesModule } from './localFiles/localFile.module';
+import { LikesModule } from './likes/likes.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { LocalFilesModule } from './localFiles/localFile.module';
     UsersModule,
     PostsModule,
     CommentsModule,
+    LikesModule,
     AuthenticationModule,
     LocalFilesModule,
   ],

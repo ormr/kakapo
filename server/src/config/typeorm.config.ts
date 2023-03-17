@@ -4,6 +4,7 @@ import User from '../users/entities/user.entity';
 import Post from '../posts/entities/post.entity';
 import Comment from '../comments/entities/comment.entity';
 import LocalFile from '../localFiles/entities/localFile.entity';
+import Like from '../likes/entities/like.entity';
 import { RemovedPostTitle1678907507513 } from '../migrations/1678907507513-RemovedPostTitle';
 
 config();
@@ -15,6 +16,6 @@ export default new DataSource({
   username: 'admin',
   password: '123456',
   database: 'blog-db',
-  entities: [Post, User, LocalFile, Comment],
+  entities: [Post, User, LocalFile, Comment, Like],
   migrations: [RemovedPostTitle1678907507513],
 });
