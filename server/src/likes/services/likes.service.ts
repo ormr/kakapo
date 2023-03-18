@@ -4,12 +4,13 @@ import User from '../../users/entities/user.entity';
 import { Repository } from 'typeorm';
 import Like from '../entities/like.entity';
 import { LikeDto } from '../dto/like.dto';
+import Post from 'src/posts/entities/post.entity';
 
 @Injectable()
 export class LikeService {
   constructor(
     @InjectRepository(Like)
-    private readonly likeRepository: Repository<Like>
+    private readonly likeRepository: Repository<Like>,
   ) {}
 
   async put(likeDto: LikeDto, user: User): Promise<Like> {

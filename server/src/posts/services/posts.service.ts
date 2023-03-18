@@ -27,16 +27,44 @@ export class PostService {
         comments: {
           author: true,
         },
+        likes: {
+          user: true,
+        },
         author: true,
+      },
+      select: {
+        comments: {
+          id: true,
+          content: true,
+          author: {
+            id: true,
+            avatarId: true,
+            name: true,
+          },
+        },
+        likes: {
+          id: true,
+          user: {
+            id: true,
+          },
+        },
+        author: {
+          id: true,
+          name: true,
+          avatarId: true,
+        },
       },
     });
   }
+
+  // трение пальцами -> чувствую ноготь -> понимаю что он достаточно длинный чтобы его можно было откусить или сломать -> ломаю/съедаю ноготьij
 
   async getAllPosts(): Promise<Post[]> {
     return this.postRepository
       .createQueryBuilder('post')
       .leftJoinAndSelect('post.author', 'author')
       .loadRelationCountAndMap('post.commentsCount', 'post.comments')
+      .loadRelationCountAndMap('post.likesCount', 'post.likes')
       .getMany();
   }
 
