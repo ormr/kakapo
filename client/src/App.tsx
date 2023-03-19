@@ -11,6 +11,7 @@ const RegisterPage = React.lazy(() => import('./pages/RegisterPage'));
 const LogInPage = React.lazy(() => import('./pages/LogInPage'));
 const ProfilePage = React.lazy(() => import('./pages/ProfilePage'));
 const NotFoundPage = React.lazy(() => import('./pages/NotFoundPage'));
+const DetailPage = React.lazy(() => import('./pages/DetailPage'));
 
 const App = (): ReactElement => {
   const dispatch = useAppDispatch();
@@ -29,6 +30,7 @@ const App = (): ReactElement => {
           <Route path="/" element={<MainPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LogInPage />} />
+          <Route path="/posts/:postId" element={<DetailPage />} />
           <Route
             path="/profile"
             element={

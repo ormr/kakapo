@@ -30,12 +30,13 @@ const Button: FC<ButtonProps> = ({ children, onClick }) => (
   <button onClick={onClick}>{children}</button>
 );
 
-const Post: FC<PostProps & { commentsCount?: number }> = ({
+const Post: FC<PostProps & { likesCount?: number; commentsCount?: number }> = ({
   id,
   author,
   createdAt,
   content,
   commentsCount = 0,
+  likesCount = 0,
 }) => (
   <div className="w-full max-w-lg mx-auto flex flex-col gap-3.5">
     <header className="flex justify-between">
@@ -52,11 +53,13 @@ const Post: FC<PostProps & { commentsCount?: number }> = ({
       </Button>
     </header>
     <div>{content}</div>
-    <footer className="flex flex-wrap gap-3 text-sm">
-      <PostTool icon={<HeartIcon />} count={123} />
-      <PostTool icon={<CommentIcon />} count={commentsCount} />
-      <PostTool icon={<ShareIcon />} count={2} />
-    </footer>
+    <Link to={`/posts/${id}`}>
+      <footer className="flex flex-wrap gap-3 text-sm">
+        <PostTool icon={<HeartIcon />} count={likesCount} />
+        <PostTool icon={<CommentIcon />} count={commentsCount} />
+        <PostTool icon={<ShareIcon />} count={2} />
+      </footer>
+    </Link>
   </div>
 );
 

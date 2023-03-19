@@ -8,6 +8,11 @@ import Post from 'src/posts/entities/post.entity';
 import User from 'src/users/entities/user.entity';
 import { Repository } from 'typeorm';
 
+type WithMetrics = {
+  likesCount: number;
+  commentsCount: number;
+};
+
 @Injectable()
 export class PostService {
   constructor(
@@ -20,8 +25,10 @@ export class PostService {
     return this.postRepository.save({ ...post, author: user });
   }
 
-  async getOnePost(id: string): Promise<Post> {
-    return this.postRepository.findOne({
+  async getOnePost(id: string) {
+    const { likesCount, commentsCount, isLikedByCurrentUser } =
+      await this.getPostMetrics(id);
+    const post = await this.postRepository.findOne({
       where: { id },
       relations: {
         comments: {
@@ -55,9 +62,30 @@ export class PostService {
         },
       },
     });
+
+    return {
+      ...post,
+      likesCount,
+      commentsCount,
+    };
   }
 
-  // трение пальцами -> чувствую ноготь -> понимаю что он достаточно длинный чтобы его можно было откусить или сломать -> ломаю/съедаю ноготьij
+  async getPostMetrics(postId: string) {
+    const [post] = await this.postRepository
+      .createQueryBuilder('post')
+      .where('post.id = :id', { id: postId })
+      .innerJoinAndSelect('post.isLiked', 'likes', 'like.userId = :userId')
+      .loadRelationCountAndMap('post.commentsCount', 'post.comments')
+      .loadRelationCountAndMap('post.likesCount', 'post.likes')
+      .getMany();
+
+    const { likesCount, commentsCount } = post as Post & {
+      likesCount: number;
+      commentsCount: number;
+    };
+
+    return { likesCount, commentsCount, isLiked };
+  }
 
   async getAllPosts(): Promise<Post[]> {
     return this.postRepository
