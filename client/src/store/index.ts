@@ -4,10 +4,8 @@ import { createReduxHistoryContext } from 'redux-first-history';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import Env from '../config/Env';
 import { authReducer } from '../features/auth/authSlice';
-import { postsApi } from '../services/api/PostsApi';
-import { authApi } from '../services/api/AuthApi';
 import { errorLoggerMiddleware } from './middleware/errorLogger';
-import { usersApi } from '../services/api/UsersApi';
+import api from '../services/api';
 
 const { createReduxHistory, routerMiddleware, routerReducer } =
   createReduxHistoryContext({
@@ -21,17 +19,13 @@ const makeStore = () => {
     reducer: {
       auth: authReducer,
       router: routerReducer,
-      [authApi.reducerPath]: authApi.reducer,
-      [postsApi.reducerPath]: postsApi.reducer,
-      [usersApi.reducerPath]: usersApi.reducer,
+      [api.reducerPath]: api.reducer,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware()
         .concat(routerMiddleware)
         .concat(errorLoggerMiddleware)
-        .concat(authApi.middleware)
-        .concat(postsApi.middleware)
-        .concat(usersApi.middleware),
+        .concat(api.middleware),
   });
 
   return store;

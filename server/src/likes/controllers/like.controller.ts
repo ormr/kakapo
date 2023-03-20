@@ -17,7 +17,7 @@ class LikesController {
   @Delete()
   @UseGuards(JwtAuthenticationGuard)
   async unlike(@Req() request: RequestWithUser, @Body() post: LikeDto) {
-    return this.likesService.remove(post, request.user);
+    return this.likesService.remove(post.post.id, request.user.id);
   }
 }
 

@@ -1,5 +1,4 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { BASE_URL } from '../../core/axios';
+import api from '.';
 
 interface Author {
   id: string;
@@ -16,14 +15,7 @@ export interface Post {
   author: Author;
 }
 
-export const postsApi = createApi({
-  reducerPath: 'postsApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: BASE_URL,
-    prepareHeaders: (headers) => headers,
-    credentials: 'include',
-  }),
-  tagTypes: ['Posts'],
+export const postsExtendedApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getPosts: builder.query<Post[], void>({
       query: () => 'posts',
@@ -82,4 +74,4 @@ export const {
   useGetPostsByUserIdQuery,
   useCreatePostMutation,
   useAddImageToPostMutation,
-} = postsApi;
+} = postsExtendedApi;

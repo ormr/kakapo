@@ -1,5 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import Like from 'src/likes/entities/like.entity';
+import { LikeService } from 'src/likes/services/likes.service';
 import { LocalFileDto } from 'src/localFiles/dto/localFile.dto';
 import LocalFilesService from 'src/localFiles/services/localFiles.service';
 import { CreatePostDto } from 'src/posts/dto/create-post.dto';
@@ -8,26 +10,84 @@ import Post from 'src/posts/entities/post.entity';
 import User from 'src/users/entities/user.entity';
 import { Repository } from 'typeorm';
 
-type WithMetrics = {
-  likesCount: number;
-  commentsCount: number;
-};
-
 @Injectable()
 export class PostService {
   constructor(
     @InjectRepository(Post)
     private readonly postRepository: Repository<Post>,
-    private localFilesService: LocalFilesService
+    private likeService: LikeService,
+    private localFilesService: LocalFilesService,
   ) {}
 
   async createPost(post: CreatePostDto, user: User): Promise<Post> {
     return this.postRepository.save({ ...post, author: user });
   }
 
+  async likePost(postId: string, user: User) {
+    const results = await this.postRepository.find({
+      relations: ['likes'],
+      where: {
+        id: postId,
+        likes: {
+          user: {
+            id: user.id,
+          },
+        },
+      },
+    });
+
+    const isAlreadyLiked = !!results.length;
+
+    if (isAlreadyLiked) {
+      throw new HttpException(
+        'Post has been already liked',
+        HttpStatus.FORBIDDEN
+      );
+    }
+
+    const { likesCount } = await this.getPostMetrics(postId);
+
+    await this.likeService.put({ post: { id: postId } }, user);
+    await this.postRepository.update({ id: postId }, { likeCount: likesCount + 1 }); 
+
+    return 'Post has been liked'
+  }
+
+  async unlikePost(postId: string, userId: string) {
+    const results = await this.postRepository.find({
+      relations: ['likes'],
+      where: {
+        id: postId,
+        likes: {
+          user: {
+            id: userId,
+          },
+        },
+      },
+    });
+
+    const isNotLiked = !!results.length;
+
+    if (!isNotLiked) {
+      throw new HttpException(
+        'Post has not been liked',
+        HttpStatus.FORBIDDEN
+      );
+    }
+
+    const { likesCount } = await this.getPostMetrics(postId);
+
+    await this.likeService.remove(postId, userId);
+
+    await this.postRepository.update({ id: postId }, { likeCount: likesCount - 1 }); 
+
+    return await this.getOnePost(postId);
+  }
+
+
   async getOnePost(id: string) {
-    const { likesCount, commentsCount, isLikedByCurrentUser } =
-      await this.getPostMetrics(id);
+    const { likesCount, commentsCount } = await this.getPostMetrics(id);
+
     const post = await this.postRepository.findOne({
       where: { id },
       relations: {
@@ -74,7 +134,6 @@ export class PostService {
     const [post] = await this.postRepository
       .createQueryBuilder('post')
       .where('post.id = :id', { id: postId })
-      .innerJoinAndSelect('post.isLiked', 'likes', 'like.userId = :userId')
       .loadRelationCountAndMap('post.commentsCount', 'post.comments')
       .loadRelationCountAndMap('post.likesCount', 'post.likes')
       .getMany();
@@ -84,7 +143,7 @@ export class PostService {
       commentsCount: number;
     };
 
-    return { likesCount, commentsCount, isLiked };
+    return { likesCount, commentsCount };
   }
 
   async getAllPosts(): Promise<Post[]> {

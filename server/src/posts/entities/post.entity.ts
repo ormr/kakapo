@@ -37,6 +37,9 @@ class Post {
   @Column({ nullable: true })
   public imageId?: string;
 
+  @Column({ default: 0 })
+  public likeCount: number;
+
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import User from '../../users/entities/user.entity';
 import { Repository } from 'typeorm';
@@ -10,7 +10,7 @@ import Post from 'src/posts/entities/post.entity';
 export class LikeService {
   constructor(
     @InjectRepository(Like)
-    private readonly likeRepository: Repository<Like>,
+    private readonly likeRepository: Repository<Like>
   ) {}
 
   async put(likeDto: LikeDto, user: User): Promise<Like> {
@@ -20,16 +20,17 @@ export class LikeService {
     });
   }
 
-  async remove(likeDto: LikeDto, user: User): Promise<string> {
+  async remove(postId: string, userId: string): Promise<string> {
     const like = await this.likeRepository.findOne({
-      where: { user: { id: user.id } },
+      where: { user: { id: userId } },
     });
 
-    if (!like) return;
+    if (!like) {
+      throw new HttpException('Like is not found', HttpStatus.NOT_FOUND)
+    };
 
-    const deleted = await this.likeRepository.delete({ id: likeDto.post.id });
+    const deleted = await this.likeRepository.delete({ id: like.id });
 
-    return likeDto.post.id;
+    return postId;
   }
 }
-

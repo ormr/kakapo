@@ -7,14 +7,18 @@ import Post from './entities/post.entity';
 import { PostService } from './services/posts.service';
 import { PostsController } from './controllers/posts.controller';
 import { LocalFilesModule } from 'src/localFiles/localFile.module';
+import { LikesModule } from 'src/likes/likes.module';
+import { LikeService } from 'src/likes/services/likes.service';
+import Like from 'src/likes/entities/like.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Post, User]),
+    TypeOrmModule.forFeature([Post, User, Like]),
     UsersModule,
+    LikesModule,
     LocalFilesModule,
   ],
-  providers: [PostService],
+  providers: [PostService, LikeService],
   controllers: [PostsController],
 })
 export class PostsModule {}

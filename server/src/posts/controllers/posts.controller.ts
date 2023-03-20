@@ -11,6 +11,8 @@ import {
   BadRequestException,
   UploadedFile,
   Req,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { JwtAuthenticationGuard } from 'src/authentication/guards/jwt-authentication.guard';
 import { RequestWithUser } from 'src/authentication/interfaces/requestWithUser.interface';
@@ -33,7 +35,9 @@ export class PostsController {
   }
 
   @Get(':id')
-  async getOnePost(@Param('id') id: string) {
+  @UseGuards(JwtAuthenticationGuard)
+  async getOnePost(@Req() request: RequestWithUser, @Param('id') id: string) {
+    // return this.postsService.checkLikeForUser(id, request.user.id);
     return this.postsService.getOnePost(id);
   }
 
@@ -42,7 +46,26 @@ export class PostsController {
     return this.postsService.getPostsByUserId(userId);
   }
 
-  @Post()
+  @Post('/like')
+  @UseGuards(JwtAuthenticationGuard)
+  async likePost(
+    @Req() request: RequestWithUser,
+    @Body() post: { id: string }
+  ) {
+    return this.postsService.likePost(post.id, request.user);
+  }
+
+  @Post('/unlike')
+  @UseGuards(JwtAuthenticationGuard)
+  async unlikePost(
+    @Req() request: RequestWithUser,
+    @Body() post: { id: string }
+  ) {
+    console.log(post);
+    return this.postsService.unlikePost(post.id, request.user.id);
+  }
+
+  @Put()
   @UseGuards(JwtAuthenticationGuard)
   async createPost(
     @Req() request: RequestWithUser,
@@ -85,10 +108,10 @@ export class PostsController {
     });
   }
 
-  @Put(':id')
-  async updatePost(@Param('id') id: string, @Body() post: UpdatePostDto) {
-    return this.postsService.updatePost(id, post);
-  }
+  // @Put(':id')
+  // async updatePost(@Param('id') id: string, @Body() post: UpdatePostDto) {
+  //   return this.postsService.updatePost(id, post);
+  // }
 
   @Delete(':id')
   async removePost(@Param('id') id: string) {

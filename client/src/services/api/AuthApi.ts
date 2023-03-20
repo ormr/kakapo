@@ -1,5 +1,4 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { BASE_URL } from '../../core/axios';
+import api from '.';
 
 export interface User {
   id: string;
@@ -22,14 +21,7 @@ interface RegisterRequest {
   password: string;
 }
 
-export const authApi = createApi({
-  reducerPath: 'authApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: BASE_URL,
-    prepareHeaders: (headers) => headers,
-    credentials: 'include',
-  }),
-  tagTypes: ['Auth'],
+export const authExtendedApi = api.injectEndpoints({
   endpoints: (builder) => ({
     auth: builder.query<User, void>({
       query: () => 'authentication',
@@ -48,7 +40,7 @@ export const authApi = createApi({
         body,
       }),
     }),
-    logOut: builder.mutation<User, void>({
+    logout: builder.mutation<User, void>({
       query: () => ({
         url: 'authentication/log-out',
         method: 'POST',
@@ -57,4 +49,9 @@ export const authApi = createApi({
   }),
 });
 
-export const { useAuthQuery, useLoginMutation, useRegisterMutation } = authApi;
+export const {
+  useAuthQuery,
+  useLoginMutation,
+  useRegisterMutation,
+  useLogoutMutation,
+} = authExtendedApi;
