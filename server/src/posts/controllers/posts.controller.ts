@@ -61,11 +61,10 @@ export class PostsController {
     @Req() request: RequestWithUser,
     @Body() post: { id: string }
   ) {
-    console.log(post);
     return this.postsService.unlikePost(post.id, request.user.id);
   }
 
-  @Put()
+  @Post()
   @UseGuards(JwtAuthenticationGuard)
   async createPost(
     @Req() request: RequestWithUser,

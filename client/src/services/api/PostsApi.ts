@@ -13,6 +13,7 @@ export interface Post {
   createdAt: string;
   imageId?: string;
   author: Author;
+  comments: any[];
 }
 
 export const postsExtendedApi = api.injectEndpoints({
