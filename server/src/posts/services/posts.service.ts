@@ -17,7 +17,7 @@ export class PostService {
     private readonly postRepository: Repository<Post>,
     private likeService: LikeService,
     private localFilesService: LocalFilesService,
-  ) {}
+  ) { }
 
   async createPost(post: CreatePostDto, user: User): Promise<Post> {
     return this.postRepository.save({ ...post, author: user });
@@ -45,10 +45,15 @@ export class PostService {
       );
     }
 
-    const { likesCount } = await this.getPostMetrics(postId);
-
     await this.likeService.put({ post: { id: postId } }, user);
-    await this.postRepository.update({ id: postId }, { likeCount: likesCount + 1 }); 
+
+    const post = await this.postRepository.findOne({
+      where: {
+        id: postId
+      }
+    })
+
+    await this.postRepository.update({ id: postId }, { likesCount: post.likesCount + 1 });
 
     return 'Post has been liked'
   }
@@ -75,13 +80,7 @@ export class PostService {
       );
     }
 
-    const { likesCount } = await this.getPostMetrics(postId);
-
     await this.likeService.remove(postId, userId);
-
-    await this.postRepository.update({ id: postId }, { likeCount: likesCount - 1 }); 
-
-    return await this.getOnePost(postId);
   }
 
 
@@ -146,13 +145,29 @@ export class PostService {
     return { likesCount, commentsCount };
   }
 
-  async getAllPosts(): Promise<Post[]> {
-    return this.postRepository
+  async getAllPosts(userId: string): Promise<Post[]> {
+    const posts = await this.postRepository
       .createQueryBuilder('post')
       .leftJoinAndSelect('post.author', 'author')
-      .loadRelationCountAndMap('post.commentsCount', 'post.comments')
-      .loadRelationCountAndMap('post.likesCount', 'post.likes')
+      .leftJoinAndSelect('post.likes', 'like')
+      .leftJoinAndSelect('like.user', 'user')
+      .orderBy('post.createdAt', 'DESC')
       .getMany();
+
+    posts.forEach((post: any) => {
+      post.isLiked = false;
+      post.likes.forEach((like: any) => {
+        if (like.user.id === userId) {
+          post.isLiked = true;
+        }
+      });
+    });
+
+    return posts.map((post) => ({
+      ...post,
+      likes: undefined,
+      isLiked: post.likes.some((like) => like.user.id === userId),
+    }));
   }
 
   async getPostsByUserId(id: string): Promise<Post[]> {

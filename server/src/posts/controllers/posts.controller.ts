@@ -30,8 +30,9 @@ export class PostsController {
   ) {}
 
   @Get()
-  async getAllPosts() {
-    return this.postsService.getAllPosts();
+  @UseGuards(JwtAuthenticationGuard)
+  async getAllPosts(@Req() request: RequestWithUser) {
+    return this.postsService.getAllPosts(request.user.id);
   }
 
   @Get(':id')
@@ -50,9 +51,9 @@ export class PostsController {
   @UseGuards(JwtAuthenticationGuard)
   async likePost(
     @Req() request: RequestWithUser,
-    @Body() post: { id: string }
+    @Body() body: { postId: string }
   ) {
-    return this.postsService.likePost(post.id, request.user);
+    return this.postsService.likePost(body.postId, request.user);
   }
 
   @Post('/unlike')
@@ -61,11 +62,10 @@ export class PostsController {
     @Req() request: RequestWithUser,
     @Body() post: { id: string }
   ) {
-    console.log(post);
     return this.postsService.unlikePost(post.id, request.user.id);
   }
 
-  @Put()
+  @Post()
   @UseGuards(JwtAuthenticationGuard)
   async createPost(
     @Req() request: RequestWithUser,
@@ -108,10 +108,10 @@ export class PostsController {
     });
   }
 
-  // @Put(':id')
-  // async updatePost(@Param('id') id: string, @Body() post: UpdatePostDto) {
-  //   return this.postsService.updatePost(id, post);
-  // }
+  @Put(':id')
+  async updatePost(@Param('id') id: string, @Body() post: UpdatePostDto) {
+    return this.postsService.updatePost(id, post);
+  }
 
   @Delete(':id')
   async removePost(@Param('id') id: string) {

@@ -38,7 +38,14 @@ class Post {
   public imageId?: string;
 
   @Column({ default: 0 })
-  public likeCount: number;
+  public likesCount: number;
+
+  @Column({ default: 0 })
+  public commentsCount: number;
+
+  @Column({ default: false })
+  public isLiked: boolean;
+
 
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;

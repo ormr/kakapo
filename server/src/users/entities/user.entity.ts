@@ -11,6 +11,7 @@ import {
 } from 'typeorm';
 import LocalFile from '../../localFiles/entities/localFile.entity';
 import Post from '../../posts/entities/post.entity';
+import Like from '../../likes/entities/like.entity';
 
 @Entity('users')
 class User {
@@ -47,6 +48,9 @@ class User {
 
   @OneToMany(() => Post, (post: Post) => post.author)
   posts?: Post[];
+
+  @OneToMany(() => Like, (like: Like) => like.user)
+  likes?: Like[];
 }
 
 export default User;

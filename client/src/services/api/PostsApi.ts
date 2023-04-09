@@ -13,6 +13,7 @@ export interface Post {
   createdAt: string;
   imageId?: string;
   author: Author;
+  isLiked?: boolean;
 }
 
 export const postsExtendedApi = api.injectEndpoints({
@@ -22,9 +23,9 @@ export const postsExtendedApi = api.injectEndpoints({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: 'Posts', id } as const)),
-              { type: 'Posts', id: 'LIST' },
-            ]
+            ...result.map(({ id }) => ({ type: 'Posts', id } as const)),
+            { type: 'Posts', id: 'LIST' },
+          ]
           : [{ type: 'Posts', id: 'LIST' }],
     }),
     getPostsByUserId: builder.query<Post[], string | undefined>({
@@ -32,9 +33,9 @@ export const postsExtendedApi = api.injectEndpoints({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: 'Posts', id } as const)),
-              { type: 'Posts', id: 'LIST' },
-            ]
+            ...result.map(({ id }) => ({ type: 'Posts', id } as const)),
+            { type: 'Posts', id: 'LIST' },
+          ]
           : [{ type: 'Posts', id: 'LIST' }],
     }),
     getPostById: builder.query<Post, string | undefined>({
@@ -65,6 +66,17 @@ export const postsExtendedApi = api.injectEndpoints({
         };
       },
     }),
+    toggleLikePost: builder.mutation<void, any>({
+      query: ({ isLiked, postId }) => {
+        return {
+          url: `posts/${!isLiked ? 'like' : 'unlike'}`,
+          method: 'POST',
+          body: {
+            postId,
+          }
+        }
+      }
+    })
   }),
 });
 
@@ -74,4 +86,5 @@ export const {
   useGetPostsByUserIdQuery,
   useCreatePostMutation,
   useAddImageToPostMutation,
+  useToggleLikePostMutation
 } = postsExtendedApi;

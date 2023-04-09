@@ -14,6 +14,8 @@ export class LikeService {
   ) {}
 
   async put(likeDto: LikeDto, user: User): Promise<Like> {
+    console.log('likeDto:', likeDto);
+    console.log('userId:', user.id);
     return await this.likeRepository.save({
       ...likeDto,
       user,

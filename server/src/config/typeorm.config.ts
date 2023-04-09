@@ -14,7 +14,7 @@ export default new DataSource({
   host: 'localhost',
   port: 5432,
   username: 'admin',
-  password: '123456',
+  password: 'admin',
   database: 'blog-db',
   entities: [Post, User, LocalFile, Comment, Like],
   migrations: [RemovedPostTitle1678907507513],

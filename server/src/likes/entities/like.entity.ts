@@ -16,7 +16,9 @@ class Like {
   @ManyToOne(() => Post, (post: Post) => post.likes)
   public post: Post;
 
-  @OneToOne(() => User, (user: User) => user.id)
+  @ManyToOne(() => User, (user: User) => user.likes, {
+    eager: true,
+  })
   @JoinColumn()
   public user: User;
 }

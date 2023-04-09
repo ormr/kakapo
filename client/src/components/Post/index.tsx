@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from 'react';
+import React, { FC, ReactNode, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
 import Avatar from '../Avatar';
@@ -7,18 +7,19 @@ import DotsIcon from '../../assets/DotsIcon';
 import HeartIcon from '../../assets/HeartIcon';
 import CommentIcon from '../../assets/CommentIcon';
 import ShareIcon from '../../assets/ShareIcon';
-import { Post as PostProps } from '../../services/api/PostsApi';
+import { Post as PostEntity } from '../../services/api/PostsApi';
 
 interface PostToolProps {
   icon: ReactNode;
   count: number;
+  onClick: VoidFunction;
 }
 
-const PostTool: FC<PostToolProps> = ({ icon, count }) => (
-  <div className="flex gap-1.5">
+const PostTool: FC<PostToolProps> = ({ icon, count, onClick }) => (
+  <button className="flex gap-1.5 select-none" onClick={onClick}>
     {icon}
     {count}
-  </div>
+  </button>
 );
 
 interface ButtonProps {
@@ -30,37 +31,62 @@ const Button: FC<ButtonProps> = ({ children, onClick }) => (
   <button onClick={onClick}>{children}</button>
 );
 
-const Post: FC<PostProps & { likesCount?: number; commentsCount?: number }> = ({
+interface PostProps {
+  likesCount?: number;
+  commentsCount?: number;
+  repostsCount?: number;
+  isLiked?: boolean;
+  onLikeClick: VoidFunction;
+  onCommentClick: VoidFunction;
+  onRepostClick: VoidFunction;
+};
+
+const Post: FC<PostEntity & PostProps> = ({
   id,
   author,
   createdAt,
   content,
+  onLikeClick,
+  onCommentClick,
+  onRepostClick,
+  likesCount: defaultLikesCount = 0,
   commentsCount = 0,
-  likesCount = 0,
-}) => (
-  <div className="w-full max-w-lg mx-auto flex flex-col gap-3.5">
-    <header className="flex justify-between">
-      <div className="flex items-center gap-1.5">
-        <Link to={`/users/${id}`}>
-          <Avatar id={author?.avatarId} />
-        </Link>
-        <div>@{author?.name}</div>
-        <DotIcon />
-        <div>{format(new Date(createdAt), 'dd/MM/yyyy hh:mm')}</div>
-      </div>
-      <Button onClick={() => console.log('dots menu opening')}>
-        <DotsIcon />
-      </Button>
-    </header>
-    <div>{content}</div>
-    <Link to={`/posts/${id}`}>
+  repostsCount = 0,
+  isLiked: isLikedByUser = false,
+}) => {
+  const [isLiked, setIsLiked] = useState(isLikedByUser);
+  const [likesCount, setLikesCount] = useState(defaultLikesCount);
+
+  const handleLikePost = () => {
+    setIsLiked(prevState => !prevState);
+    setLikesCount(prevCount => isLiked ? prevCount - 1 : prevCount + 1);
+    onLikeClick();
+  }
+
+  return (
+    <div className="w-full max-w-lg mx-auto flex flex-col gap-3.5">
+      <header className="flex justify-between">
+        <div className="flex items-center gap-1.5">
+          <Link to={`/users/${id}`}>
+            <Avatar id={author?.avatarId} />
+          </Link>
+          <div>@{author?.name}</div>
+          <DotIcon />
+          <div>{format(new Date(createdAt), 'dd/MM/yyyy hh:mm')}</div>
+        </div>
+        <Button onClick={() => console.log('dots menu opening')}>
+          <DotsIcon />
+        </Button>
+      </header>
+      <div>{content}</div>
       <footer className="flex flex-wrap gap-3 text-sm">
-        <PostTool icon={<HeartIcon />} count={likesCount} />
-        <PostTool icon={<CommentIcon />} count={commentsCount} />
-        <PostTool icon={<ShareIcon />} count={2} />
+        <PostTool icon={<HeartIcon fill={isLiked} />} onClick={handleLikePost} count={likesCount} />
+        <PostTool icon={<CommentIcon />} onClick={onCommentClick} count={commentsCount} />
+        <PostTool icon={<ShareIcon />} onClick={onRepostClick} count={repostsCount} />
       </footer>
-    </Link>
-  </div>
-);
+    </div>
+
+  )
+};
 
 export default Post;
