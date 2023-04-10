@@ -1,5 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { JwtAuthenticationGuard } from 'src/authentication/guards/jwt-authentication.guard';
 import Like from 'src/likes/entities/like.entity';
 import { LikeService } from 'src/likes/services/likes.service';
 import { LocalFileDto } from 'src/localFiles/dto/localFile.dto';
@@ -16,8 +17,8 @@ export class PostService {
     @InjectRepository(Post)
     private readonly postRepository: Repository<Post>,
     private likeService: LikeService,
-    private localFilesService: LocalFilesService,
-  ) { }
+    private localFilesService: LocalFilesService
+  ) {}
 
   async createPost(post: CreatePostDto, user: User): Promise<Post> {
     return this.postRepository.save({ ...post, author: user });
@@ -49,13 +50,16 @@ export class PostService {
 
     const post = await this.postRepository.findOne({
       where: {
-        id: postId
-      }
-    })
+        id: postId,
+      },
+    });
 
-    await this.postRepository.update({ id: postId }, { likesCount: post.likesCount + 1 });
+    await this.postRepository.update(
+      { id: postId },
+      { likesCount: post.likesCount + 1 }
+    );
 
-    return 'Post has been liked'
+    return 'Post has been liked';
   }
 
   async unlikePost(postId: string, userId: string) {
@@ -74,15 +78,22 @@ export class PostService {
     const isNotLiked = !!results.length;
 
     if (!isNotLiked) {
-      throw new HttpException(
-        'Post has not been liked',
-        HttpStatus.FORBIDDEN
-      );
+      throw new HttpException('Post has not been liked', HttpStatus.FORBIDDEN);
     }
 
     await this.likeService.remove(postId, userId);
-  }
 
+    const post = await this.postRepository.findOne({
+      where: {
+        id: postId,
+      },
+    });
+
+    await this.postRepository.update(
+      { id: postId },
+      { likesCount: post.likesCount - 1 }
+    );
+  }
 
   async getOnePost(id: string) {
     const { likesCount, commentsCount } = await this.getPostMetrics(id);
@@ -199,6 +210,7 @@ export class PostService {
 
   async addImage(userId: string, fileData: LocalFileDto) {
     const image = await this.localFilesService.saveLocalFileData(fileData);
+
     await this.postRepository.update(userId, {
       imageId: image.id,
     });

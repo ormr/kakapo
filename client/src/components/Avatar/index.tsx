@@ -7,7 +7,7 @@ interface AvatarProps {
 const Avatar: FC<AvatarProps> = ({ id }) => (
   <div className="h-10 w-10">
     <img
-      className="h-full w-full rounded-full object-cover object-center"
+      className="h-inherit w-inherit rounded-full object-cover object-center"
       src={id ? `/local-files/${id}` : '/default-picture.jpg'}
       alt="avatar"
     />

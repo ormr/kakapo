@@ -14,6 +14,7 @@ export interface Post {
   imageId?: string;
   author: Author;
   isLiked?: boolean;
+  comments: any[];
 }
 
 export const postsExtendedApi = api.injectEndpoints({
@@ -23,9 +24,9 @@ export const postsExtendedApi = api.injectEndpoints({
       providesTags: (result) =>
         result
           ? [
-            ...result.map(({ id }) => ({ type: 'Posts', id } as const)),
-            { type: 'Posts', id: 'LIST' },
-          ]
+              ...result.map(({ id }) => ({ type: 'Posts', id } as const)),
+              { type: 'Posts', id: 'LIST' },
+            ]
           : [{ type: 'Posts', id: 'LIST' }],
     }),
     getPostsByUserId: builder.query<Post[], string | undefined>({
@@ -33,9 +34,9 @@ export const postsExtendedApi = api.injectEndpoints({
       providesTags: (result) =>
         result
           ? [
-            ...result.map(({ id }) => ({ type: 'Posts', id } as const)),
-            { type: 'Posts', id: 'LIST' },
-          ]
+              ...result.map(({ id }) => ({ type: 'Posts', id } as const)),
+              { type: 'Posts', id: 'LIST' },
+            ]
           : [{ type: 'Posts', id: 'LIST' }],
     }),
     getPostById: builder.query<Post, string | undefined>({
@@ -73,10 +74,25 @@ export const postsExtendedApi = api.injectEndpoints({
           method: 'POST',
           body: {
             postId,
-          }
-        }
-      }
-    })
+          },
+        };
+      },
+    }),
+    addCommentToPost: builder.mutation<any, any>({
+      query: ({ content, postId: id }) => ({
+        url: `comments`,
+        method: 'POST',
+        body: {
+          content,
+          post: {
+            id,
+          },
+        },
+        invalidatesTags: (_result: any, _error: any, arg: any) => [
+          { type: 'Posts', id: arg.id },
+        ],
+      }),
+    }),
   }),
 });
 
@@ -86,5 +102,5 @@ export const {
   useGetPostsByUserIdQuery,
   useCreatePostMutation,
   useAddImageToPostMutation,
-  useToggleLikePostMutation
+  useToggleLikePostMutation,
 } = postsExtendedApi;

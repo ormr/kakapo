@@ -1,5 +1,4 @@
-import React, { ChangeEvent, FC, HTMLInputTypeAttribute } from 'react';
-import { FieldError } from 'react-hook-form';
+import React, { ChangeEvent, HTMLInputTypeAttribute } from 'react';
 
 interface InputProps {
   id?: string;
@@ -31,5 +30,9 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     </>
   )
 );
+
+Input.defaultProps = {
+  id: '',
+};
 
 export default Input;

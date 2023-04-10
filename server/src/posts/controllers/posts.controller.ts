@@ -97,7 +97,32 @@ export class PostsController {
       },
     })
   )
-  async addImage(
+  /*
+   * TODO:
+   * Дoбавить возможность загрузки нескольких фотографий
+   * */
+  @Post('image')
+  @UseGuards(JwtAuthenticationGuard)
+  @UseInterceptors(
+    LocalFilesInterceptor({
+      fieldName: 'file',
+      path: '/posts',
+      fileFilter: (_request, file, callback) => {
+        if (!file.mimetype.includes('image')) {
+          return callback(
+            new BadRequestException('Provide a valid image'),
+            false
+          );
+        }
+
+        return callback(null, true);
+      },
+      limits: {
+        fileSize: 1024 ** 2, // 1MB
+      },
+    })
+  )
+  async addFile(
     @Param('id') id: string,
     @UploadedFile() file: Express.Multer.File
   ) {
