@@ -58,6 +58,7 @@ export class UsersService {
 
   async addAvatar(userId: string, fileData: LocalFileDto) {
     const avatar = await this.localFilesService.saveLocalFileData(fileData);
+    console.log(avatar);
     await this.userRepository.update(userId, {
       avatarId: avatar.id,
     });

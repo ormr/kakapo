@@ -7,20 +7,22 @@ import Avatar from '../Avatar';
 import Container from '../Container';
 
 const Header = () => {
-const { user } = useAppSelector((app) => app.auth);
-return (
-  <Container>
-    <div className="flex justify-between items-center py-5">
-      <Link to="/profile">
-        <Avatar id={user?.avatarId} />
-      </Link>
-      <Link to="/">
-        <Logo />
-      </Link>
-      <Tools />
-    </div>
-  </Container>
-)};
+  const { user } = useAppSelector((app) => app.auth);
+
+  return (
+    <Container>
+      <div className="flex justify-between items-center py-5">
+        <Link to="/profile">
+          <Avatar id={user?.avatarId} />
+        </Link>
+        <Link to="/">
+          <Logo />
+        </Link>
+        <Tools />
+      </div>
+    </Container>
+  );
+};
 
 const Tools = () => (
   <ul className="flex space-x-3">
