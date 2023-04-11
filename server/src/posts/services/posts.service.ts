@@ -1,7 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { JwtAuthenticationGuard } from 'src/authentication/guards/jwt-authentication.guard';
-import Like from 'src/likes/entities/like.entity';
 import { LikeService } from 'src/likes/services/likes.service';
 import { LocalFileDto } from 'src/localFiles/dto/localFile.dto';
 import LocalFilesService from 'src/localFiles/services/localFiles.service';
@@ -12,7 +10,7 @@ import User from 'src/users/entities/user.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
-export class PostService {
+class PostService {
   constructor(
     @InjectRepository(Post)
     private readonly postRepository: Repository<Post>,
@@ -193,3 +191,5 @@ export class PostService {
     });
   }
 }
+
+export default PostService;

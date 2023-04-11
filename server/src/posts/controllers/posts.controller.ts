@@ -4,22 +4,18 @@ import {
   Param,
   Post,
   Body,
-  Put,
   Delete,
   UseGuards,
   UseInterceptors,
   BadRequestException,
   UploadedFile,
   Req,
-  HttpException,
-  HttpStatus,
 } from '@nestjs/common';
 import { JwtAuthenticationGuard } from 'src/authentication/guards/jwt-authentication.guard';
 import { RequestWithUser } from 'src/authentication/interfaces/requestWithUser.interface';
 import LocalFilesInterceptor from 'src/localFiles/mixins/localFiles.interceptor';
 import { CreatePostDto } from 'src/posts/dto/create-post.dto';
-import { UpdatePostDto } from 'src/posts/dto/update-post.dto';
-import { PostService } from 'src/posts/services/posts.service';
+import PostService from 'src/posts/services/posts.service';
 import { UsersService } from 'src/users/services/users.service';
 
 @Controller('posts')
@@ -36,7 +32,7 @@ export class PostsController {
 
   @Get(':id')
   @UseGuards(JwtAuthenticationGuard)
-  async getOnePost(@Req() request: RequestWithUser, @Param('id') id: string) {
+  async getOnePost(@Req() _request: RequestWithUser, @Param('id') id: string) {
     // return this.postsService.checkLikeForUser(id, request.user.id);
     return this.postsService.getOnePost(id);
   }
