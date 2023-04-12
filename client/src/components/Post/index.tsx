@@ -35,6 +35,7 @@ const Post: FC<PostProps & { likesCount?: number; commentsCount?: number }> = ({
   author,
   createdAt,
   content,
+  fileIds,
   commentsCount = 0,
   likesCount = 0,
 }) => (
@@ -52,15 +53,33 @@ const Post: FC<PostProps & { likesCount?: number; commentsCount?: number }> = ({
         <DotsIcon />
       </Button>
     </header>
+    <PostFilesPreview fileIds={fileIds} />
     <div>{content}</div>
-    <Link to={`/posts/${id}`}>
-      <footer className="flex flex-wrap gap-3 text-sm">
-        <PostTool icon={<HeartIcon />} count={likesCount} />
-        <PostTool icon={<CommentIcon />} count={commentsCount} />
-        <PostTool icon={<ShareIcon />} count={2} />
-      </footer>
-    </Link>
+    <footer className="flex flex-wrap gap-3 text-sm">
+      <PostTool icon={<HeartIcon />} count={likesCount} />
+      <PostTool icon={<CommentIcon />} count={commentsCount} />
+      <PostTool icon={<ShareIcon />} count={2} />
+    </footer>
   </div>
 );
+
+interface PostFilesPreviewProps {
+  fileIds: string[];
+}
+
+const PostFilesPreview: FC<PostFilesPreviewProps> = ({ fileIds }) => {
+  return (
+    <div className="grid grid-cols-2 gap-1">
+      {fileIds.map((id, index) => (
+        <figure className={1 === index ? 'row-span-2' : undefined}>
+          <img
+            className="w-full h-full object-cover block"
+            src={`/local-files/${id}`}
+          />
+        </figure>
+      ))}
+    </div>
+  );
+};
 
 export default Post;

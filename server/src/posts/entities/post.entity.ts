@@ -22,20 +22,18 @@ class Post {
   @Column()
   public content: string;
 
-  @JoinColumn({ name: 'imageId' })
-  @OneToOne(() => LocalFile, {
-    nullable: true,
-  })
-  public image?: LocalFile;
+  @JoinColumn({ name: 'fileIds' })
+  @OneToMany(() => LocalFile, (file: LocalFile) => file.id, { nullable: true })
+  public files?: LocalFile[];
+
+  @Column('text', { nullable: true, array: true, default: [] })
+  public fileIds?: string[];
 
   @OneToMany(() => Comment, (comment: Comment) => comment.post)
   public comments: Comment[];
 
   @OneToMany(() => Like, (like: Like) => like.post)
   public likes: Like[];
-
-  @Column({ nullable: true })
-  public imageId?: string;
 
   @Column({ default: 0 })
   public likeCount: number;

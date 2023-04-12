@@ -1,5 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { CreateCommentDto } from 'src/comments/dto/create-comment.dto';
+import CommentsService from 'src/comments/services/comments.service';
 import { LikeService } from 'src/likes/services/likes.service';
 import { LocalFileDto } from 'src/localFiles/dto/localFile.dto';
 import LocalFilesService from 'src/localFiles/services/localFiles.service';
@@ -15,6 +17,7 @@ class PostService {
     @InjectRepository(Post)
     private readonly postRepository: Repository<Post>,
     private likeService: LikeService,
+    private commentsService: CommentsService,
     private localFilesService: LocalFilesService
   ) {}
 
@@ -183,12 +186,33 @@ class PostService {
     return this.getOnePost(updatePostInput.id);
   }
 
-  async addImage(userId: string, fileData: LocalFileDto) {
-    const image = await this.localFilesService.saveLocalFileData(fileData);
+  async addFile(postId: string, fileData: LocalFileDto) {
+    const file = await this.localFilesService.saveLocalFileData(fileData);
 
-    await this.postRepository.update(userId, {
-      imageId: image.id,
+    const post = await this.postRepository.findOne({ where: { id: postId } });
+
+    await this.postRepository.update(postId, {
+      fileIds: [...post.fileIds, file.id],
     });
+  }
+
+  async addComment(commentDto: CreateCommentDto, author: User) {
+    try {
+      const comment = await this.commentsService.createComment(
+        commentDto,
+        author
+      );
+
+      if (!comment) {
+        throw new HttpException('Comment did not created', HttpStatus.CONFLICT);
+      }
+
+      const post = await this.getOnePost(commentDto.post.id);
+
+      return post;
+    } catch (error) {
+      throw new HttpException('Comment did not created', HttpStatus.CONFLICT);
+    }
   }
 }
 

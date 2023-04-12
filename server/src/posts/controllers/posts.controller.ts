@@ -13,6 +13,7 @@ import {
 } from '@nestjs/common';
 import { JwtAuthenticationGuard } from 'src/authentication/guards/jwt-authentication.guard';
 import { RequestWithUser } from 'src/authentication/interfaces/requestWithUser.interface';
+import { CreateCommentDto } from 'src/comments/dto/create-comment.dto';
 import LocalFilesInterceptor from 'src/localFiles/mixins/localFiles.interceptor';
 import { CreatePostDto } from 'src/posts/dto/create-post.dto';
 import PostService from 'src/posts/services/posts.service';
@@ -60,6 +61,15 @@ export class PostsController {
     return this.postsService.unlikePost(post.id, request.user.id);
   }
 
+  @Post('/add-comment')
+  @UseGuards(JwtAuthenticationGuard)
+  async addComment(
+    @Req() request: RequestWithUser,
+    @Body() createCommentDto: CreateCommentDto
+  ) {
+    return this.postsService.addComment(createCommentDto, request.user);
+  }
+
   @Post()
   @UseGuards(JwtAuthenticationGuard)
   async createPost(
@@ -71,7 +81,7 @@ export class PostsController {
     return this.postsService.createPost(post, user);
   }
 
-  @Post(':id')
+  @Post(':id/add-file')
   @UseGuards(JwtAuthenticationGuard)
   @UseInterceptors(
     LocalFilesInterceptor({
@@ -92,36 +102,11 @@ export class PostsController {
       },
     })
   )
-  /*
-   * TODO:
-   * Дoбавить возможность загрузки нескольких фотографий
-   * */
-  @Post('image')
-  @UseGuards(JwtAuthenticationGuard)
-  @UseInterceptors(
-    LocalFilesInterceptor({
-      fieldName: 'file',
-      path: '/posts',
-      fileFilter: (_request, file, callback) => {
-        if (!file.mimetype.includes('image')) {
-          return callback(
-            new BadRequestException('Provide a valid image'),
-            false
-          );
-        }
-
-        return callback(null, true);
-      },
-      limits: {
-        fileSize: 1024 ** 2, // 1MB
-      },
-    })
-  )
   async addFile(
     @Param('id') id: string,
     @UploadedFile() file: Express.Multer.File
   ) {
-    this.postsService.addImage(id, {
+    this.postsService.addFile(id, {
       path: file.path,
       filename: file.originalname,
       mimetype: file.mimetype,

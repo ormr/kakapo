@@ -4,7 +4,7 @@ import { useGetPostByIdQuery } from '../services/api/PostsApi';
 import Post from '../components/Post';
 import Avatar from '../components/Avatar';
 import AddCommentForm from '../components/forms/AddCommentForm';
-import { useAddCommentToPostMutation } from '../services/api/CommentsApi';
+import { useAddCommentToPostMutation } from '../services/api/PostsApi';
 
 const DetailPage: FC = () => {
   const { postId } = useParams();

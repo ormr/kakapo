@@ -1,4 +1,4 @@
-import React, { FC, useRef } from 'react';
+import React, { FC, useRef, useState } from 'react';
 import ImageIcon from '../../../assets/ImageIcon';
 import PaperclipIcon from '../../../assets/Paperclip';
 import VideoIcon from '../../../assets/VideoIcon';
@@ -9,20 +9,29 @@ import Progressbar from './ProgressBar';
 import FileLoader, { AttachmentType } from '../../FileLoader';
 import FileLoaderButton from '../../FileLoader/FileLoaderButton';
 import { useForm, Controller } from 'react-hook-form';
-import { useCreatePostMutation } from '../../../services/api/PostsApi';
+import {
+  useAddFileToPostMutation,
+  useCreatePostMutation,
+} from '../../../services/api/PostsApi';
 
 interface AddPostFormProps {
   onFormClose: VoidFunction;
 }
 
+export interface AddPostFormValues {
+  content: string;
+  files: File[];
+}
+
 const defaultValues = {
   content: '',
+  files: [],
 };
 
 /*
  * TODO:
- * 1. Подключить к API
- */
+ * Прикрутить сохранение нескольких изображений на сервере
+ * */
 
 const AddPostForm: FC<AddPostFormProps> = ({ onFormClose }) => {
   const maxValue = 250;
@@ -31,11 +40,21 @@ const AddPostForm: FC<AddPostFormProps> = ({ onFormClose }) => {
     defaultValues,
   });
 
-  const [createPost, { isLoading }] = useCreatePostMutation();
+  const [isLoading, setIsLoading] = useState(false);
+  const [createPost] = useCreatePostMutation();
+  const [addFileToPost] = useAddFileToPostMutation();
 
-  const onSubmit = async (formState: any) => {
-    const post = await createPost(formState).unwrap();
-    console.log(post);
+  const onSubmit = async ({ content, files }: AddPostFormValues) => {
+    setIsLoading(true);
+    const post = await createPost({ content });
+
+    if ('data' in post && files) {
+      for (const file of files) {
+        addFileToPost({ postId: post.data.id, file });
+      }
+    }
+
+    setIsLoading(false);
     onFormClose();
   };
 
@@ -56,22 +75,32 @@ const AddPostForm: FC<AddPostFormProps> = ({ onFormClose }) => {
           )}
         />
         <div className="w-full flex items-center gap-3.5 mt-2 mb-4">
-          <FileLoader>
-            <FileLoaderButton type={AttachmentType.IMAGE}>
-              <ImageIcon />
-            </FileLoaderButton>
-            <FileLoaderButton type={AttachmentType.VIDEO}>
-              <VideoIcon />
-            </FileLoaderButton>
-            <FileLoaderButton type={AttachmentType.DOC}>
-              <PaperclipIcon />
-            </FileLoaderButton>
-          </FileLoader>
+          <Controller
+            control={control}
+            name="files"
+            render={({ field: { value, onChange } }) => (
+              <FileLoader files={value} onChange={(files) => onChange(files)}>
+                <FileLoaderButton type={AttachmentType.IMAGE}>
+                  <ImageIcon />
+                </FileLoaderButton>
+                <FileLoaderButton type={AttachmentType.VIDEO}>
+                  <VideoIcon />
+                </FileLoaderButton>
+                <FileLoaderButton type={AttachmentType.DOC}>
+                  <PaperclipIcon />
+                </FileLoaderButton>
+              </FileLoader>
+            )}
+          />
           <Progressbar value={watch('content').length} maxValue={maxValue} />
         </div>
         <Button
           onClick={handleSubmit(onSubmit)}
-          disabled={watch('content').length > maxValue || !watch('content').length}
+          disabled={
+            watch('content').length > maxValue ||
+            !watch('content').length ||
+            isLoading
+          }
         >
           Post
         </Button>

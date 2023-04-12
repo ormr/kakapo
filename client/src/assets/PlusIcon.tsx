@@ -1,6 +1,18 @@
-import React from "react";
+import React, { FC } from 'react';
 
-const PlusIcon = () => {
+interface PlusIconProps {
+  width?: number;
+  height?: number;
+  fill?: string;
+  className?: string;
+}
+
+const PlusIcon: FC<PlusIconProps> = ({
+  width = 12,
+  height = 12,
+  fill = '#fff',
+  className = '',
+}) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -9,9 +21,10 @@ const PlusIcon = () => {
       strokeMiterlimit="2"
       clipRule="evenodd"
       viewBox="0 0 24 24"
-      width="12"
-      height="12"
-      fill="#fff"
+      width={width}
+      height={height}
+      fill={fill}
+      className={className}
     >
       <path
         fillRule="nonzero"
@@ -19,6 +32,6 @@ const PlusIcon = () => {
       ></path>
     </svg>
   );
-}
+};
 
 export default PlusIcon;
