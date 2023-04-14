@@ -9,7 +9,7 @@ import { CreatePostDto } from 'src/posts/dto/create-post.dto';
 import { UpdatePostDto } from 'src/posts/dto/update-post.dto';
 import Post from 'src/posts/entities/post.entity';
 import User from 'src/users/entities/user.entity';
-import { Repository } from 'typeorm';
+import { FindManyOptions, MoreThan, Repository } from 'typeorm';
 
 @Injectable()
 class PostService {
@@ -25,7 +25,7 @@ class PostService {
     return this.postRepository.save({ ...post, author: user });
   }
 
-  async likePost(postId: string, user: User) {
+  async likePost(postId: number, user: User) {
     const results = await this.postRepository.find({
       relations: ['likes'],
       where: {
@@ -58,7 +58,7 @@ class PostService {
     return 'Post has been liked';
   }
 
-  async unlikePost(postId: string, userId: string) {
+  async unlikePost(postId: number, userId: string) {
     const results = await this.postRepository.find({
       relations: ['likes'],
       where: {
@@ -89,7 +89,7 @@ class PostService {
     return await this.getOnePost(postId);
   }
 
-  async getOnePost(id: string) {
+  async getOnePost(id: number) {
     const { likesCount, commentsCount } = await this.getPostMetrics(id);
 
     const post = await this.postRepository.findOne({
@@ -134,7 +134,7 @@ class PostService {
     };
   }
 
-  async getPostMetrics(postId: string) {
+  async getPostMetrics(postId: number) {
     const [post] = await this.postRepository
       .createQueryBuilder('post')
       .where('post.id = :id', { id: postId })
@@ -150,32 +150,53 @@ class PostService {
     return { likesCount, commentsCount };
   }
 
-  async getAllPosts(): Promise<Post[]> {
-    return this.postRepository
-      .createQueryBuilder('post')
-      .leftJoinAndSelect('post.author', 'author')
-      .loadRelationCountAndMap('post.commentsCount', 'post.comments')
-      .loadRelationCountAndMap('post.likesCount', 'post.likes')
-      .getMany();
-  }
+  async getPosts(
+    offset?: number,
+    limit?: number,
+    startId?: number,
+    options?: FindManyOptions<Post>
+  ) {
+    // return this.postRepository
+    //   .createQueryBuilder('post')
+    //   .leftJoinAndSelect('post.author', 'author')
+    //   .loadRelationCountAndMap('post.commentsCount', 'post.comments')
+    //   .loadRelationCountAndMap('post.likesCount', 'post.likes')
+    //   .getMany();
 
-  async getPostsByUserId(id: string): Promise<Post[]> {
-    return this.postRepository.find({
+    const where: FindManyOptions<Post>['where'] = {};
+    let separateCount = 0;
+
+    if (startId) {
+      where.id = MoreThan(startId);
+      separateCount = await this.postRepository.count();
+    }
+
+    const [items, count] = await this.postRepository.findAndCount({
       where: {
-        author: {
-          id,
-        },
+        ...where,
+        ...options?.where,
       },
       relations: ['author'],
+      order: {
+        id: 'ASC',
+      },
+      skip: offset,
+      take: limit,
+      ...options,
     });
+
+    return {
+      items,
+      count: startId ? separateCount : count,
+    };
   }
 
-  async removePost(id: string): Promise<string> {
+  async removePost(id: number): Promise<number> {
     await this.postRepository.delete({ id });
     return id;
   }
 
-  async updatePost(id: string, updatePostInput: UpdatePostDto): Promise<Post> {
+  async updatePost(id: number, updatePostInput: UpdatePostDto): Promise<Post> {
     await this.postRepository.update(
       {
         id,
@@ -186,7 +207,7 @@ class PostService {
     return this.getOnePost(updatePostInput.id);
   }
 
-  async addFile(postId: string, fileData: LocalFileDto) {
+  async addFile(postId: number, fileData: LocalFileDto) {
     const file = await this.localFilesService.saveLocalFileData(fileData);
 
     const post = await this.postRepository.findOne({ where: { id: postId } });

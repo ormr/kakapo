@@ -12,8 +12,8 @@ const MainPage: FC = (): ReactElement => {
     <>
       <Container>
         <div className="flex flex-col gap-6">
-          {posts?.length
-            ? posts.map((post) => <Post key={post.id} {...post} />)
+          {posts?.items
+            ? posts.items.map((post) => <Post key={post.id} {...post} />)
             : 'Постов пока нет'}
         </div>
       </Container>

@@ -1,9 +1,9 @@
-import { IsNotEmpty, IsUUID } from 'class-validator';
+import { IsNotEmpty, IsNumber } from 'class-validator';
 
 class ObjectWithIdDto {
-  @IsUUID()
+  @IsNumber()
   @IsNotEmpty()
-  id: string;
+  id: number;
 }
 
 export default ObjectWithIdDto;

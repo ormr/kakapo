@@ -16,8 +16,8 @@ import LocalFile from '../../localFiles/entities/localFile.entity';
 
 @Entity('posts')
 class Post {
-  @PrimaryGeneratedColumn('uuid')
-  public id: string;
+  @PrimaryGeneratedColumn()
+  public id: number;
 
   @Column()
   public content: string;

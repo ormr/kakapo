@@ -8,7 +8,7 @@ interface Author {
 }
 
 export interface Post {
-  id: string;
+  id: number;
   content: string;
   createdAt: string;
   imageId?: string;
@@ -17,24 +17,29 @@ export interface Post {
   fileIds: any[];
 }
 
+interface Response<T> {
+  items: T;
+  count: number;
+}
+
 export const postsExtendedApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    getPosts: builder.query<Post[], void>({
+    getPosts: builder.query<Response<Post[]>, void>({
       query: () => 'posts',
       providesTags: (result) =>
-        result
+        result && result.items
           ? [
-              ...result.map(({ id }) => ({ type: 'Posts', id } as const)),
+              ...result.items.map(({ id }) => ({ type: 'Posts', id } as const)),
               { type: 'Posts', id: 'LIST' },
             ]
           : [{ type: 'Posts', id: 'LIST' }],
     }),
-    getPostsByUserId: builder.query<Post[], string | undefined>({
+    getPostsByUserId: builder.query<Response<Post[]>, string | undefined>({
       query: (id) => `posts/user/${id}`,
       providesTags: (result) => {
-        return result
+        return result && result.items
           ? [
-              ...result.map(({ id }) => ({ type: 'Posts', id } as const)),
+              ...result.items.map(({ id }) => ({ type: 'Posts', id } as const)),
               { type: 'Posts', id: 'LIST' },
             ]
           : [{ type: 'Posts', id: 'LIST' }];

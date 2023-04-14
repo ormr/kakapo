@@ -10,6 +10,7 @@ import {
   BadRequestException,
   UploadedFile,
   Req,
+  Query,
 } from '@nestjs/common';
 import { JwtAuthenticationGuard } from 'src/authentication/guards/jwt-authentication.guard';
 import { RequestWithUser } from 'src/authentication/interfaces/requestWithUser.interface';
@@ -18,6 +19,7 @@ import LocalFilesInterceptor from 'src/localFiles/mixins/localFiles.interceptor'
 import { CreatePostDto } from 'src/posts/dto/create-post.dto';
 import PostService from 'src/posts/services/posts.service';
 import { UsersService } from 'src/users/services/users.service';
+import { PaginationParams } from 'src/utils/types/paginationParams';
 
 @Controller('posts')
 export class PostsController {
@@ -27,27 +29,26 @@ export class PostsController {
   ) {}
 
   @Get()
-  async getAllPosts() {
-    return this.postsService.getAllPosts();
+  async getPosts(@Query() { offset, limit, startId }: PaginationParams) {
+    return this.postsService.getPosts(offset, limit, startId);
   }
 
   @Get(':id')
   @UseGuards(JwtAuthenticationGuard)
-  async getOnePost(@Req() _request: RequestWithUser, @Param('id') id: string) {
-    // return this.postsService.checkLikeForUser(id, request.user.id);
+  async getOnePost(@Req() _request: RequestWithUser, @Param('id') id: number) {
     return this.postsService.getOnePost(id);
   }
 
   @Get('/user/:id')
-  async getPostsByUserId(@Param('id') userId: string) {
-    return this.postsService.getPostsByUserId(userId);
+  async getPostsByUserId(@Param('id') userId: string, @Query() { offset, limit, startId }: PaginationParams) {
+    return this.postsService.getPosts(offset, limit, startId, { where: { author: { id: userId } } });
   }
 
   @Post('/like')
   @UseGuards(JwtAuthenticationGuard)
   async likePost(
     @Req() request: RequestWithUser,
-    @Body() post: { id: string }
+    @Body() post: { id: number }
   ) {
     return this.postsService.likePost(post.id, request.user);
   }
@@ -56,7 +57,7 @@ export class PostsController {
   @UseGuards(JwtAuthenticationGuard)
   async unlikePost(
     @Req() request: RequestWithUser,
-    @Body() post: { id: string }
+    @Body() post: { id: number }
   ) {
     return this.postsService.unlikePost(post.id, request.user.id);
   }
@@ -103,7 +104,7 @@ export class PostsController {
     })
   )
   async addFile(
-    @Param('id') id: string,
+    @Param('id') id: number,
     @UploadedFile() file: Express.Multer.File
   ) {
     this.postsService.addFile(id, {
@@ -119,7 +120,7 @@ export class PostsController {
   // }
 
   @Delete(':id')
-  async removePost(@Param('id') id: string) {
+  async removePost(@Param('id') id: number) {
     return this.postsService.removePost(id);
   }
 }

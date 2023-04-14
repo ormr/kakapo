@@ -8,6 +8,7 @@ import HeartIcon from '../../assets/HeartIcon';
 import CommentIcon from '../../assets/CommentIcon';
 import ShareIcon from '../../assets/ShareIcon';
 import { Post as PostProps } from '../../services/api/PostsApi';
+import clsx from 'clsx';
 
 interface PostToolProps {
   icon: ReactNode;
@@ -67,14 +68,44 @@ interface PostFilesPreviewProps {
   fileIds: string[];
 }
 
+interface FilePositionsStyles {
+  [key: number]: {
+    wrapper: string;
+    figure: (index: number) => string | undefined;
+  };
+}
+
 const PostFilesPreview: FC<PostFilesPreviewProps> = ({ fileIds }) => {
+  const filePositionsByLength: FilePositionsStyles = {
+    1: {
+      wrapper: 'grid grid-cols-1',
+      figure: () => undefined,
+    },
+    2: {
+      wrapper: 'grid-cols-2 gap-1',
+      figure: () => undefined,
+    },
+    3: {
+      wrapper: 'grid-cols-2 gap-1',
+      figure: (index: number) => (index === 1 ? 'row-span-2' : undefined),
+    },
+  };
+
+  const currentFilesPositionStyles = filePositionsByLength[fileIds.length];
+
   return (
-    <div className="grid grid-cols-2 gap-1">
+    <div className={clsx('grid', currentFilesPositionStyles.wrapper)}>
       {fileIds.map((id, index) => (
-        <figure className={1 === index ? 'row-span-2' : undefined}>
+        <figure
+          className={clsx(
+            'w-full h-full',
+            currentFilesPositionStyles.figure(index)
+          )}
+        >
           <img
             className="w-full h-full object-cover block"
             src={`/local-files/${id}`}
+            alt={`post-image-${index}`}
           />
         </figure>
       ))}

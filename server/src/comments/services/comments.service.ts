@@ -16,7 +16,7 @@ class CommentsService {
     return this.commentRepository.find({ relations: ['post'] });
   }
 
-  async getCommentsByPostId(id: string): Promise<Comment[]> {
+  async getCommentsByPostId(id: number): Promise<Comment[]> {
     return this.commentRepository.find({
       where: {
         post: {

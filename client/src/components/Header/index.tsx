@@ -39,6 +39,6 @@ const Tools = () => (
   </ul>
 );
 
-const Logo = () => <div className="font-bold text-xl">GorongGoring</div>;
+const Logo = () => <div className="font-bold text-xl">Намедни</div>;
 
 export default Header;
