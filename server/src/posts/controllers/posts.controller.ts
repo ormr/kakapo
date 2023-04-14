@@ -4,23 +4,24 @@ import {
   Param,
   Post,
   Body,
-  Put,
   Delete,
   UseGuards,
   UseInterceptors,
   BadRequestException,
   UploadedFile,
   Req,
-  HttpException,
-  HttpStatus,
+  Query,
+  Put,
 } from '@nestjs/common';
 import { JwtAuthenticationGuard } from 'src/authentication/guards/jwt-authentication.guard';
 import { RequestWithUser } from 'src/authentication/interfaces/requestWithUser.interface';
+import { CreateCommentDto } from 'src/comments/dto/create-comment.dto';
 import LocalFilesInterceptor from 'src/localFiles/mixins/localFiles.interceptor';
 import { CreatePostDto } from 'src/posts/dto/create-post.dto';
-import { UpdatePostDto } from 'src/posts/dto/update-post.dto';
-import { PostService } from 'src/posts/services/posts.service';
+import PostService from 'src/posts/services/posts.service';
 import { UsersService } from 'src/users/services/users.service';
+import { PaginationParams } from 'src/utils/types/paginationParams';
+import { UpdatePostDto } from '../dto/update-post.dto';
 
 @Controller('posts')
 export class PostsController {
@@ -31,27 +32,38 @@ export class PostsController {
 
   @Get()
   @UseGuards(JwtAuthenticationGuard)
-  async getAllPosts(@Req() request: RequestWithUser) {
-    return this.postsService.getAllPosts(request.user.id);
+  async getPosts(
+    @Req() request: RequestWithUser,
+    @Query() { offset, limit, startId }: PaginationParams
+  ) {
+    return this.postsService.getPosts(
+      offset,
+      limit,
+      startId,
+      {},
+      request.user.id
+    );
+  }
+
+  @Get('/user/:id')
+  async getPostsByUserId(
+    @Param('id') userId: string,
+    @Query() { offset, limit, startId }: PaginationParams
+  ) {
+    return this.postsService.getPosts(offset, limit, startId, {}, userId);
   }
 
   @Get(':id')
   @UseGuards(JwtAuthenticationGuard)
-  async getOnePost(@Req() request: RequestWithUser, @Param('id') id: string) {
-    // return this.postsService.checkLikeForUser(id, request.user.id);
+  async getOnePost(@Req() _request: RequestWithUser, @Param('id') id: number) {
     return this.postsService.getOnePost(id);
-  }
-
-  @Get('/user/:id')
-  async getPostsByUserId(@Param('id') userId: string) {
-    return this.postsService.getPostsByUserId(userId);
   }
 
   @Post('/like')
   @UseGuards(JwtAuthenticationGuard)
   async likePost(
     @Req() request: RequestWithUser,
-    @Body() body: { postId: string }
+    @Body() body: { postId: number }
   ) {
     return this.postsService.likePost(body.postId, request.user);
   }
@@ -60,9 +72,18 @@ export class PostsController {
   @UseGuards(JwtAuthenticationGuard)
   async unlikePost(
     @Req() request: RequestWithUser,
-    @Body() post: { id: string }
+    @Body() post: { id: number }
   ) {
     return this.postsService.unlikePost(post.id, request.user.id);
+  }
+
+  @Post('/add-comment')
+  @UseGuards(JwtAuthenticationGuard)
+  async addComment(
+    @Req() request: RequestWithUser,
+    @Body() createCommentDto: CreateCommentDto
+  ) {
+    return this.postsService.addComment(createCommentDto, request.user);
   }
 
   @Post()
@@ -76,7 +97,7 @@ export class PostsController {
     return this.postsService.createPost(post, user);
   }
 
-  @Post(':id')
+  @Post(':id/add-file')
   @UseGuards(JwtAuthenticationGuard)
   @UseInterceptors(
     LocalFilesInterceptor({
@@ -97,36 +118,11 @@ export class PostsController {
       },
     })
   )
-  /*
-   * TODO:
-   * Дoбавить возможность загрузки нескольких фотографий
-   * */
-  @Post('image')
-  @UseGuards(JwtAuthenticationGuard)
-  @UseInterceptors(
-    LocalFilesInterceptor({
-      fieldName: 'file',
-      path: '/posts',
-      fileFilter: (_request, file, callback) => {
-        if (!file.mimetype.includes('image')) {
-          return callback(
-            new BadRequestException('Provide a valid image'),
-            false
-          );
-        }
-
-        return callback(null, true);
-      },
-      limits: {
-        fileSize: 1024 ** 2, // 1MB
-      },
-    })
-  )
   async addFile(
-    @Param('id') id: string,
+    @Param('id') id: number,
     @UploadedFile() file: Express.Multer.File
   ) {
-    this.postsService.addImage(id, {
+    this.postsService.addFile(id, {
       path: file.path,
       filename: file.originalname,
       mimetype: file.mimetype,
@@ -134,12 +130,12 @@ export class PostsController {
   }
 
   @Put(':id')
-  async updatePost(@Param('id') id: string, @Body() post: UpdatePostDto) {
+  async updatePost(@Param('id') id: number, @Body() post: UpdatePostDto) {
     return this.postsService.updatePost(id, post);
   }
 
   @Delete(':id')
-  async removePost(@Param('id') id: string) {
+  async removePost(@Param('id') id: number) {
     return this.postsService.removePost(id);
   }
 }

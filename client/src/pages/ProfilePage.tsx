@@ -33,19 +33,17 @@ const ProfilePage: FC = () => {
       <section className="mx-auto">
         <h1 className="text-center my-2 text-black">Posts:</h1>
         <div className="flex flex-col gap-6">
-          {
-            posts?.length
-              ? posts.map((post) => (
-                  <Post
-                    key={post.id}
-                    onLikeClick={() => console.log('!')}
-                    onCommentClick={() => console.log('!')}
-                    onRepostClick={() => console.log('!')}
-                    {...post}
-                  />
-                )
-              ) : 'Постов пока нет'
-          }
+          {posts?.items.length
+            ? posts?.items.map((post) => (
+                <Post
+                  key={post.id}
+                  onLikeClick={() => console.log('!')}
+                  onCommentClick={() => console.log('!')}
+                  onRepostClick={() => console.log('!')}
+                  {...post}
+                />
+              ))
+            : 'Постов пока нет'}
         </div>
       </section>
     </Container>

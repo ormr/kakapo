@@ -16,26 +16,24 @@ import LocalFile from '../../localFiles/entities/localFile.entity';
 
 @Entity('posts')
 class Post {
-  @PrimaryGeneratedColumn('uuid')
-  public id: string;
+  @PrimaryGeneratedColumn()
+  public id: number;
 
   @Column()
   public content: string;
 
-  @JoinColumn({ name: 'imageId' })
-  @OneToOne(() => LocalFile, {
-    nullable: true,
-  })
-  public image?: LocalFile;
+  @JoinColumn({ name: 'fileIds' })
+  @OneToMany(() => LocalFile, (file: LocalFile) => file.id, { nullable: true })
+  public files?: LocalFile[];
+
+  @Column('text', { nullable: true, array: true, default: [] })
+  public fileIds?: string[];
 
   @OneToMany(() => Comment, (comment: Comment) => comment.post)
   public comments: Comment[];
 
   @OneToMany(() => Like, (like: Like) => like.post)
   public likes: Like[];
-
-  @Column({ nullable: true })
-  public imageId?: string;
 
   @Column({ default: 0 })
   public likesCount: number;
@@ -46,14 +44,13 @@ class Post {
   @Column({ default: false })
   public isLiked: boolean;
 
-
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => User, (author: User) => author.posts)
+  @ManyToOne(() => User, (author: User) => author.posts, { eager: true })
   public author: User;
 }
 

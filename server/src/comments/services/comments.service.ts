@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import Comment from '../entities/comment.entity';
@@ -16,7 +16,7 @@ class CommentsService {
     return this.commentRepository.find({ relations: ['post'] });
   }
 
-  async getCommentsByPostId(id: string): Promise<Comment[]> {
+  async getCommentsByPostId(id: number): Promise<Comment[]> {
     return this.commentRepository.find({
       where: {
         post: {
@@ -26,11 +26,13 @@ class CommentsService {
     });
   }
 
-  async createComment(commentDto: LikeDto, author: User): Promise<Comment> {
-    return await this.commentRepository.save({
+  async createComment(commentDto: LikeDto, author: User): Promise<any> {
+    const comment = this.commentRepository.save({
       ...commentDto,
       author,
     });
+
+    return comment;
   }
 }
 

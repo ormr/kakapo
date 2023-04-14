@@ -8,6 +8,7 @@ import HeartIcon from '../../assets/HeartIcon';
 import CommentIcon from '../../assets/CommentIcon';
 import ShareIcon from '../../assets/ShareIcon';
 import { Post as PostEntity } from '../../services/api/PostsApi';
+import clsx from 'clsx';
 
 interface PostToolProps {
   icon: ReactNode;
@@ -39,12 +40,13 @@ interface PostProps {
   onLikeClick: VoidFunction;
   onCommentClick: VoidFunction;
   onRepostClick: VoidFunction;
-};
+}
 
 const Post: FC<PostEntity & PostProps> = ({
   id,
   author,
   createdAt,
+  fileIds,
   content,
   onLikeClick,
   onCommentClick,
@@ -58,10 +60,10 @@ const Post: FC<PostEntity & PostProps> = ({
   const [likesCount, setLikesCount] = useState(defaultLikesCount);
 
   const handleLikePost = () => {
-    setIsLiked(prevState => !prevState);
-    setLikesCount(prevCount => isLiked ? prevCount - 1 : prevCount + 1);
+    setIsLiked((prevState) => !prevState);
+    setLikesCount((prevCount) => (isLiked ? prevCount - 1 : prevCount + 1));
     onLikeClick();
-  }
+  };
 
   return (
     <div className="w-full max-w-lg mx-auto flex flex-col gap-3.5">
@@ -78,15 +80,76 @@ const Post: FC<PostEntity & PostProps> = ({
           <DotsIcon />
         </Button>
       </header>
+      {fileIds.length ? <PostFilesPreview fileIds={fileIds} /> : undefined}
       <div>{content}</div>
       <footer className="flex flex-wrap gap-3 text-sm">
-        <PostTool icon={<HeartIcon fill={isLiked} />} onClick={handleLikePost} count={likesCount} />
-        <PostTool icon={<CommentIcon />} onClick={onCommentClick} count={commentsCount} />
-        <PostTool icon={<ShareIcon />} onClick={onRepostClick} count={repostsCount} />
+        <PostTool
+          icon={<HeartIcon fill={isLiked} />}
+          onClick={handleLikePost}
+          count={likesCount}
+        />
+        <PostTool
+          icon={<CommentIcon />}
+          onClick={onCommentClick}
+          count={commentsCount}
+        />
+        <PostTool
+          icon={<ShareIcon />}
+          onClick={onRepostClick}
+          count={repostsCount}
+        />
       </footer>
     </div>
+  );
+};
 
-  )
+interface PostFilesPreviewProps {
+  fileIds: string[];
+}
+
+interface FilePositionsStyles {
+  [key: number]: {
+    wrapper: string;
+    figure: (index: number) => string | undefined;
+  };
+}
+
+const PostFilesPreview: FC<PostFilesPreviewProps> = ({ fileIds }) => {
+  const filePositionsByLength: FilePositionsStyles = {
+    1: {
+      wrapper: 'grid grid-cols-1',
+      figure: () => undefined,
+    },
+    2: {
+      wrapper: 'grid-cols-2 gap-1',
+      figure: () => undefined,
+    },
+    3: {
+      wrapper: 'grid-cols-2 gap-1',
+      figure: (index: number) => (index === 1 ? 'row-span-2' : undefined),
+    },
+  };
+
+  const currentFilesPositionStyles = filePositionsByLength[fileIds.length];
+
+  return (
+    <div className={clsx('grid', currentFilesPositionStyles.wrapper)}>
+      {fileIds.map((id, index) => (
+        <figure
+          className={clsx(
+            'w-full h-full',
+            currentFilesPositionStyles.figure(index)
+          )}
+        >
+          <img
+            className="w-full h-full object-cover block"
+            src={`/local-files/${id}`}
+            alt={`post-image-${index}`}
+          />
+        </figure>
+      ))}
+    </div>
+  );
 };
 
 export default Post;

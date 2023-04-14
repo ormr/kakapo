@@ -1,22 +1,34 @@
 import React, { FC, ReactNode } from 'react';
-import { useParams } from 'react-router-dom';
-import { useGetPostByIdQuery } from '../services/api/PostsApi';
+import { useNavigate, useParams } from 'react-router-dom';
+import {
+  useGetPostByIdQuery,
+  useToggleLikePostMutation,
+} from '../services/api/PostsApi';
 import Post from '../components/Post';
 import Avatar from '../components/Avatar';
 import AddCommentForm from '../components/forms/AddCommentForm';
-import { useAddCommentToPostMutation } from '../services/api/CommentsApi';
+import { useAddCommentToPostMutation } from '../services/api/PostsApi';
 
 const DetailPage: FC = () => {
   const { postId } = useParams();
+  const navigate = useNavigate();
   const { data: post } = useGetPostByIdQuery(postId);
   const [addComment] = useAddCommentToPostMutation();
+  const [toggleLike] = useToggleLikePostMutation();
 
   if (!post) return null;
 
   return (
     <ContainerInner>
       <section className="mb-6">
-        <Post {...post} />
+        <Post
+          {...post}
+          onLikeClick={async () =>
+            await toggleLike({ isLiked: post.isLiked, postId: post.id })
+          }
+          onCommentClick={() => navigate(`/posts/${post.id}`)}
+          onRepostClick={() => console.log('!')}
+        />
       </section>
       <section className="mb-6">
         <AddCommentForm

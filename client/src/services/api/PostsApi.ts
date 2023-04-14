@@ -8,41 +8,55 @@ interface Author {
 }
 
 export interface Post {
-  id: string;
+  id: number;
   content: string;
   createdAt: string;
   imageId?: string;
   author: Author;
   isLiked?: boolean;
   comments: any[];
+  fileIds: any[];
+}
+
+interface Response<T> {
+  items: T;
+  count: number;
 }
 
 export const postsExtendedApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    getPosts: builder.query<Post[], void>({
+    getPosts: builder.query<Response<Post[]>, void>({
       query: () => 'posts',
       providesTags: (result) =>
-        result
+        result && result.items
           ? [
-              ...result.map(({ id }) => ({ type: 'Posts', id } as const)),
+              ...result.items.map(({ id }) => ({ type: 'Posts', id } as const)),
               { type: 'Posts', id: 'LIST' },
             ]
           : [{ type: 'Posts', id: 'LIST' }],
     }),
-    getPostsByUserId: builder.query<Post[], string | undefined>({
+    getPostsByUserId: builder.query<Response<Post[]>, string | undefined>({
       query: (id) => `posts/user/${id}`,
-      providesTags: (result) =>
-        result
+      providesTags: (result) => {
+        return result && result.items
           ? [
-              ...result.map(({ id }) => ({ type: 'Posts', id } as const)),
+              ...result.items.map(({ id }) => ({ type: 'Posts', id } as const)),
               { type: 'Posts', id: 'LIST' },
             ]
-          : [{ type: 'Posts', id: 'LIST' }],
+          : [{ type: 'Posts', id: 'LIST' }];
+      },
     }),
     getPostById: builder.query<Post, string | undefined>({
       query: (id) => `posts/${id}`,
+      providesTags: (result) =>
+        result
+          ? [
+              { type: 'Posts', id: result.id },
+              { type: 'Posts', id: 'LIST' },
+            ]
+          : [{ type: 'Posts', id: 'LIST' }],
     }),
-    createPost: builder.mutation<any, any>({
+    createPost: builder.mutation<Post, { content: string }>({
       query: (body) => ({
         url: 'posts',
         method: 'POST',
@@ -50,20 +64,17 @@ export const postsExtendedApi = api.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'Posts', id: 'LIST' }],
     }),
-    addImageToPost: builder.mutation<any, any>({
+    addFileToPost: builder.mutation<any, any>({
       query: (data) => {
-        const { id, coverImage } = data;
+        const { postId, file } = data;
 
         const formData = new FormData();
-        formData.append('file', coverImage);
+        formData.append('file', file);
 
         return {
-          url: `posts/${id}`,
+          url: `posts/${postId}/add-file`,
           method: 'POST',
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-          body: coverImage,
+          body: formData,
         };
       },
     }),
@@ -80,7 +91,7 @@ export const postsExtendedApi = api.injectEndpoints({
     }),
     addCommentToPost: builder.mutation<any, any>({
       query: ({ content, postId: id }) => ({
-        url: `comments`,
+        url: 'posts/add-comment',
         method: 'POST',
         body: {
           content,
@@ -88,10 +99,11 @@ export const postsExtendedApi = api.injectEndpoints({
             id,
           },
         },
-        invalidatesTags: (_result: any, _error: any, arg: any) => [
-          { type: 'Posts', id: arg.id },
-        ],
       }),
+      invalidatesTags: (result, error, arg) =>
+        result && !error
+          ? [{ type: 'Posts', id: arg.id }]
+          : [{ type: 'Posts', id: 'LIST' }],
     }),
   }),
 });
@@ -101,6 +113,7 @@ export const {
   useGetPostByIdQuery,
   useGetPostsByUserIdQuery,
   useCreatePostMutation,
-  useAddImageToPostMutation,
   useToggleLikePostMutation,
+  useAddFileToPostMutation,
+  useAddCommentToPostMutation,
 } = postsExtendedApi;

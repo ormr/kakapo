@@ -22,14 +22,14 @@ export class LikeService {
     });
   }
 
-  async remove(postId: string, userId: string): Promise<string> {
+  async remove(postId: number, userId: string): Promise<number> {
     const like = await this.likeRepository.findOne({
       where: { user: { id: userId } },
     });
 
     if (!like) {
-      throw new HttpException('Like is not found', HttpStatus.NOT_FOUND)
-    };
+      throw new HttpException('Like is not found', HttpStatus.NOT_FOUND);
+    }
 
     const deleted = await this.likeRepository.delete({ id: like.id });
 
