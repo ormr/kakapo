@@ -1,3 +1,4 @@
+import * as path from 'path'
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -7,6 +8,7 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import { CommentsModule } from './comments/comments.module';
 import { LocalFilesModule } from './localFiles/localFile.module';
 import { LikesModule } from './likes/likes.module';
+import { CreatedAllEntities1681650046713 } from './migrations/1681650046713-CreatedAllEntities';
 
 @Module({
   imports: [
@@ -21,21 +23,9 @@ import { LikesModule } from './likes/likes.module';
         password: config.get<string>('TYPEORM_PASSWORD'),
         database: config.get<string>('TYPEORM_DATABASE'),
         port: config.get<number>('TYPEORM_PORT'),
-        entities: [],
-        autoLoadEntities: true,
-        synchronize: true,
-        // entities: [__dirname + 'dist/**/*.entity{.ts,.js}'],
-        // synchronize: false,
-        // // autoLoadEntities: true,
-        // logging: true,
-        // logger: 'file',
-        // migrations: [__dirname + '/migrations/**/*{.ts,.js}'],
-        // migrationsRun: true,
-        // cli: {
-        //   // Location of migration should be inside src folder
-        //   // to be compiled into dist/ folder.
-        //   migrationsDir: 'src/migrations',
-        // },
+        entities: [path.join(__dirname, '..', '/dist/**/*.entity{.ts,.js}')],
+        migrations: [CreatedAllEntities1681650046713],
+        synchronize: false,
       }),
     }),
     UsersModule,
@@ -46,4 +36,4 @@ import { LikesModule } from './likes/likes.module';
     LocalFilesModule,
   ],
 })
-export class AppModule {}
+export class AppModule { }

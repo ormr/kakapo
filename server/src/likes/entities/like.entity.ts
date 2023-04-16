@@ -1,4 +1,3 @@
-import User from 'src/users/entities/user.entity';
 import {
   Entity,
   JoinColumn,
@@ -7,6 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import Post from '../../posts/entities/post.entity';
+import User from '../../users/entities/user.entity';
 
 @Entity()
 class Like {

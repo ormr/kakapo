@@ -1,21 +1,17 @@
 import { DataSource } from 'typeorm';
 import { config } from 'dotenv';
-import User from '../users/entities/user.entity';
-import Post from '../posts/entities/post.entity';
-import Comment from '../comments/entities/comment.entity';
-import LocalFile from '../localFiles/entities/localFile.entity';
-import Like from '../likes/entities/like.entity';
-import { RemovedPostTitle1678907507513 } from '../migrations/1678907507513-RemovedPostTitle';
+import * as path from 'path'
+import { CreatedAllEntities1681650046713 } from '../migrations/1681650046713-CreatedAllEntities';
 
-config();
+config({ path: path.join(__dirname, '..', '..', '..', '.env') });
 
 export default new DataSource({
   type: 'postgres',
-  host: 'localhost',
-  port: 5432,
-  username: 'admin',
-  password: 'admin',
-  database: 'blog-db',
-  entities: [Post, User, LocalFile, Comment, Like],
-  migrations: [RemovedPostTitle1678907507513],
+  host: process.env.TYPEORM_HOST,
+  port: Number(process.env.TYPEORM_PORT),
+  username: process.env.TYPEORM_USERNAME,
+  password: process.env.TYPEORM_PASSWORD,
+  database: process.env.TYPEORM_DATABASE,
+  entities: [path.join(__dirname, '..', '/dist/**/*.entity{.ts,.js}')],
+  migrations: [CreatedAllEntities1681650046713],
 });
