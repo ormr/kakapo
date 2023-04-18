@@ -7,7 +7,8 @@ import useOnClickOutside from '../../../hooks/useOutsideClick';
 import Button from '../../Button';
 import TextArea from '../../Textarea';
 import Progressbar from './ProgressBar';
-import FileLoader, { AttachmentType } from '../../FileLoader';
+import FileLoader from '../../FileLoader';
+import { AttachmentType } from '../../FileLoader/utils';
 import FileLoaderButton from '../../FileLoader/FileLoaderButton';
 import { useAddFileToPostMutation, useCreatePostMutation } from '../../../services/api/PostsApi';
 
@@ -46,9 +47,9 @@ const AddPostForm: FC<AddPostFormProps> = ({ onFormClose }) => {
     const post = await createPost({ content });
 
     if ('data' in post && files) {
-      for (const file of files) {
-        addFileToPost({ postId: post.data.id, file });
-      }
+      files.forEach(async (file) => {
+        await addFileToPost({ postId: post.data.id, file });
+      });
     }
 
     setIsLoading(false);

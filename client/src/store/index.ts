@@ -4,7 +4,7 @@ import { createReduxHistoryContext } from 'redux-first-history';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import Env from '../config/Env';
 import { authReducer } from '../features/auth/authSlice';
-import { errorLoggerMiddleware } from './middleware/errorLogger';
+import errorLoggerMiddleware from './middleware/errorLogger';
 import api from '../services/api';
 
 const { createReduxHistory, routerMiddleware, routerReducer } = createReduxHistoryContext({

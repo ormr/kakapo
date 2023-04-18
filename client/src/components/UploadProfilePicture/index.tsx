@@ -15,8 +15,20 @@ const UploadProfilePicture: FC<UploadProfilePictureProps> = ({ href, onChange })
     }
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      ref?.current?.click();
+    }
+  };
+
   return (
-    <div className="w-64 h-64" onClick={() => ref?.current?.click()}>
+    <div
+      role="button"
+      tabIndex={0}
+      className="w-64 h-64"
+      onClick={() => ref?.current?.click()}
+      onKeyDown={handleKeyDown}
+    >
       <input ref={ref} type="file" accept="image/png, image/jpeg" onChange={handleChange} hidden />
       <div className="relative w-64 h-64">
         <img

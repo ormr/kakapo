@@ -2,7 +2,6 @@ import React, { FC } from 'react';
 import Container from '../components/Container';
 import Post from '../components/Post';
 import UploadProfilePicture from '../components/UploadProfilePicture';
-import { BASE_URL } from '../core/axios';
 import { useGetPostsByUserIdQuery } from '../services/api/PostsApi';
 import { useAddProfilePictureMutation } from '../services/api/UsersApi';
 import { useAppSelector } from '../store/hooks';

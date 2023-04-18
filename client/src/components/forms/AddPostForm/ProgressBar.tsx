@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 
 interface ProgressbarProps {
@@ -31,12 +31,16 @@ const Progressbar: FC<ProgressbarProps> = ({ value, maxValue }) => {
     if (value > maxValue + 10) {
       return 'transparent';
     }
+
+    return undefined;
   };
 
   const getTrailColor = () => {
     if (value > maxValue + 10) {
       return 'transparent';
     }
+
+    return undefined;
   };
 
   return (

@@ -1,18 +1,7 @@
 import React, { FC, ReactNode, useState, useRef, useMemo, useEffect } from 'react';
-import { FilesContext } from './context';
+import FilesContext from './context';
 import FilesPreview from './FilesPreview';
-
-export enum AttachmentType {
-  IMAGE = 'image',
-  VIDEO = 'video',
-  DOC = 'doc',
-}
-
-const attachmentMap = {
-  [AttachmentType.IMAGE]: 'image/png, image/jpeg',
-  [AttachmentType.VIDEO]: 'video/mp4',
-  [AttachmentType.DOC]: '.doc,.docx,.xml',
-};
+import { attachmentMap, AttachmentType } from './utils';
 
 interface AddFileProps {
   files?: File[];
@@ -64,6 +53,10 @@ const FileLoader: FC<AddFileProps> = ({ children, files: defaultFiles = [], onCh
       <FilesPreview files={files} onDelete={handleDelete} />
     </div>
   );
+};
+
+FileLoader.defaultProps = {
+  files: undefined,
 };
 
 export default FileLoader;

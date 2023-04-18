@@ -11,4 +11,8 @@ const Label: FC<LabelProps> = ({ children, htmlFor }) => (
   </label>
 );
 
+Label.defaultProps = {
+  htmlFor: undefined,
+};
+
 export default Label;

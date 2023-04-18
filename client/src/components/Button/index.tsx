@@ -10,12 +10,19 @@ interface ButtonProps {
 
 const Button: FC<ButtonProps> = ({ children, onClick, disabled = false, className = '' }) => (
   <button
+    type="button"
     className={clsx('w-full p-4 bg-black text-white border-1', disabled && 'bg-opacity-25', className)}
     onClick={onClick}
     disabled={disabled}
   >
-    Post
+    {children}
   </button>
 );
+
+Button.defaultProps = {
+  disabled: false,
+  onClick: () => {},
+  className: '',
+};
 
 export default Button;

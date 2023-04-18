@@ -1,6 +1,6 @@
 import React, { FC, ReactNode, useContext } from 'react';
-import { AttachmentType } from '.';
-import { FilesContext } from './context';
+import FilesContext from './context';
+import { AttachmentType } from './utils';
 
 interface FileLoaderButtonProps {
   children: ReactNode;
@@ -12,7 +12,7 @@ const FileLoaderButton: FC<FileLoaderButtonProps> = ({ type, children }) => {
 
   return (
     <label htmlFor={htmlForName} className="flex items-center">
-      <button onClick={() => addFile(type)} className="[&>*]:w-5 [&>*]:h-5">
+      <button type="button" onClick={() => addFile(type)} className="[&>*]:w-5 [&>*]:h-5">
         {children}
       </button>
     </label>

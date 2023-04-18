@@ -5,6 +5,26 @@ import Post from '../components/Post';
 import Avatar from '../components/Avatar';
 import AddCommentForm from '../components/forms/AddCommentForm';
 
+interface ContainerInnerProps {
+  children: React.ReactNode;
+}
+
+const ContainerInner: FC<ContainerInnerProps> = ({ children }) => (
+  <div className="w-full max-w-lg mx-auto">{children}</div>
+);
+
+interface CommentProps {
+  content: string;
+  author: any;
+}
+
+const Comment: FC<CommentProps> = ({ content, author }) => (
+  <div className="w-full flex gap-3 items-center">
+    <Avatar id={author.avatarId} />
+    <div className="w-full">{content}</div>
+  </div>
+);
+
 const DetailPage: FC = () => {
   const { postId } = useParams();
   const navigate = useNavigate();
@@ -38,25 +58,5 @@ const DetailPage: FC = () => {
     </ContainerInner>
   );
 };
-
-interface ContainerInnerProps {
-  children: React.ReactNode;
-}
-
-const ContainerInner: FC<ContainerInnerProps> = ({ children }) => (
-  <div className="w-full max-w-lg mx-auto">{children}</div>
-);
-
-interface CommentProps {
-  content: string;
-  author: any;
-}
-
-const Comment: FC<CommentProps> = ({ content, author }) => (
-  <div className="w-full flex gap-3 items-center">
-    <Avatar id={author.avatarId} />
-    <div className="w-full">{content}</div>
-  </div>
-);
 
 export default DetailPage;

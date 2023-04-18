@@ -1,14 +1,13 @@
-import React, { FC, ReactElement, useEffect, useState } from 'react';
+import React, { FC, ReactElement } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Post from '../components/Post';
 import Container from '../components/Container';
 import { useGetPostsQuery, useToggleLikePostMutation } from '../services/api/PostsApi';
-import PlusIcon from '../assets/PlusIcon';
-import AddPostForm from '../components/forms/AddPostForm';
+import TogglePostForm from '../components/forms/TogglePostForm';
 
 const MainPage: FC = (): ReactElement => {
   const navigate = useNavigate();
-  const { data: posts, error, isLoading } = useGetPostsQuery();
+  const { data: posts } = useGetPostsQuery();
 
   const [toggleLike] = useToggleLikePostMutation();
 
@@ -31,20 +30,6 @@ const MainPage: FC = (): ReactElement => {
       </Container>
       <TogglePostForm />
     </>
-  );
-};
-
-const TogglePostForm = () => {
-  const [showPost, setShowPost] = useState(false);
-  return (
-    <div>
-      <div className="fixed bottom-3 right-3">
-        <button className="rounded-full bg-neutral-800 text-white p-3" onClick={() => setShowPost(true)}>
-          <PlusIcon />
-        </button>
-      </div>
-      {showPost && <AddPostForm onFormClose={() => setShowPost(false)} />}
-    </div>
   );
 };
 

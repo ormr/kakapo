@@ -20,4 +20,8 @@ const UploadIcon: FC<UploadIconProps> = ({ className }) => (
   </svg>
 );
 
+UploadIcon.defaultProps = {
+  className: '',
+};
+
 export default UploadIcon;

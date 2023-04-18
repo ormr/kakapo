@@ -1,9 +1,11 @@
 import { createContext } from 'react';
-import { AttachmentType } from '.';
+import { AttachmentType } from './utils';
 
 interface FilesContextProps {
   htmlForName: string;
   addFile: (type: AttachmentType) => void;
 }
 
-export const FilesContext = createContext<FilesContextProps>(null!);
+const FilesContext = createContext<FilesContextProps>(null!);
+
+export default FilesContext;

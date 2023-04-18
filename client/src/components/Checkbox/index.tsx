@@ -9,7 +9,7 @@ interface CheckboxProps {
 }
 
 const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(({ id, name, value, onChange, label }, ref) => (
-  <label className="flex gap-4">
+  <label className="flex gap-4" htmlFor={name}>
     <input
       ref={ref}
       id={id}
@@ -23,5 +23,11 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(({ id, name, 
     <span className="text-sm text-gray-700">{label}</span>
   </label>
 ));
+
+Checkbox.defaultProps = {
+  id: undefined,
+  name: undefined,
+  value: undefined,
+};
 
 export default Checkbox;

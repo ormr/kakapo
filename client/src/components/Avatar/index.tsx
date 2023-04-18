@@ -14,4 +14,8 @@ const Avatar: FC<AvatarProps> = ({ id }) => (
   </div>
 );
 
+Avatar.defaultProps = {
+  id: undefined,
+};
+
 export default Avatar;

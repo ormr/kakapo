@@ -6,8 +6,8 @@ interface InputProps {
   placeholder?: string;
   name?: string;
   value?: string | ReadonlyArray<string> | number | undefined;
-  onChange: (value: ChangeEvent<HTMLInputElement>) => void;
   errorMessage?: string;
+  onChange?: (value: ChangeEvent<HTMLInputElement>) => void;
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
@@ -30,6 +30,12 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
 Input.defaultProps = {
   id: '',
+  type: 'text',
+  placeholder: '',
+  name: '',
+  value: undefined,
+  errorMessage: undefined,
+  onChange: undefined,
 };
 
 export default Input;

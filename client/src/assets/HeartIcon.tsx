@@ -40,4 +40,8 @@ const HeartIcon: FC<HeartIconProps> = ({ fill }) =>
     </svg>
   );
 
+HeartIcon.defaultProps = {
+  fill: false,
+};
+
 export default HeartIcon;

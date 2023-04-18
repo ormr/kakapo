@@ -27,4 +27,11 @@ const PlusIcon: FC<PlusIconProps> = ({ width = 12, height = 12, fill = '#fff', c
   </svg>
 );
 
+PlusIcon.defaultProps = {
+  width: 12,
+  height: 12,
+  fill: '#fff',
+  className: '',
+};
+
 export default PlusIcon;

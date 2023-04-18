@@ -34,7 +34,7 @@ const App = (): ReactElement => {
           <Route
             path="/profile"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute redirectPath="/login">
                 <ProfilePage />
               </ProtectedRoute>
             }

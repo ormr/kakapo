@@ -1,18 +1,14 @@
-import React, { ChangeEvent, FC } from 'react';
+import React, { FC } from 'react';
 import * as yup from 'yup';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Link } from 'react-router-dom';
 import Input from '../../Input';
 import Label from '../../Label';
-import Checkbox from '../../Checkbox';
 
 const SignInSchema = yup.object().shape({
-  // firstname: yup.string().required(),
-  // lastname: yup.string().required(),
   name: yup.string().required(),
   email: yup.string().required(),
-  // marketingAccept: yup.boolean().required(),
   password: yup.string().required(),
   password2: yup.string().required(),
 });
@@ -22,11 +18,8 @@ interface RegisterFormProps {
 }
 
 const defaultValues = {
-  // firstname: '',
-  // lastname: '',
   name: '',
   email: '',
-  // marketingAccept: false,
   password: '',
   password2: '',
 };

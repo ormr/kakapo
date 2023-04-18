@@ -10,6 +10,46 @@ import CommentIcon from '../../assets/CommentIcon';
 import ShareIcon from '../../assets/ShareIcon';
 import { Post as PostEntity } from '../../services/api/PostsApi';
 
+interface PostFilesPreviewProps {
+  fileIds: string[];
+}
+
+interface FilePositionsStyles {
+  [key: number]: {
+    wrapper: string;
+    figure: (index: number) => string | undefined;
+  };
+}
+
+const PostFilesPreview: FC<PostFilesPreviewProps> = ({ fileIds }) => {
+  const filePositionsByLength: FilePositionsStyles = {
+    1: {
+      wrapper: 'grid grid-cols-1',
+      figure: () => undefined,
+    },
+    2: {
+      wrapper: 'grid-cols-2 gap-1',
+      figure: () => undefined,
+    },
+    3: {
+      wrapper: 'grid-cols-2 gap-1',
+      figure: (index: number) => (index === 1 ? 'row-span-2' : undefined),
+    },
+  };
+
+  const currentFilesPositionStyles = filePositionsByLength[fileIds.length];
+
+  return (
+    <div className={clsx('grid', currentFilesPositionStyles.wrapper)}>
+      {fileIds.map((id, index) => (
+        <figure className={clsx('w-full h-full', currentFilesPositionStyles.figure(index))}>
+          <img className="w-full h-full object-cover block" src={`/local-files/${id}`} alt={`post-${index}`} />
+        </figure>
+      ))}
+    </div>
+  );
+};
+
 interface PostToolProps {
   icon: ReactNode;
   count: number;
@@ -17,7 +57,7 @@ interface PostToolProps {
 }
 
 const PostTool: FC<PostToolProps> = ({ icon, count, onClick }) => (
-  <button className="flex gap-1.5 select-none" onClick={onClick}>
+  <button type="button" className="flex gap-1.5 select-none" onClick={onClick}>
     {icon}
     {count}
   </button>
@@ -28,7 +68,11 @@ interface ButtonProps {
   onClick: VoidFunction;
 }
 
-const Button: FC<ButtonProps> = ({ children, onClick }) => <button onClick={onClick}>{children}</button>;
+const Button: FC<ButtonProps> = ({ children, onClick }) => (
+  <button type="button" onClick={onClick}>
+    {children}
+  </button>
+);
 
 interface PostProps {
   likesCount?: number;
@@ -89,44 +133,11 @@ const Post: FC<PostEntity & PostProps> = ({
   );
 };
 
-interface PostFilesPreviewProps {
-  fileIds: string[];
-}
-
-interface FilePositionsStyles {
-  [key: number]: {
-    wrapper: string;
-    figure: (index: number) => string | undefined;
-  };
-}
-
-const PostFilesPreview: FC<PostFilesPreviewProps> = ({ fileIds }) => {
-  const filePositionsByLength: FilePositionsStyles = {
-    1: {
-      wrapper: 'grid grid-cols-1',
-      figure: () => undefined,
-    },
-    2: {
-      wrapper: 'grid-cols-2 gap-1',
-      figure: () => undefined,
-    },
-    3: {
-      wrapper: 'grid-cols-2 gap-1',
-      figure: (index: number) => (index === 1 ? 'row-span-2' : undefined),
-    },
-  };
-
-  const currentFilesPositionStyles = filePositionsByLength[fileIds.length];
-
-  return (
-    <div className={clsx('grid', currentFilesPositionStyles.wrapper)}>
-      {fileIds.map((id, index) => (
-        <figure className={clsx('w-full h-full', currentFilesPositionStyles.figure(index))}>
-          <img className="w-full h-full object-cover block" src={`/local-files/${id}`} alt={`post-image-${index}`} />
-        </figure>
-      ))}
-    </div>
-  );
+Post.defaultProps = {
+  likesCount: 0,
+  commentsCount: 0,
+  repostsCount: 0,
+  isLiked: false,
 };
 
 export default Post;

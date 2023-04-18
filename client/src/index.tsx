@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import { Provider } from 'react-redux';
 import { HistoryRouter as Router } from 'redux-first-history/rr6';
+import { ToastContainer } from 'react-toastify';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { history, store } from './store';
 import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer } from 'react-toastify';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(

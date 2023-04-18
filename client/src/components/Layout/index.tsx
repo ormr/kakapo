@@ -1,7 +1,7 @@
 import React, { useState, useMemo, FC, ReactNode } from 'react';
+import clsx from 'clsx';
 import Header from '../Header';
 import 'react-circular-progressbar/dist/styles.css';
-import clsx from 'clsx';
 
 interface LayoutProps {
   children: ReactNode;
