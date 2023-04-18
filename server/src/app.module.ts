@@ -1,4 +1,4 @@
-import * as path from 'path'
+import * as path from 'path';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -22,6 +22,7 @@ import { CreatedAllEntities1681650046713 } from './migrations/1681650046713-Crea
         username: config.get<string>('TYPEORM_USERNAME'),
         password: config.get<string>('TYPEORM_PASSWORD'),
         database: config.get<string>('TYPEORM_DATABASE'),
+        ssl: config.get<string>('TYPEORM_SSL') === 'true',
         port: config.get<number>('TYPEORM_PORT'),
         entities: [path.join(__dirname, '..', '/dist/**/*.entity{.ts,.js}')],
         migrations: [CreatedAllEntities1681650046713],
@@ -36,4 +37,4 @@ import { CreatedAllEntities1681650046713 } from './migrations/1681650046713-Crea
     LocalFilesModule,
   ],
 })
-export class AppModule { }
+export class AppModule {}
