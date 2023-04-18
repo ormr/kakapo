@@ -6,12 +6,12 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  const config = app.get(ConfigService);
   app.enableCors({
-    origin: 'http://localhost:3000',
+    origin: config.get<string>('API_ORIGIN_URL'),
     credentials: true,
   });
   app.use(cookieParser());
-  const config = app.get(ConfigService);
   const mode = config.get<string>('MODE');
   const apiPort = config.get<number>('API_PORT');
   const port = mode === 'dev' ? 3001 : apiPort;
