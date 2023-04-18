@@ -7,17 +7,14 @@ interface ProtectedRouteProps {
   children: any;
 }
 
-const ProtectedRoute = ({
-  redirectPath = '/login',
-  children,
-}: ProtectedRouteProps) => {
+const ProtectedRoute = ({ redirectPath = '/login', children }: ProtectedRouteProps) => {
   const { user } = useAppSelector((app) => app.auth);
 
   if (!user) {
     return <Navigate to={redirectPath} replace />;
   }
 
-  return children ? children : <Outlet />;
+  return children || <Outlet />;
 };
 
 export default ProtectedRoute;

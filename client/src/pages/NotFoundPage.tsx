@@ -3,21 +3,13 @@ import { Link } from 'react-router-dom';
 
 const NotFoundPage = () => (
   <div className="flex flex-col h-screen bg-white">
-    <img
-      src="/background-1.jfif"
-      alt=""
-      className="object-cover w-full h-64"
-    />
+    <img src="/background-1.jfif" alt="" className="object-cover w-full h-64" />
 
     <div className="flex items-center justify-center flex-1">
       <div className="max-w-xl px-4 py-8 mx-auto text-center">
-        <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-          We can't find that page.
-        </h1>
+        <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-4xl">We can't find that page.</h1>
 
-        <p className="mt-4 text-gray-500">
-          Try searching again, or return home to start from the beginning.
-        </p>
+        <p className="mt-4 text-gray-500">Try searching again, or return home to start from the beginning.</p>
 
         <Link
           to="/"
@@ -28,7 +20,6 @@ const NotFoundPage = () => (
       </div>
     </div>
   </div>
-
 );
 
 export default NotFoundPage;

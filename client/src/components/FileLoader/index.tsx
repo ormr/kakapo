@@ -1,11 +1,4 @@
-import React, {
-  FC,
-  ReactNode,
-  useState,
-  useRef,
-  useMemo,
-  useEffect,
-} from 'react';
+import React, { FC, ReactNode, useState, useRef, useMemo, useEffect } from 'react';
 import { FilesContext } from './context';
 import FilesPreview from './FilesPreview';
 
@@ -27,11 +20,7 @@ interface AddFileProps {
   children: ReactNode;
 }
 
-const FileLoader: FC<AddFileProps> = ({
-  children,
-  files: defaultFiles = [],
-  onChange,
-}) => {
+const FileLoader: FC<AddFileProps> = ({ children, files: defaultFiles = [], onChange }) => {
   const [files, setFiles] = useState<File[]>(defaultFiles);
   const ref = useRef<HTMLInputElement>(null);
 
@@ -68,18 +57,10 @@ const FileLoader: FC<AddFileProps> = ({
       <div className="flex gap-3.5 pb-2">
         <p className="text-xs text-gray-400">Add:</p>
         <div className="flex space-x-3">
-          <FilesContext.Provider value={tools}>
-            {children}
-          </FilesContext.Provider>
+          <FilesContext.Provider value={tools}>{children}</FilesContext.Provider>
         </div>
       </div>
-      <input
-        ref={ref}
-        name={htmlForName}
-        onChange={handleChange}
-        type="file"
-        hidden
-      />
+      <input ref={ref} name={htmlForName} onChange={handleChange} type="file" hidden />
       <FilesPreview files={files} onDelete={handleDelete} />
     </div>
   );

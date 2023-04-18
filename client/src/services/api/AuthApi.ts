@@ -49,9 +49,4 @@ export const authExtendedApi = api.injectEndpoints({
   }),
 });
 
-export const {
-  useAuthQuery,
-  useLoginMutation,
-  useRegisterMutation,
-  useLogoutMutation,
-} = authExtendedApi;
+export const { useAuthQuery, useLoginMutation, useRegisterMutation, useLogoutMutation } = authExtendedApi;

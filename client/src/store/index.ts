@@ -7,12 +7,11 @@ import { authReducer } from '../features/auth/authSlice';
 import { errorLoggerMiddleware } from './middleware/errorLogger';
 import api from '../services/api';
 
-const { createReduxHistory, routerMiddleware, routerReducer } =
-  createReduxHistoryContext({
-    history: createBrowserHistory(),
-    reduxTravelling: Env.isDev(),
-    savePreviousLocations: 1,
-  });
+const { createReduxHistory, routerMiddleware, routerReducer } = createReduxHistoryContext({
+  history: createBrowserHistory(),
+  reduxTravelling: Env.isDev(),
+  savePreviousLocations: 1,
+});
 
 const makeStore = () => {
   const store = configureStore({
@@ -22,10 +21,7 @@ const makeStore = () => {
       [api.reducerPath]: api.reducer,
     },
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware()
-        .concat(routerMiddleware)
-        .concat(errorLoggerMiddleware)
-        .concat(api.middleware),
+      getDefaultMiddleware().concat(routerMiddleware).concat(errorLoggerMiddleware).concat(api.middleware),
   });
 
   return store;

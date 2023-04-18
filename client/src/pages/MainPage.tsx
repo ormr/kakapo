@@ -1,13 +1,10 @@
 import React, { FC, ReactElement, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Post from '../components/Post';
 import Container from '../components/Container';
-import {
-  useGetPostsQuery,
-  useToggleLikePostMutation,
-} from '../services/api/PostsApi';
+import { useGetPostsQuery, useToggleLikePostMutation } from '../services/api/PostsApi';
 import PlusIcon from '../assets/PlusIcon';
 import AddPostForm from '../components/forms/AddPostForm';
-import { useNavigate } from 'react-router-dom';
 
 const MainPage: FC = (): ReactElement => {
   const navigate = useNavigate();
@@ -23,9 +20,7 @@ const MainPage: FC = (): ReactElement => {
             ? posts?.items?.map((post: any) => (
                 <Post
                   key={post.id}
-                  onLikeClick={async () =>
-                    await toggleLike({ isLiked: post.isLiked, postId: post.id })
-                  }
+                  onLikeClick={async () => toggleLike({ isLiked: post.isLiked, postId: post.id })}
                   onCommentClick={() => navigate(`/posts/${post.id}`)}
                   onRepostClick={() => console.log('!')}
                   {...post}
@@ -44,10 +39,7 @@ const TogglePostForm = () => {
   return (
     <div>
       <div className="fixed bottom-3 right-3">
-        <button
-          className="rounded-full bg-neutral-800 text-white p-3"
-          onClick={() => setShowPost(true)}
-        >
+        <button className="rounded-full bg-neutral-800 text-white p-3" onClick={() => setShowPost(true)}>
           <PlusIcon />
         </button>
       </div>

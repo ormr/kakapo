@@ -15,18 +15,12 @@ const ProfilePage: FC = () => {
   return (
     <Container>
       <section className="px-40 flex gap-10 items-center">
-        <UploadProfilePicture
-          href={user?.avatarId}
-          onChange={async (file) => addProfilePicture(file)}
-        />
+        <UploadProfilePicture href={user?.avatarId} onChange={async (file) => addProfilePicture(file)} />
         <div className="flex items-center">
           <div>
             <div>name: {user?.name}</div>
             <div>email: {user?.email}</div>
-            <div>
-              description:{' '}
-              {user?.description ? user?.description : 'No description'}
-            </div>
+            <div>description: {user?.description ? user?.description : 'No description'}</div>
           </div>
         </div>
       </section>

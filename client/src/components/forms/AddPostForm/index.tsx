@@ -1,4 +1,5 @@
 import React, { FC, useRef, useState } from 'react';
+import { useForm, Controller } from 'react-hook-form';
 import ImageIcon from '../../../assets/ImageIcon';
 import PaperclipIcon from '../../../assets/Paperclip';
 import VideoIcon from '../../../assets/VideoIcon';
@@ -8,11 +9,7 @@ import TextArea from '../../Textarea';
 import Progressbar from './ProgressBar';
 import FileLoader, { AttachmentType } from '../../FileLoader';
 import FileLoaderButton from '../../FileLoader/FileLoaderButton';
-import { useForm, Controller } from 'react-hook-form';
-import {
-  useAddFileToPostMutation,
-  useCreatePostMutation,
-} from '../../../services/api/PostsApi';
+import { useAddFileToPostMutation, useCreatePostMutation } from '../../../services/api/PostsApi';
 
 interface AddPostFormProps {
   onFormClose: VoidFunction;
@@ -62,17 +59,12 @@ const AddPostForm: FC<AddPostFormProps> = ({ onFormClose }) => {
 
   return (
     <div className="absolute top-0 bottom-0 right-0 left-0 bg-neutral-700 bg-opacity-50">
-      <div
-        ref={formRef}
-        className="w-full h-72 fixed bottom-0 bg-white py-6 px-3"
-      >
+      <div ref={formRef} className="w-full h-72 fixed bottom-0 bg-white py-6 px-3">
         <h3 className="mb-3 font-bold">Create post</h3>
         <Controller
           control={control}
           name="content"
-          render={({ field: { value, onChange } }) => (
-            <TextArea value={value} onChange={onChange} />
-          )}
+          render={({ field: { value, onChange } }) => <TextArea value={value} onChange={onChange} />}
         />
         <div className="w-full flex items-center gap-3.5 mt-2 mb-4">
           <Controller
@@ -96,11 +88,7 @@ const AddPostForm: FC<AddPostFormProps> = ({ onFormClose }) => {
         </div>
         <Button
           onClick={handleSubmit(onSubmit)}
-          disabled={
-            watch('content').length > maxValue ||
-            !watch('content').length ||
-            isLoading
-          }
+          disabled={watch('content').length > maxValue || !watch('content').length || isLoading}
         >
           Post
         </Button>

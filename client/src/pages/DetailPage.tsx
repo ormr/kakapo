@@ -1,13 +1,9 @@
-import React, { FC, ReactNode } from 'react';
+import React, { FC } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import {
-  useGetPostByIdQuery,
-  useToggleLikePostMutation,
-} from '../services/api/PostsApi';
+import { useGetPostByIdQuery, useToggleLikePostMutation, useAddCommentToPostMutation } from '../services/api/PostsApi';
 import Post from '../components/Post';
 import Avatar from '../components/Avatar';
 import AddCommentForm from '../components/forms/AddCommentForm';
-import { useAddCommentToPostMutation } from '../services/api/PostsApi';
 
 const DetailPage: FC = () => {
   const { postId } = useParams();
@@ -23,17 +19,13 @@ const DetailPage: FC = () => {
       <section className="mb-6">
         <Post
           {...post}
-          onLikeClick={async () =>
-            await toggleLike({ isLiked: post.isLiked, postId: post.id })
-          }
+          onLikeClick={async () => toggleLike({ isLiked: post.isLiked, postId: post.id })}
           onCommentClick={() => navigate(`/posts/${post.id}`)}
           onRepostClick={() => console.log('!')}
         />
       </section>
       <section className="mb-6">
-        <AddCommentForm
-          onAddComment={async (data) => addComment({ ...data, postId })}
-        />
+        <AddCommentForm onAddComment={async (data) => addComment({ ...data, postId })} />
       </section>
       <section>
         <h4 className="mb-3">Комментарии:</h4>

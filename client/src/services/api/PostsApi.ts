@@ -29,22 +29,15 @@ export const postsExtendedApi = api.injectEndpoints({
       query: () => 'posts',
       providesTags: (result) =>
         result && result.items
-          ? [
-              ...result.items.map(({ id }) => ({ type: 'Posts', id } as const)),
-              { type: 'Posts', id: 'LIST' },
-            ]
+          ? [...result.items.map(({ id }) => ({ type: 'Posts', id } as const)), { type: 'Posts', id: 'LIST' }]
           : [{ type: 'Posts', id: 'LIST' }],
     }),
     getPostsByUserId: builder.query<Response<Post[]>, string | undefined>({
       query: (id) => `posts/user/${id}`,
-      providesTags: (result) => {
-        return result && result.items
-          ? [
-              ...result.items.map(({ id }) => ({ type: 'Posts', id } as const)),
-              { type: 'Posts', id: 'LIST' },
-            ]
-          : [{ type: 'Posts', id: 'LIST' }];
-      },
+      providesTags: (result) =>
+        result && result.items
+          ? [...result.items.map(({ id }) => ({ type: 'Posts', id } as const)), { type: 'Posts', id: 'LIST' }]
+          : [{ type: 'Posts', id: 'LIST' }],
     }),
     getPostById: builder.query<Post, string | undefined>({
       query: (id) => `posts/${id}`,
@@ -79,15 +72,13 @@ export const postsExtendedApi = api.injectEndpoints({
       },
     }),
     toggleLikePost: builder.mutation<void, any>({
-      query: ({ isLiked, postId }) => {
-        return {
-          url: `posts/${!isLiked ? 'like' : 'unlike'}`,
-          method: 'POST',
-          body: {
-            postId,
-          },
-        };
-      },
+      query: ({ isLiked, postId }) => ({
+        url: `posts/${!isLiked ? 'like' : 'unlike'}`,
+        method: 'POST',
+        body: {
+          postId,
+        },
+      }),
     }),
     addCommentToPost: builder.mutation<any, any>({
       query: ({ content, postId: id }) => ({
@@ -101,9 +92,7 @@ export const postsExtendedApi = api.injectEndpoints({
         },
       }),
       invalidatesTags: (result, error, arg) =>
-        result && !error
-          ? [{ type: 'Posts', id: arg.id }]
-          : [{ type: 'Posts', id: 'LIST' }],
+        result && !error ? [{ type: 'Posts', id: arg.id }] : [{ type: 'Posts', id: 'LIST' }],
     }),
   }),
 });

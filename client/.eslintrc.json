@@ -19,11 +19,7 @@
   },
   "rules": {
     "prettier/prettier": [
-      "warn",
-      {},
-      {
-        "usePrettierrc": true
-      }
+      "warn"
     ],
     "react/jsx-props-no-spreading": "off",
     "quotes": [

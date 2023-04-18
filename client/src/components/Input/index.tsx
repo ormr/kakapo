@@ -11,10 +11,7 @@ interface InputProps {
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  (
-    { id, type = 'text', name, placeholder, value, onChange, errorMessage },
-    ref
-  ) => (
+  ({ id, type = 'text', name, placeholder, value, onChange, errorMessage }, ref) => (
     <>
       <input
         ref={ref}

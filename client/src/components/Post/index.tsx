@@ -1,6 +1,7 @@
 import React, { FC, ReactNode, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
+import clsx from 'clsx';
 import Avatar from '../Avatar';
 import DotIcon from '../../assets/DotIcon';
 import DotsIcon from '../../assets/DotsIcon';
@@ -8,7 +9,6 @@ import HeartIcon from '../../assets/HeartIcon';
 import CommentIcon from '../../assets/CommentIcon';
 import ShareIcon from '../../assets/ShareIcon';
 import { Post as PostEntity } from '../../services/api/PostsApi';
-import clsx from 'clsx';
 
 interface PostToolProps {
   icon: ReactNode;
@@ -28,9 +28,7 @@ interface ButtonProps {
   onClick: VoidFunction;
 }
 
-const Button: FC<ButtonProps> = ({ children, onClick }) => (
-  <button onClick={onClick}>{children}</button>
-);
+const Button: FC<ButtonProps> = ({ children, onClick }) => <button onClick={onClick}>{children}</button>;
 
 interface PostProps {
   likesCount?: number;
@@ -83,21 +81,9 @@ const Post: FC<PostEntity & PostProps> = ({
       {fileIds.length ? <PostFilesPreview fileIds={fileIds} /> : undefined}
       <div>{content}</div>
       <footer className="flex flex-wrap gap-3 text-sm">
-        <PostTool
-          icon={<HeartIcon fill={isLiked} />}
-          onClick={handleLikePost}
-          count={likesCount}
-        />
-        <PostTool
-          icon={<CommentIcon />}
-          onClick={onCommentClick}
-          count={commentsCount}
-        />
-        <PostTool
-          icon={<ShareIcon />}
-          onClick={onRepostClick}
-          count={repostsCount}
-        />
+        <PostTool icon={<HeartIcon fill={isLiked} />} onClick={handleLikePost} count={likesCount} />
+        <PostTool icon={<CommentIcon />} onClick={onCommentClick} count={commentsCount} />
+        <PostTool icon={<ShareIcon />} onClick={onRepostClick} count={repostsCount} />
       </footer>
     </div>
   );
@@ -135,17 +121,8 @@ const PostFilesPreview: FC<PostFilesPreviewProps> = ({ fileIds }) => {
   return (
     <div className={clsx('grid', currentFilesPositionStyles.wrapper)}>
       {fileIds.map((id, index) => (
-        <figure
-          className={clsx(
-            'w-full h-full',
-            currentFilesPositionStyles.figure(index)
-          )}
-        >
-          <img
-            className="w-full h-full object-cover block"
-            src={`/local-files/${id}`}
-            alt={`post-image-${index}`}
-          />
+        <figure className={clsx('w-full h-full', currentFilesPositionStyles.figure(index))}>
+          <img className="w-full h-full object-cover block" src={`/local-files/${id}`} alt={`post-image-${index}`} />
         </figure>
       ))}
     </div>

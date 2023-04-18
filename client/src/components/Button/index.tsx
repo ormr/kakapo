@@ -8,18 +8,9 @@ interface ButtonProps {
   className?: string;
 }
 
-const Button: FC<ButtonProps> = ({
-  children,
-  onClick,
-  disabled = false,
-  className = '',
-}) => (
+const Button: FC<ButtonProps> = ({ children, onClick, disabled = false, className = '' }) => (
   <button
-    className={clsx(
-      'w-full p-4 bg-black text-white border-1',
-      disabled && 'bg-opacity-25',
-      className
-    )}
+    className={clsx('w-full p-4 bg-black text-white border-1', disabled && 'bg-opacity-25', className)}
     onClick={onClick}
     disabled={disabled}
   >

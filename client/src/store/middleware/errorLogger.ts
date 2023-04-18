@@ -8,14 +8,10 @@ import { toast } from 'react-toastify';
 
 const excludedStatuses = [401];
 
-export const errorLoggerMiddleware: Middleware =
-  (_api: MiddlewareAPI) => (next) => (action) => {
-    if (
-      isRejectedWithValue(action) &&
-      !excludedStatuses.includes(action.payload.status)
-    ) {
-      toast.error(action.payload.data.message);
-    }
+export const errorLoggerMiddleware: Middleware = (_api: MiddlewareAPI) => (next) => (action) => {
+  if (isRejectedWithValue(action) && !excludedStatuses.includes(action.payload.status)) {
+    toast.error(action.payload.data.message);
+  }
 
-    return next(action);
-  };
+  return next(action);
+};

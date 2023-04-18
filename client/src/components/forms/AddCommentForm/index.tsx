@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
-import Button from '../../Button';
 import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import Button from '../../Button';
 
 interface AddCommentProps {
   onAddComment: (data: { content: string }) => void;
