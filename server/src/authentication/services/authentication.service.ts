@@ -76,7 +76,7 @@ export class AuthenticationService {
 
     return `Authentication=${token}; HttpOnly; Path=/; Max-Age=${this.configService.get(
       'JWT_EXPIRATION_TIME'
-    )}`;
+    )}; SameSite=None`;
   }
 
   public getCookieForLogOut() {
