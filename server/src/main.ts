@@ -12,9 +12,7 @@ async function bootstrap() {
     credentials: true,
   });
   app.use(cookieParser());
-  const mode = config.get<string>('MODE');
-  const apiPort = config.get<number>('API_PORT');
-  const port = mode === 'dev' ? 3001 : apiPort;
+  const port = process.env.PORT || 3001;
   await app.listen(port, () => {
     // eslint-disable-next-line no-console
     console.log(`App started on port: ${port}`);
