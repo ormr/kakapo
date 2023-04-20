@@ -10,7 +10,7 @@
   },
   "scripts": {
     "prebuild": "rimraf dist",
-    "build": "nest build",
+    "build": "yarn && npx @nestjs/cli build",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start": "node dist/main",
