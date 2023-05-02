@@ -8,6 +8,7 @@ const api = createApi({
     credentials: 'include',
   }),
   tagTypes: ['Auth', 'Users', 'Posts'],
+  refetchOnMountOrArgChange: true,
   endpoints: () => ({}),
 });
 

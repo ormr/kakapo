@@ -19,7 +19,7 @@ class PostService {
     private likeService: LikeService,
     private commentsService: CommentsService,
     private localFilesService: LocalFilesService
-  ) { }
+  ) {}
 
   async createPost(post: CreatePostDto, user: User): Promise<Post> {
     return this.postRepository.save({ ...post, author: user });
@@ -140,7 +140,8 @@ class PostService {
     limit?: number,
     startId?: number,
     options?: FindManyOptions<Post>,
-    userId?: string
+    userId?: string,
+    userPostsOnly: boolean = false
   ) {
     const where: FindManyOptions<Post>['where'] = {};
     let separateCount = 0;
@@ -150,12 +151,15 @@ class PostService {
       separateCount = await this.postRepository.count();
     }
 
+    if (userPostsOnly) {
+      where.author = {
+        id: userId,
+      };
+    }
+
     const [items, count] = await this.postRepository.findAndCount({
       where: {
         ...where,
-        author: {
-          id: userId,
-        },
       },
       relations: {
         likes: {
@@ -163,7 +167,7 @@ class PostService {
         },
       },
       order: {
-        id: 'ASC',
+        createdAt: 'DESC',
       },
       skip: offset,
       take: limit,

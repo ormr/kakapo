@@ -23,10 +23,15 @@ interface Response<T> {
   count: number;
 }
 
+interface Pagination {
+  limit: number;
+  offset: number;
+}
+
 export const postsExtendedApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    getPosts: builder.query<Response<Post[]>, void>({
-      query: () => 'posts',
+    getPosts: builder.query<Response<Post[]>, Pagination>({
+      query: ({ limit, offset }) => `posts?limit=${limit}&offset=${offset}`,
       providesTags: (result) =>
         result && result.items
           ? [...result.items.map(({ id }) => ({ type: 'Posts', id } as const)), { type: 'Posts', id: 'LIST' }]

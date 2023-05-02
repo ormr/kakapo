@@ -50,7 +50,7 @@ export class PostsController {
     @Param('id') userId: string,
     @Query() { offset, limit, startId }: PaginationParams
   ) {
-    return this.postsService.getPosts(offset, limit, startId, {}, userId);
+    return this.postsService.getPosts(offset, limit, startId, {}, userId, true);
   }
 
   @Get(':id')
