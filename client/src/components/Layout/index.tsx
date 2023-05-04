@@ -21,9 +21,9 @@ const Layout: FC<LayoutProps> = ({ children }) => {
   );
 
   return (
-    <div className={clsx(colorMode.mode)}>
+    <div className={clsx(colorMode.mode, 'h-full')}>
       <Header />
-      <main>{children}</main>
+      <main className="h-[calc(100%-5rem)]">{children}</main>
     </div>
   );
 };

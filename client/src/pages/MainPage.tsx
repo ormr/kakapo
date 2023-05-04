@@ -5,6 +5,8 @@ import Container from '../components/Container';
 import { useGetPostsQuery, useToggleLikePostMutation } from '../services/api/PostsApi';
 import TogglePostForm from '../components/forms/TogglePostForm';
 import Pagination from '../components/Pagination';
+import Spinner from '../components/Spinner';
+import AnchorProvider from '../components/AnchorProvider';
 
 const usePagination = ({ itemsPerPage }: any) => {
   const [totalCount, setTotalCount] = useState(0);
@@ -12,7 +14,9 @@ const usePagination = ({ itemsPerPage }: any) => {
   const [pageCount, setPageCount] = useState(0);
 
   useEffect(() => {
-    setPageCount(Math.ceil(totalCount / itemsPerPage));
+    if (totalCount >= itemsPerPage) {
+      setPageCount(Math.ceil(totalCount / itemsPerPage));
+    }
   }, [offset, itemsPerPage, totalCount]);
 
   const handlePageClick = (event: any) => {
@@ -37,10 +41,8 @@ const LIMIT = 10;
 const MainPage: FC = (): ReactElement => {
   const navigate = useNavigate();
   const { offset, pageCount, setTotalCount, handlePageClick } = usePagination({ itemsPerPage: LIMIT });
-  const { data } = useGetPostsQuery({ offset, limit: LIMIT });
+  const { data, isLoading } = useGetPostsQuery({ offset, limit: LIMIT });
   const [toggleLike] = useToggleLikePostMutation();
-
-  console.log(data);
 
   useEffect(() => {
     if (data?.count) {
@@ -51,31 +53,42 @@ const MainPage: FC = (): ReactElement => {
   return (
     <>
       <Container>
-        <div className="flex flex-col gap-6">
-          {data?.items?.length
-            ? data?.items?.map((post: any) => (
-                <Post
-                  key={post.id}
-                  onLikeClick={async () => toggleLike({ isLiked: post.isLiked, postId: post.id })}
-                  onCommentClick={() => navigate(`/posts/${post.id}`)}
-                  onRepostClick={() => console.log('!')}
-                  {...post}
-                />
-              ))
-            : 'Постов пока нет'}
+        {isLoading ? (
+          <Spinner className="h-full w-full flex items-center justify-center" />
+        ) : (
+          <div className="flex flex-col gap-6">
+            <AnchorProvider>
+              {data?.items?.length ? (
+                data?.items?.map((post: any) => (
+                  <Post
+                    key={post.id}
+                    onLikeClick={async () => toggleLike({ isLiked: post.isLiked, postId: post.id })}
+                    onCommentClick={() => navigate(`/posts/${post.id}`)}
+                    onRepostClick={() => console.log('!')}
+                    {...post}
+                  />
+                ))
+              ) : (
+                <NoPosts />
+              )}
+            </AnchorProvider>
+          </div>
+        )}
+        <div>
+          <Pagination
+            onPageChange={handlePageClick}
+            pageRangeDisplayed={3}
+            marginPagesDisplayed={1}
+            pageCount={pageCount}
+            renderOnZeroPageCount={null}
+          />
         </div>
       </Container>
-      <div>
-        <Pagination
-          onPageChange={handlePageClick}
-          pageRangeDisplayed={3}
-          marginPagesDisplayed={1}
-          pageCount={pageCount}
-        />
-      </div>
       <TogglePostForm />
     </>
   );
 };
+
+const NoPosts = () => <div className="">There is no posts yet :(</div>;
 
 export default MainPage;

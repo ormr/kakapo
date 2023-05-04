@@ -24,7 +24,7 @@ interface FilePositionsStyles {
 const PostFilesPreview: FC<PostFilesPreviewProps> = ({ fileIds }) => {
   const filePositionsByLength: FilePositionsStyles = {
     1: {
-      wrapper: 'grid grid-cols-1',
+      wrapper: 'grid-cols-1',
       figure: () => undefined,
     },
     2: {
@@ -40,7 +40,7 @@ const PostFilesPreview: FC<PostFilesPreviewProps> = ({ fileIds }) => {
   const currentFilesPositionStyles = filePositionsByLength[fileIds.length];
 
   return (
-    <div className={clsx('grid', currentFilesPositionStyles.wrapper)}>
+    <div className={clsx('grid', 'auto-rows-max', currentFilesPositionStyles.wrapper)}>
       {fileIds.map((id, index) => (
         <figure className={clsx('w-full h-full', currentFilesPositionStyles.figure(index))}>
           <img className="w-full h-full object-cover block" src={`/local-files/${id}`} alt={`post-${index}`} />
@@ -115,7 +115,9 @@ const Post: FC<PostEntity & PostProps> = ({
             <Avatar id={author?.avatarId} />
           </Link>
           <div>@{author?.name}</div>
-          <DotIcon />
+          <button type="button" onClick={() => console.log('')}>
+            <DotIcon />
+          </button>
           <div>{format(new Date(createdAt), 'dd/MM/yyyy hh:mm')}</div>
         </div>
         <Button onClick={() => console.log('dots menu opening')}>

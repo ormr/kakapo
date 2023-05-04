@@ -10,7 +10,7 @@ const Header: FC = () => {
   const { user } = useAppSelector((app) => app.auth);
 
   return (
-    <Container>
+    <Container className="h-20">
       <div className="flex justify-between items-center py-5">
         <Link to="/profile">
           <Avatar id={user?.avatarId} />

@@ -31,22 +31,20 @@ const Next = () => (
   </>
 );
 
-const Pagination: FC<ReactPaginateProps> = (props) => {
-  return (
-    <ReactPaginate
-      {...props}
-      nextLabel={<Next />}
-      previousLabel={<Prev />}
-      pageLinkClassName="block h-8 w-8 rounded border border-gray-100 bg-white text-center leading-8 text-gray-900"
-      previousLinkClassName="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-100 bg-white text-gray-900"
-      nextLinkClassName="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-100 bg-white text-gray-900"
-      breakLabel="..."
-      breakLinkClassName="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-100 bg-white text-gray-900"
-      containerClassName="flex justify-center gap-1 text-xs font-medium"
-      activeLinkClassName="!border-blue-600 !bg-blue-600 !text-white"
-      renderOnZeroPageCount={null}
-    />
-  );
-};
+const Pagination: FC<ReactPaginateProps> = (props) => (
+  <ReactPaginate
+    {...props}
+    nextLabel={<Next />}
+    previousLabel={<Prev />}
+    pageLinkClassName="block h-8 w-8 rounded border border-gray-100 bg-white text-center leading-8 text-gray-900"
+    previousLinkClassName="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-100 bg-white text-gray-900"
+    nextLinkClassName="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-100 bg-white text-gray-900"
+    breakLabel="..."
+    breakLinkClassName="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-100 bg-white text-gray-900"
+    containerClassName="flex justify-center gap-1 text-xs font-medium"
+    activeLinkClassName="!border-lightgreen !bg-lightgreen !text-white"
+    renderOnZeroPageCount={null}
+  />
+);
 
 export default Pagination;
