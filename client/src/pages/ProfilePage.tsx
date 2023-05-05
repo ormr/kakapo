@@ -30,9 +30,12 @@ const ProfilePage: FC = () => {
             ? posts?.items.map((post) => (
                 <Post
                   key={post.id}
-                  onLikeClick={() => console.log('!')}
-                  onCommentClick={() => console.log('!')}
-                  onRepostClick={() => console.log('!')}
+                  onLike={() => console.log('!')}
+                  onComment={() => console.log('!')}
+                  onRepost={() => console.log('!')}
+                  onEdit={() => {}}
+                  onReport={() => {}}
+                  onDelete={() => {}}
                   {...post}
                 />
               ))

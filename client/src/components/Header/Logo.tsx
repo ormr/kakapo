@@ -6,7 +6,7 @@ const Logo = () => (
     <div>
       <span className="text-[#ff9100]">K</span>
       <span className="text-[#fabe2c]">a</span>
-      <span className="text-[#9cdd05]">p</span>
+      <span className="text-[#9cdd05]">k</span>
       <span className="text-[#fabe2c]">a</span>
       <span className="text-[#9cdd05]">p</span>
       <span className="text-[#563941]">o</span>

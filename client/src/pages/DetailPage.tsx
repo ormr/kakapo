@@ -39,9 +39,12 @@ const DetailPage: FC = () => {
       <section className="mb-6">
         <Post
           {...post}
-          onLikeClick={async () => toggleLike({ isLiked: post.isLiked, postId: post.id })}
-          onCommentClick={() => navigate(`/posts/${post.id}`)}
-          onRepostClick={() => console.log('!')}
+          onLike={async () => toggleLike({ isLiked: post.isLiked, postId: post.id })}
+          onComment={() => navigate(`/posts/${post.id}`)}
+          onRepost={() => console.log('!')}
+          onEdit={() => {}}
+          onDelete={() => {}}
+          onReport={() => console.log('!')}
         />
       </section>
       <section className="mb-6">

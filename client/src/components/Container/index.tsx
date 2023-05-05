@@ -7,7 +7,7 @@ interface ContainerProps {
 }
 
 const Container: FC<ContainerProps> = ({ className, children }) => (
-  <div className={clsx('px-10', 'h-full', className)}>{children}</div>
+  <div className={clsx('px-10', className)}>{children}</div>
 );
 
 Container.defaultProps = {

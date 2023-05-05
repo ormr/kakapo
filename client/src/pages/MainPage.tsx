@@ -7,6 +7,7 @@ import TogglePostForm from '../components/forms/TogglePostForm';
 import Pagination from '../components/Pagination';
 import Spinner from '../components/Spinner';
 import AnchorProvider from '../components/AnchorProvider';
+import Modal from '../components/Modal';
 
 const usePagination = ({ itemsPerPage }: any) => {
   const [totalCount, setTotalCount] = useState(0);
@@ -50,9 +51,11 @@ const MainPage: FC = (): ReactElement => {
     }
   }, [data?.count]);
 
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <>
-      <Container>
+      <Container className="h-full">
         {isLoading ? (
           <Spinner className="h-full w-full flex items-center justify-center" />
         ) : (
@@ -62,9 +65,11 @@ const MainPage: FC = (): ReactElement => {
                 data?.items?.map((post: any) => (
                   <Post
                     key={post.id}
-                    onLikeClick={async () => toggleLike({ isLiked: post.isLiked, postId: post.id })}
-                    onCommentClick={() => navigate(`/posts/${post.id}`)}
-                    onRepostClick={() => console.log('!')}
+                    onLike={async () => toggleLike({ isLiked: post.isLiked, postId: post.id })}
+                    onComment={() => navigate(`/posts/${post.id}`)}
+                    onRepost={() => console.log('!')}
+                    onDelete={() => setIsOpen(true)}
+                    onEdit={() => console.log('!')}
                     {...post}
                   />
                 ))
@@ -84,10 +89,32 @@ const MainPage: FC = (): ReactElement => {
           />
         </div>
       </Container>
+      <Modal isOpen={isOpen} title="Warning!" onCloseModal={() => setIsOpen(false)}>
+        <WarningModal onClose={() => setIsOpen(false)} onSubmit={() => setIsOpen(false)} />
+      </Modal>
       <TogglePostForm />
     </>
   );
 };
+
+interface WarningModalProps {
+  onClose: () => void;
+  onSubmit: () => void;
+}
+
+const WarningModal: FC<WarningModalProps> = ({ onClose, onSubmit }) => (
+  <div>
+    <div>
+      <button onClick={onClose}>close</button>
+      <button onClick={onSubmit}>submit</button>
+      <button
+        type="button"
+        className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+        onClick={onSubmit}
+      />
+    </div>
+  </div>
+);
 
 const NoPosts = () => <div className="">There is no posts yet :(</div>;
 
