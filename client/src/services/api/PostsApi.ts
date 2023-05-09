@@ -99,6 +99,19 @@ export const postsExtendedApi = api.injectEndpoints({
       invalidatesTags: (result, error, arg) =>
         result && !error ? [{ type: 'Posts', id: arg.id }] : [{ type: 'Posts', id: 'LIST' }],
     }),
+    deletePost: builder.mutation<any, any>({
+      query: (postId) => ({
+        url: `posts/${postId}`,
+        method: 'DELETE',
+        providesTags: (result: any) =>
+          result
+            ? [
+                { type: 'Posts', id: result.id },
+                { type: 'Posts', id: 'LIST' },
+              ]
+            : [{ type: 'Posts', id: 'LIST' }],
+      }),
+    }),
   }),
 });
 
@@ -110,4 +123,5 @@ export const {
   useToggleLikePostMutation,
   useAddFileToPostMutation,
   useAddCommentToPostMutation,
+  useDeletePostMutation,
 } = postsExtendedApi;

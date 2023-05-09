@@ -34,7 +34,7 @@ const PostMenuButton: FC<PostMenuButtonProps> = ({ onEdit, onReport, onDelete })
                   type="button"
                   onClick={() => onEdit()}
                   className={`${
-                    active ? 'bg-violet-500 text-white' : 'text-gray-900'
+                    active ? 'bg-lightgreen text-white' : 'text-gray-900'
                   } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                 >
                   <EditIcon active={active} className="mr-2 h-5 w-5" aria-hidden="true" />
@@ -50,7 +50,7 @@ const PostMenuButton: FC<PostMenuButtonProps> = ({ onEdit, onReport, onDelete })
                   type="button"
                   onClick={() => onReport()}
                   className={`${
-                    active ? 'bg-violet-500 text-white' : 'text-gray-900'
+                    active ? 'bg-lightgreen text-white' : 'text-gray-900'
                   } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                 >
                   <ReportIcon active={active} className="mr-2 h-5 w-5" aria-hidden="true" />
@@ -64,10 +64,10 @@ const PostMenuButton: FC<PostMenuButtonProps> = ({ onEdit, onReport, onDelete })
                   type="button"
                   onClick={() => onDelete()}
                   className={`${
-                    active ? 'bg-violet-500 text-white' : 'text-gray-900'
+                    active ? 'bg-lightgreen text-white' : 'text-gray-900'
                   } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                 >
-                  <DeleteIcon active={active} className="mr-2 h-5 w-5 text-violet-400" aria-hidden="true" />
+                  <DeleteIcon active={active} className="mr-2 h-5 w-5 text-green-400" aria-hidden="true" />
                   Delete
                 </button>
               )}

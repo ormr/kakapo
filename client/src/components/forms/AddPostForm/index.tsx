@@ -89,6 +89,7 @@ const AddPostForm: FC<AddPostFormProps> = ({ onFormClose }) => {
         </div>
         <Button
           onClick={handleSubmit(onSubmit)}
+          className="w-full"
           disabled={watch('content').length > maxValue || !watch('content').length || isLoading}
         >
           Post

@@ -57,9 +57,7 @@ const Post: FC<PostEntity & PostProps> = ({
             <Avatar id={author?.avatarId} />
           </Link>
           <div>@{author?.name}</div>
-          <button type="button" onClick={() => console.log('')}>
-            <DotIcon />
-          </button>
+          <DotIcon />
           <div>{format(new Date(createdAt), 'dd/MM/yyyy hh:mm')}</div>
           <PostMenuButton onEdit={() => {}} onReport={() => {}} onDelete={onDelete} />
         </div>
