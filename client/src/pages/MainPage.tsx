@@ -2,7 +2,12 @@ import React, { FC, ReactElement, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Post from '../components/Post';
 import Container from '../components/Container';
-import { useDeletePostMutation, useGetPostsQuery, useToggleLikePostMutation } from '../services/api/PostsApi';
+import {
+  Post as IPost,
+  useDeletePostMutation,
+  useGetPostsQuery,
+  useToggleLikePostMutation,
+} from '../services/api/PostsApi';
 import TogglePostForm from '../components/forms/TogglePostForm';
 import Pagination from '../components/Pagination';
 import Spinner from '../components/Spinner';
@@ -46,14 +51,35 @@ const MainPage: FC = (): ReactElement => {
   const { data, isLoading } = useGetPostsQuery({ offset, limit: LIMIT });
   const [toggleLike] = useToggleLikePostMutation();
   const [deletePost] = useDeletePostMutation();
+  const [postData, setPostData] = useState<IPost | undefined>(undefined);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleOpenDeleteModal = (newPostData: IPost) => {
+    setPostData(newPostData);
+    setIsOpen(true);
+  };
+
+  const handleDeletePost = async (postId?: number) => {
+    if (!postId) return;
+
+    try {
+      await deletePost(postId).unwrap();
+      setIsOpen(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleOpenEditModal = async () => {
+    try {
+    } catch (error) {}
+  };
 
   useEffect(() => {
     if (data?.count) {
       setTotalCount(data?.count);
     }
   }, [data?.count]);
-
-  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
@@ -70,8 +96,8 @@ const MainPage: FC = (): ReactElement => {
                     onLike={async () => toggleLike({ isLiked: post.isLiked, postId: post.id })}
                     onComment={() => navigate(`/posts/${post.id}`)}
                     onRepost={() => console.log('!')}
-                    onDelete={() => setIsOpen(true)}
-                    onEdit={() => console.log('!')}
+                    onDelete={() => handleOpenDeleteModal(post)}
+                    onEdit={() => handleOpenEditModal()}
                     {...post}
                   />
                 ))
@@ -96,7 +122,7 @@ const MainPage: FC = (): ReactElement => {
         title="Are you sure that you want to delete this post?"
         onCloseModal={() => setIsOpen(false)}
       >
-        <WarningModal onClose={() => setIsOpen(false)} onSubmit={() => setIsOpen(false)} />
+        <WarningModal onClose={() => setIsOpen(false)} onSubmit={() => handleDeletePost(postData?.id)} />
       </Modal>
       <TogglePostForm />
     </>
@@ -109,7 +135,7 @@ interface WarningModalProps {
 }
 
 const WarningModal: FC<WarningModalProps> = ({ onClose, onSubmit }) => (
-  <div className="flex gap-3 mt-3">
+  <div className="flex flex-col gap-3 mt-3">
     <Button outline onClick={onClose}>
       No
     </Button>

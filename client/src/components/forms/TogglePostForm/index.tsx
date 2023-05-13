@@ -1,9 +1,14 @@
 import React, { FC, useState } from 'react';
 import PlusIcon from '../../../assets/PlusIcon';
-import AddPostForm from '../AddPostForm';
+import AddPostForm, { AddPostFormValues } from '../AddPostForm';
 
-const TogglePostForm: FC = () => {
+interface TogglePostFormProps {
+  defaultValues: AddPostFormValues;
+}
+
+const TogglePostForm: FC<TogglePostFormProps> = ({ defaultValues }) => {
   const [showPost, setShowPost] = useState(false);
+
   return (
     <div>
       <div className="fixed bottom-3 right-3">
@@ -11,7 +16,7 @@ const TogglePostForm: FC = () => {
           <PlusIcon />
         </button>
       </div>
-      {showPost && <AddPostForm onFormClose={() => setShowPost(false)} />}
+      {showPost && <AddPostForm defaultValues={defaultValues} onFormClose={() => setShowPost(false)} />}
     </div>
   );
 };

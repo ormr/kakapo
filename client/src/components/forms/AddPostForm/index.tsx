@@ -12,16 +12,17 @@ import { AttachmentType } from '../../FileLoader/utils';
 import FileLoaderButton from '../../FileLoader/FileLoaderButton';
 import { useAddFileToPostMutation, useCreatePostMutation } from '../../../services/api/PostsApi';
 
-interface AddPostFormProps {
-  onFormClose: VoidFunction;
-}
-
 export interface AddPostFormValues {
   content: string;
   files: File[];
 }
 
-const defaultValues = {
+interface AddPostFormProps {
+  defaultValues?: AddPostFormValues;
+  onFormClose: VoidFunction;
+}
+
+const defaultValuesForCreation = {
   content: '',
   files: [],
 };
@@ -31,7 +32,7 @@ const defaultValues = {
  * Прикрутить сохранение нескольких изображений на сервере
  * */
 
-const AddPostForm: FC<AddPostFormProps> = ({ onFormClose }) => {
+const AddPostForm: FC<AddPostFormProps> = ({ defaultValues = defaultValuesForCreation, onFormClose }) => {
   const maxValue = 250;
   const formRef = useRef() as any;
   const { control, watch, handleSubmit } = useForm({
@@ -59,7 +60,7 @@ const AddPostForm: FC<AddPostFormProps> = ({ onFormClose }) => {
   useOnClickOutside(formRef, () => onFormClose());
 
   return (
-    <div className="absolute top-0 bottom-0 right-0 left-0 bg-neutral-700 bg-opacity-50">
+    <div className="fixed top-0 bottom-0 right-0 left-0 bg-neutral-700 bg-opacity-50">
       <div ref={formRef} className="w-full h-72 fixed bottom-0 bg-white py-6 px-3">
         <h3 className="mb-3 font-bold">Create post</h3>
         <Controller
@@ -97,6 +98,13 @@ const AddPostForm: FC<AddPostFormProps> = ({ onFormClose }) => {
       </div>
     </div>
   );
+};
+
+AddPostForm.defaultProps = {
+  defaultValues: {
+    content: '',
+    files: [],
+  },
 };
 
 export default AddPostForm;

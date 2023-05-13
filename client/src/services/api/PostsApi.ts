@@ -75,6 +75,8 @@ export const postsExtendedApi = api.injectEndpoints({
           body: formData,
         };
       },
+      invalidatesTags: (result, error) =>
+        result && !error ? [{ type: 'Posts', id: result.id }] : [{ type: 'Posts', id: 'LIST' }],
     }),
     toggleLikePost: builder.mutation<void, any>({
       query: ({ isLiked, postId }) => ({

@@ -19,7 +19,9 @@ class Comment {
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 
-  @ManyToOne(() => Post, (post: Post) => post.comments)
+  @ManyToOne(() => Post, (post: Post) => post.comments, {
+    onDelete: 'CASCADE',
+  })
   public post: Post;
 
   @ManyToOne(() => User, (author: User) => author.posts)
