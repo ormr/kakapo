@@ -1,4 +1,4 @@
-import React, { FC, useRef, useState } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import ImageIcon from '../../../assets/ImageIcon';
 import PaperclipIcon from '../../../assets/Paperclip';
@@ -10,22 +10,23 @@ import Progressbar from './ProgressBar';
 import FileLoader from '../../FileLoader';
 import { AttachmentType } from '../../FileLoader/utils';
 import FileLoaderButton from '../../FileLoader/FileLoaderButton';
-import { useAddFileToPostMutation, useCreatePostMutation } from '../../../services/api/PostsApi';
+import { Post, useAddFileToPostMutation, useCreatePostMutation } from '../../../services/api/PostsApi';
 
-export interface AddPostFormValues {
+export interface TempPost extends Partial<Post> {
   content: string;
   files: File[];
 }
 
-interface AddPostFormProps {
-  defaultValues?: AddPostFormValues;
-  onFormClose: VoidFunction;
-}
-
-const defaultValuesForCreation = {
+const defaultValuesForCreation: TempPost = {
   content: '',
+  fileIds: [],
   files: [],
 };
+
+interface AddPostFormProps {
+  defaultValues?: TempPost;
+  onFormClose: VoidFunction;
+}
 
 /*
  * TODO:
@@ -43,7 +44,7 @@ const AddPostForm: FC<AddPostFormProps> = ({ defaultValues = defaultValuesForCre
   const [createPost] = useCreatePostMutation();
   const [addFileToPost] = useAddFileToPostMutation();
 
-  const onSubmit = async ({ content, files }: AddPostFormValues) => {
+  const onSubmit = async ({ content, files, fileIds }: TempPost) => {
     setIsLoading(true);
     const post = await createPost({ content });
 
@@ -72,8 +73,12 @@ const AddPostForm: FC<AddPostFormProps> = ({ defaultValues = defaultValuesForCre
           <Controller
             control={control}
             name="files"
-            render={({ field: { value, onChange } }) => (
-              <FileLoader files={value} onChange={(files) => onChange(files)}>
+            render={({ field: { value, onChange }, formState }) => (
+              <FileLoader
+                files={value}
+                existingFiles={formState.dirtyFields.fileIds}
+                onChange={(files) => onChange(files)}
+              >
                 <FileLoaderButton type={AttachmentType.IMAGE}>
                   <ImageIcon />
                 </FileLoaderButton>

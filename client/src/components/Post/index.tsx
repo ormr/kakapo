@@ -59,7 +59,7 @@ const Post: FC<PostEntity & PostProps> = ({
           <div>@{author?.name}</div>
           <DotIcon />
           <div>{format(new Date(createdAt), 'dd/MM/yyyy hh:mm')}</div>
-          <PostMenuButton onEdit={() => {}} onReport={() => {}} onDelete={onDelete} />
+          <PostMenuButton onEdit={onEdit} onReport={() => {}} onDelete={onDelete} />
         </div>
       </header>
       {fileIds.length ? <PostFilesPreview fileIds={fileIds} /> : undefined}

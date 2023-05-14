@@ -52,11 +52,17 @@ const MainPage: FC = (): ReactElement => {
   const [toggleLike] = useToggleLikePostMutation();
   const [deletePost] = useDeletePostMutation();
   const [postData, setPostData] = useState<IPost | undefined>(undefined);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const handleOpenDeleteModal = (newPostData: IPost) => {
     setPostData(newPostData);
-    setIsOpen(true);
+    setIsDeleteModalOpen(true);
+  };
+
+  const handleOpenEditModal = (newPostData: IPost) => {
+    setPostData(newPostData);
+    setIsEditModalOpen(true);
   };
 
   const handleDeletePost = async (postId?: number) => {
@@ -64,15 +70,10 @@ const MainPage: FC = (): ReactElement => {
 
     try {
       await deletePost(postId).unwrap();
-      setIsOpen(false);
+      setIsDeleteModalOpen(false);
     } catch (error) {
       console.error(error);
     }
-  };
-
-  const handleOpenEditModal = async () => {
-    try {
-    } catch (error) {}
   };
 
   useEffect(() => {
@@ -97,7 +98,7 @@ const MainPage: FC = (): ReactElement => {
                     onComment={() => navigate(`/posts/${post.id}`)}
                     onRepost={() => console.log('!')}
                     onDelete={() => handleOpenDeleteModal(post)}
-                    onEdit={() => handleOpenEditModal()}
+                    onEdit={() => handleOpenEditModal(post)}
                     {...post}
                   />
                 ))
@@ -118,13 +119,18 @@ const MainPage: FC = (): ReactElement => {
         </div>
       </Container>
       <Modal
-        isOpen={isOpen}
+        isOpen={isDeleteModalOpen}
         title="Are you sure that you want to delete this post?"
-        onCloseModal={() => setIsOpen(false)}
+        onCloseModal={() => setIsDeleteModalOpen(false)}
       >
-        <WarningModal onClose={() => setIsOpen(false)} onSubmit={() => handleDeletePost(postData?.id)} />
+        <WarningModal onClose={() => setIsDeleteModalOpen(false)} onSubmit={() => handleDeletePost(postData?.id)} />
       </Modal>
-      <TogglePostForm />
+      <TogglePostForm
+        defaultValues={postData}
+        isOpen={isEditModalOpen}
+        onClose={() => setIsEditModalOpen(false)}
+        onOpen={() => setIsEditModalOpen(true)}
+      />
     </>
   );
 };
