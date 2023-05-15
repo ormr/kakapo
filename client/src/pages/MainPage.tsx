@@ -55,14 +55,9 @@ const MainPage: FC = (): ReactElement => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-  const handleOpenDeleteModal = (newPostData: IPost) => {
+  const toggleModal = (setModalFn: React.Dispatch<boolean>, isOpen: boolean = true, newPostData?: IPost) => {
     setPostData(newPostData);
-    setIsDeleteModalOpen(true);
-  };
-
-  const handleOpenEditModal = (newPostData: IPost) => {
-    setPostData(newPostData);
-    setIsEditModalOpen(true);
+    setModalFn(isOpen);
   };
 
   const handleDeletePost = async (postId?: number) => {
@@ -97,8 +92,8 @@ const MainPage: FC = (): ReactElement => {
                     onLike={async () => toggleLike({ isLiked: post.isLiked, postId: post.id })}
                     onComment={() => navigate(`/posts/${post.id}`)}
                     onRepost={() => console.log('!')}
-                    onDelete={() => handleOpenDeleteModal(post)}
-                    onEdit={() => handleOpenEditModal(post)}
+                    onDelete={() => toggleModal(setIsDeleteModalOpen, true, post)}
+                    onEdit={() => toggleModal(setIsEditModalOpen, true, post)}
                     {...post}
                   />
                 ))
@@ -123,13 +118,16 @@ const MainPage: FC = (): ReactElement => {
         title="Are you sure that you want to delete this post?"
         onCloseModal={() => setIsDeleteModalOpen(false)}
       >
-        <WarningModal onClose={() => setIsDeleteModalOpen(false)} onSubmit={() => handleDeletePost(postData?.id)} />
+        <WarningModal
+          onClose={() => toggleModal(setIsDeleteModalOpen, false)}
+          onSubmit={() => handleDeletePost(postData?.id)}
+        />
       </Modal>
       <TogglePostForm
         defaultValues={postData}
         isOpen={isEditModalOpen}
-        onClose={() => setIsEditModalOpen(false)}
-        onOpen={() => setIsEditModalOpen(true)}
+        onClose={() => toggleModal(setIsEditModalOpen, false)}
+        onOpen={() => toggleModal(setIsEditModalOpen, true)}
       />
     </>
   );

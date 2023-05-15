@@ -15,15 +15,23 @@ interface FilePositionsStyles {
 const filePositionsByLength: FilePositionsStyles = {
   1: {
     wrapper: 'grid-cols-1',
-    figure: () => undefined,
+    figure: () => 'h-[516px]',
   },
   2: {
     wrapper: 'grid-cols-2 gap-1',
-    figure: () => undefined,
+    figure: () => 'h-[516px]',
   },
   3: {
     wrapper: 'grid-cols-2 gap-1',
-    figure: (index: number) => (index === 1 ? 'row-span-2' : undefined),
+    figure: (index: number) => {
+      const map: { [key: number]: string } = {
+        0: 'h-[16rem]',
+        1: 'row-span-2 h-full',
+        2: 'h-[16rem]',
+      };
+
+      return map[index];
+    },
   },
 };
 
@@ -33,7 +41,7 @@ const PostFilesPreview: FC<PostFilesPreviewProps> = ({ fileIds }) => {
   return (
     <div className={clsx('grid auto-rows-max', currentFilesPositionStyles.wrapper)}>
       {fileIds.map((id, index) => (
-        <figure key={id + index} className={clsx('w-full h-[512px]', currentFilesPositionStyles.figure(index))}>
+        <figure key={id + index} className={clsx('w-full', currentFilesPositionStyles.figure(index))}>
           <img className="w-full h-full object-cover rounded-lg" src={`/local-files/${id}`} alt={`post-${index}`} />
         </figure>
       ))}

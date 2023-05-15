@@ -62,6 +62,14 @@ export const postsExtendedApi = api.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'Posts', id: 'LIST' }],
     }),
+    updatePost: builder.mutation<Post, { postId: number; content: string }>({
+      query: ({ postId, ...body }) => ({
+        url: `posts/${postId}`,
+        method: 'PUT',
+        body,
+      }),
+      invalidatesTags: [{ type: 'Posts', id: 'LIST' }],
+    }),
     addFileToPost: builder.mutation<any, any>({
       query: (data) => {
         const { postId, file } = data;
@@ -77,6 +85,16 @@ export const postsExtendedApi = api.injectEndpoints({
       },
       invalidatesTags: (result, error) =>
         result && !error ? [{ type: 'Posts', id: result.id }] : [{ type: 'Posts', id: 'LIST' }],
+    }),
+    deletePostFile: builder.mutation<any, any>({
+      query: (data) => {
+        const { postId, fileId } = data;
+
+        return {
+          url: `posts/${postId}/delete-file/${fileId}`,
+          method: 'DELETE',
+        };
+      },
     }),
     toggleLikePost: builder.mutation<void, any>({
       query: ({ isLiked, postId }) => ({
@@ -126,4 +144,6 @@ export const {
   useAddFileToPostMutation,
   useAddCommentToPostMutation,
   useDeletePostMutation,
+  useUpdatePostMutation,
+  useDeletePostFileMutation,
 } = postsExtendedApi;

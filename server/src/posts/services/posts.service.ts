@@ -185,6 +185,16 @@ class PostService {
   }
 
   async removePost(id: number): Promise<number> {
+    const post = await this.postRepository.findOne({ where: { id } });
+
+    console.log(post.fileIds);
+
+    post.fileIds.forEach(
+      async (fileId) => await this.localFilesService.deleteFileById(fileId)
+    );
+
+    console.log(post.fileIds);
+
     await this.postRepository.delete({ id });
     return id;
   }
@@ -208,6 +218,20 @@ class PostService {
     await this.postRepository.update(postId, {
       fileIds: [...post.fileIds, file.id],
     });
+  }
+
+  async deleteFilePostAndFileId(postId: number, fileId: string) {
+    try {
+      await this.localFilesService.deleteFileById(fileId);
+      const post = await this.postRepository.findOne({ where: { id: postId } });
+      const updatedPostFileIds = post.fileIds.filter((id) => id !== fileId);
+
+      await this.postRepository.update(postId, {
+        fileIds: updatedPostFileIds,
+      });
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   async addComment(commentDto: CreateCommentDto, author: User) {

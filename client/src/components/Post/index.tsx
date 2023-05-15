@@ -5,7 +5,6 @@ import Avatar from '../Avatar';
 import DotIcon from '../../assets/DotIcon';
 import HeartIcon from '../../assets/HeartIcon';
 import CommentIcon from '../../assets/CommentIcon';
-import ShareIcon from '../../assets/ShareIcon';
 import { Post as PostEntity } from '../../services/api/PostsApi';
 import PostFilesPreview from './PostFilesPreview';
 import PostTool from './PostTool';
@@ -33,11 +32,9 @@ const Post: FC<PostEntity & PostProps> = ({
   onLike,
   onComment,
   onEdit,
-  onRepost,
   onDelete,
   likesCount: defaultLikesCount = 0,
   commentsCount = 0,
-  repostsCount = 0,
   isLiked: isLikedByUser = false,
 }) => {
   const [isLiked, setIsLiked] = useState(isLikedByUser);
@@ -59,7 +56,7 @@ const Post: FC<PostEntity & PostProps> = ({
           <div>@{author?.name}</div>
           <DotIcon />
           <div>{format(new Date(createdAt), 'dd/MM/yyyy hh:mm')}</div>
-          <PostMenuButton onEdit={onEdit} onReport={() => {}} onDelete={onDelete} />
+          <PostMenuButton onEdit={onEdit} onDelete={onDelete} />
         </div>
       </header>
       {fileIds.length ? <PostFilesPreview fileIds={fileIds} /> : undefined}
@@ -67,7 +64,6 @@ const Post: FC<PostEntity & PostProps> = ({
       <footer className="flex flex-wrap gap-3 text-sm">
         <PostTool icon={<HeartIcon fill={isLiked} />} onClick={handleLikePost} count={likesCount} />
         <PostTool icon={<CommentIcon />} onClick={onComment} count={commentsCount} />
-        <PostTool icon={<ShareIcon />} onClick={onRepost} count={repostsCount} />
       </footer>
     </div>
   );

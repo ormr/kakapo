@@ -134,6 +134,13 @@ export class PostsController {
     return this.postsService.updatePost(id, post);
   }
 
+  @Delete(':id/delete-file/:fileId')
+  @UseGuards(JwtAuthenticationGuard)
+  async deleteFile(@Param('id') id: number, @Param('fileId') fileId: string) {
+    console.log(id, fileId);
+    this.postsService.deleteFilePostAndFileId(id, fileId);
+  }
+
   @Delete(':id')
   async removePost(@Param('id') id: number) {
     return this.postsService.removePost(id);
