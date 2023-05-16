@@ -2,7 +2,11 @@ import clsx from 'clsx';
 import React, { FC } from 'react';
 import ReactPaginate, { ReactPaginateProps } from 'react-paginate';
 
-const ArrowIcon = ({ className = '' }) => (
+interface ArrowIconProps {
+  className?: string;
+}
+
+const ArrowIcon: FC<ArrowIconProps> = ({ className = '' }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     className={clsx('h-3 w-3', className)}
@@ -16,6 +20,10 @@ const ArrowIcon = ({ className = '' }) => (
     />
   </svg>
 );
+
+ArrowIcon.defaultProps = {
+  className: '',
+};
 
 const Prev = () => (
   <>

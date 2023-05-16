@@ -58,4 +58,8 @@ const FileLoader: FC<AddFileProps> = ({ children, fileIds: existingFileIds = [],
   );
 };
 
+FileLoader.defaultProps = {
+  fileIds: [],
+};
+
 export default FileLoader;

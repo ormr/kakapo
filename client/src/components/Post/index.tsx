@@ -1,4 +1,4 @@
-import React, { FC, useRef, useState } from 'react';
+import React, { FC, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
 import Avatar from '../Avatar';
@@ -13,13 +13,10 @@ import PostMenuButton from './PostMenu';
 interface PostProps {
   likesCount?: number;
   commentsCount?: number;
-  repostsCount?: number;
   isLiked?: boolean;
   onLike: VoidFunction;
   onComment: VoidFunction;
-  onRepost: VoidFunction;
   onEdit: VoidFunction;
-  onReport: VoidFunction;
   onDelete: VoidFunction;
 }
 
@@ -72,7 +69,6 @@ const Post: FC<PostEntity & PostProps> = ({
 Post.defaultProps = {
   likesCount: 0,
   commentsCount: 0,
-  repostsCount: 0,
   isLiked: false,
 };
 

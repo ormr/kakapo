@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import PlusIcon from '../../../assets/PlusIcon';
-import AddPostForm, { TempPost } from '../AddPostForm';
-import { Post } from '../../../services/api/PostsApi';
+import AddPostForm from '../AddPostForm';
 
 interface TogglePostFormProps {
   isOpen: boolean;
@@ -20,5 +19,9 @@ const TogglePostForm: FC<TogglePostFormProps> = ({ isOpen, defaultValues, onClos
     {isOpen && <AddPostForm isCreation={!defaultValues} defaultValues={defaultValues} onFormClose={onClose} />}
   </div>
 );
+
+TogglePostForm.defaultProps = {
+  defaultValues: undefined,
+};
 
 export default TogglePostForm;

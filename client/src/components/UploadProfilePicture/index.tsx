@@ -33,7 +33,7 @@ const UploadProfilePicture: FC<UploadProfilePictureProps> = ({ href, onChange })
       <div className="relative w-64 h-64">
         <img
           className="w-64 h-64 rounded-full absolute"
-          src={href ? `/local-files/${href}` : '/default-picture.jpg'}
+          src={href ? `/api/local-files/${href}` : '/default-picture.jpg'}
           alt="profile"
         />
         <div className="w-64 h-64 group hover:bg-gray-200 opacity-60 rounded-full absolute flex justify-center items-center cursor-pointer transition duration-500">

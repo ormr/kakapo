@@ -31,6 +31,7 @@ class LocalFilesService {
 
   async saveLocalFileData(fileData: LocalFileDto) {
     const newFile = await this.localFilesRepository.create(fileData);
+    console.log(newFile);
     await this.localFilesRepository.save(newFile);
     return newFile;
   }

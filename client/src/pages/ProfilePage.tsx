@@ -32,9 +32,7 @@ const ProfilePage: FC = () => {
                   key={post.id}
                   onLike={() => console.log('!')}
                   onComment={() => console.log('!')}
-                  onRepost={() => console.log('!')}
                   onEdit={() => {}}
-                  onReport={() => {}}
                   onDelete={() => {}}
                   {...post}
                 />

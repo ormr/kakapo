@@ -12,6 +12,7 @@ async function bootstrap() {
     credentials: true,
   });
   app.use(cookieParser());
+  app.setGlobalPrefix('api');
   const mode = config.get<string>('MODE');
   const apiPort = config.get<number>('API_PORT');
   const port = mode === 'dev' ? 3001 : apiPort;

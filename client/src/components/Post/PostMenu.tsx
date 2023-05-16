@@ -2,7 +2,6 @@ import React, { FC, Fragment } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import DotsIcon from '../../assets/DotsIcon';
 import EditIcon from '../../assets/EditIcon';
-import ReportIcon from '../../assets/ReportIcon';
 import DeleteIcon from '../../assets/DeleteIcon';
 
 interface PostMenuButtonProps {

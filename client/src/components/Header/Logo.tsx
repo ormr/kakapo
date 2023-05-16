@@ -2,7 +2,7 @@ import React from 'react';
 
 const Logo = () => (
   <div className="font-bold text-xl flex gap-3">
-    <img src="/logo128.png" width={32} height={32} />
+    <img src="/logo128.png" width={32} height={32} alt="Logotype" />
     <div>
       <span className="text-[#ff9100]">K</span>
       <span className="text-[#fabe2c]">a</span>

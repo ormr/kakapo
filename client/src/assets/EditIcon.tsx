@@ -15,4 +15,8 @@ const EditIcon: FC<EditIconProps & SVGProps<SVGSVGElement>> = ({ active, ...prop
     </svg>
   );
 
+EditIcon.defaultProps = {
+  active: false,
+};
+
 export default EditIcon;

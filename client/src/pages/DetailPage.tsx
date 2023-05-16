@@ -41,10 +41,8 @@ const DetailPage: FC = () => {
           {...post}
           onLike={async () => toggleLike({ isLiked: post.isLiked, postId: post.id })}
           onComment={() => navigate(`/posts/${post.id}`)}
-          onRepost={() => console.log('!')}
           onEdit={() => {}}
           onDelete={() => {}}
-          onReport={() => console.log('!')}
         />
       </section>
       <section className="mb-6">

@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef, useState } from 'react';
+import React, { FC, useRef, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import ImageIcon from '../../../assets/ImageIcon';
 import PaperclipIcon from '../../../assets/Paperclip';
@@ -119,7 +119,7 @@ const AddPostForm: FC<AddPostFormProps> = ({ isCreation, defaultValues = default
           <Controller
             control={control}
             name="files"
-            render={({ field: { value, onChange } }) => (
+            render={({ field: { onChange } }) => (
               <FileLoader fileIds={watch('fileIds')} onChange={(files) => onChange(files)}>
                 <FileLoaderButton type={AttachmentType.IMAGE}>
                   <ImageIcon />

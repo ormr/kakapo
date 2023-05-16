@@ -19,4 +19,8 @@ const DeleteIcon: FC<DeleteIconProps & SVGProps<SVGSVGElement>> = ({ active, ...
     </svg>
   );
 
+DeleteIcon.defaultProps = {
+  active: false,
+};
+
 export default DeleteIcon;

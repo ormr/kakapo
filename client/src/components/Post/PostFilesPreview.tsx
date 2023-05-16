@@ -41,8 +41,8 @@ const PostFilesPreview: FC<PostFilesPreviewProps> = ({ fileIds }) => {
   return (
     <div className={clsx('grid auto-rows-max', currentFilesPositionStyles.wrapper)}>
       {fileIds.map((id, index) => (
-        <figure key={id + index} className={clsx('w-full', currentFilesPositionStyles.figure(index))}>
-          <img className="w-full h-full object-cover rounded-lg" src={`/local-files/${id}`} alt={`post-${index}`} />
+        <figure key={id} className={clsx('w-full', currentFilesPositionStyles.figure(index))}>
+          <img className="w-full h-full object-cover rounded-lg" src={`/api/local-files/${id}`} alt={`post-${index}`} />
         </figure>
       ))}
     </div>

@@ -11,7 +11,6 @@ import {
 import TogglePostForm from '../components/forms/TogglePostForm';
 import Pagination from '../components/Pagination';
 import Spinner from '../components/Spinner';
-import AnchorProvider from '../components/AnchorProvider';
 import Modal from '../components/Modal';
 import Button from '../components/Button';
 
@@ -42,6 +41,24 @@ const usePagination = ({ itemsPerPage }: any) => {
     handlePageClick,
   };
 };
+
+interface WarningModalProps {
+  onClose: () => void;
+  onSubmit: () => void;
+}
+
+const WarningModal: FC<WarningModalProps> = ({ onClose, onSubmit }) => (
+  <div className="flex flex-col gap-3 mt-3">
+    <Button outline onClick={onClose}>
+      No
+    </Button>
+    <Button className="bg-red" onClick={onSubmit}>
+      Yes
+    </Button>
+  </div>
+);
+
+const NoPosts = () => <div className="">There is no posts yet :(</div>;
 
 const LIMIT = 10;
 
@@ -84,23 +101,20 @@ const MainPage: FC = (): ReactElement => {
           <Spinner className="h-full w-full flex items-center justify-center" />
         ) : (
           <div className="flex flex-col gap-6">
-            <AnchorProvider>
-              {data?.items?.length ? (
-                data?.items?.map((post: any) => (
-                  <Post
-                    key={post.id}
-                    onLike={async () => toggleLike({ isLiked: post.isLiked, postId: post.id })}
-                    onComment={() => navigate(`/posts/${post.id}`)}
-                    onRepost={() => console.log('!')}
-                    onDelete={() => toggleModal(setIsDeleteModalOpen, true, post)}
-                    onEdit={() => toggleModal(setIsEditModalOpen, true, post)}
-                    {...post}
-                  />
-                ))
-              ) : (
-                <NoPosts />
-              )}
-            </AnchorProvider>
+            {data?.items?.length ? (
+              data?.items?.map((post: any) => (
+                <Post
+                  key={post.id}
+                  onLike={async () => toggleLike({ isLiked: post.isLiked, postId: post.id })}
+                  onComment={() => navigate(`/posts/${post.id}`)}
+                  onDelete={() => toggleModal(setIsDeleteModalOpen, true, post)}
+                  onEdit={() => toggleModal(setIsEditModalOpen, true, post)}
+                  {...post}
+                />
+              ))
+            ) : (
+              <NoPosts />
+            )}
           </div>
         )}
         <div>
@@ -132,23 +146,5 @@ const MainPage: FC = (): ReactElement => {
     </>
   );
 };
-
-interface WarningModalProps {
-  onClose: () => void;
-  onSubmit: () => void;
-}
-
-const WarningModal: FC<WarningModalProps> = ({ onClose, onSubmit }) => (
-  <div className="flex flex-col gap-3 mt-3">
-    <Button outline onClick={onClose}>
-      No
-    </Button>
-    <Button className="bg-red" onClick={onSubmit}>
-      Yes
-    </Button>
-  </div>
-);
-
-const NoPosts = () => <div className="">There is no posts yet :(</div>;
 
 export default MainPage;
