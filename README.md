@@ -1,6 +1,6 @@
-# Намедни
+# Kakapo
 
-My personal blog project
+Kakapo is the network app
 
 ### Setup
 
