@@ -3,7 +3,7 @@ import { config } from 'dotenv';
 import * as path from 'path';
 import { CreatedAllEntities1681650046713 } from '../migrations/1681650046713-CreatedAllEntities';
 
-config({ path: path.join(__dirname, '..', '..', '.env') });
+config({ path: path.join(__dirname, '..', '..', '..', '.env') });
 
 export default new DataSource({
   type: 'postgres',

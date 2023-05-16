@@ -16,12 +16,17 @@ export const authSlice = createSlice({
     setCredentials: (state, { payload }) => {
       state.user = payload;
     },
+    updateAvatarId: (state, { payload }) => {
+      if (state.user?.avatarId) {
+        state.user.avatarId = payload;
+      }
+    },
     clearUserData: (state) => {
       state.user = undefined;
     },
   },
 });
 
-export const { setCredentials } = authSlice.actions;
+export const { setCredentials, updateAvatarId } = authSlice.actions;
 
 export const authReducer = authSlice.reducer;

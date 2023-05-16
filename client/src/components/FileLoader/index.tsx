@@ -4,13 +4,13 @@ import FilesPreview from './FilesPreview';
 import { attachmentMap, AttachmentType } from './utils';
 
 interface AddFileProps {
-  files?: File[];
-  onChange: (files: File[]) => void;
+  fileIds?: (File | string)[];
+  onChange: (files: (File | string)[]) => void;
   children: ReactNode;
 }
 
-const FileLoader: FC<AddFileProps> = ({ children, files: defaultFiles = [], onChange }) => {
-  const [files, setFiles] = useState<File[]>(defaultFiles);
+const FileLoader: FC<AddFileProps> = ({ children, fileIds: existingFileIds = [], onChange }) => {
+  const [files, setFiles] = useState<(File | string)[]>(existingFileIds);
   const ref = useRef<HTMLInputElement>(null);
 
   const htmlForName = 'fileUpload';
@@ -50,13 +50,16 @@ const FileLoader: FC<AddFileProps> = ({ children, files: defaultFiles = [], onCh
         </div>
       </div>
       <input ref={ref} name={htmlForName} onChange={handleChange} type="file" hidden />
-      <FilesPreview files={files} onDelete={handleDelete} />
+      <FilesPreview
+        files={files.map((file) => (typeof file === 'string' ? file : file.name))}
+        onDelete={handleDelete}
+      />
     </div>
   );
 };
 
 FileLoader.defaultProps = {
-  files: undefined,
+  fileIds: [],
 };
 
 export default FileLoader;

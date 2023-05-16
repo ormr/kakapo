@@ -25,6 +25,7 @@ export const authExtendedApi = api.injectEndpoints({
   endpoints: (builder) => ({
     auth: builder.query<User, void>({
       query: () => 'authentication',
+      providesTags: ['User'],
     }),
     login: builder.mutation<User, LoginRequest>({
       query: (body) => ({

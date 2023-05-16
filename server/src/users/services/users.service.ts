@@ -60,5 +60,9 @@ export class UsersService {
     await this.userRepository.update(userId, {
       avatarId: avatar.id,
     });
+
+    return {
+      avatarId: avatar.id,
+    };
   }
 }
