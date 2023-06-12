@@ -10,7 +10,7 @@ interface PostMenuButtonProps {
 }
 
 const PostMenuButton: FC<PostMenuButtonProps> = ({ onEdit, onDelete }) => (
-  <div className="w-56 text-right">
+  <div className="flex flex-grow text-right">
     <Menu as="div" className="relative inline-block text-left">
       <Menu.Button>
         <DotsIcon />

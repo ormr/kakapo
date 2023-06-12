@@ -13,17 +13,36 @@ export class UsersService {
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
     private localFilesService: LocalFilesService
-  ) {}
+  ) { }
 
   async create(createUserInput: CreateUserDto): Promise<User> {
     return await this.userRepository.save(createUserInput);
   }
 
-  async getById(id: string): Promise<User> {
-    const user = await this.userRepository.findOne({ where: { id } });
+  async getById(id: string) {
+    const user = await this.userRepository.findOne({
+      where: { id },
+      relations: {
+        likes: true,
+        comments: true,
+        posts: true,
+      }
+    });
+
+
     if (user) {
-      return user;
+      const { likes, comments, posts, ...restUser } = user;
+
+      restUser.password = undefined;
+
+      return {
+        ...restUser,
+        likesCount: likes.length,
+        postsCount: posts.length,
+        commentsCount: comments.length,
+      }
     }
+
     throw new HttpException(
       'User with this id does not exist',
       HttpStatus.NOT_FOUND

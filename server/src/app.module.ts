@@ -9,10 +9,11 @@ import { CommentsModule } from './comments/comments.module';
 import { LocalFilesModule } from './localFiles/localFile.module';
 import { LikesModule } from './likes/likes.module';
 import { CreatedAllEntities1681650046713 } from './migrations/1681650046713-CreatedAllEntities';
+import { AddedCommentsAndLocationAndDegreeAndPositionFieldsToUserEntity1684838462189 } from './migrations/1684838462189-AddedCommentsAndLocationAndDegreeAndPositionFieldsToUserEntity';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
+    ConfigModule.forRoot({ isGlobal: true, envFilePath: '../.env' }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -25,7 +26,10 @@ import { CreatedAllEntities1681650046713 } from './migrations/1681650046713-Crea
         ssl: config.get<string>('TYPEORM_SSL') === 'true',
         port: config.get<number>('TYPEORM_PORT'),
         entities: [path.join(__dirname, '..', '/dist/**/*.entity{.ts,.js}')],
-        migrations: [CreatedAllEntities1681650046713],
+        migrations: [
+          CreatedAllEntities1681650046713,
+          AddedCommentsAndLocationAndDegreeAndPositionFieldsToUserEntity1684838462189,
+        ],
         synchronize: false,
       }),
     }),

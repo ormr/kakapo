@@ -12,6 +12,7 @@ import {
 import LocalFile from '../../localFiles/entities/localFile.entity';
 import Post from '../../posts/entities/post.entity';
 import Like from '../../likes/entities/like.entity';
+import Comment from '../../comments/entities/comment.entity';
 
 @Entity('users')
 class User {
@@ -23,6 +24,15 @@ class User {
 
   @Column()
   name: string;
+
+  @Column({ nullable: true })
+  location: string;
+
+  @Column({ nullable: true })
+  degree: string;
+
+  @Column({ nullable: true })
+  position: string;
 
   @Column({ nullable: true })
   description: string;
@@ -51,6 +61,9 @@ class User {
 
   @OneToMany(() => Like, (like: Like) => like.user)
   likes?: Like[];
+
+  @OneToMany(() => Comment, (comment: Comment) => comment.author)
+  comments?: Comment[];
 }
 
 export default User;

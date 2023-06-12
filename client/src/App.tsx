@@ -1,5 +1,5 @@
-import React, { ReactElement, Suspense, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import React, { ReactElement, Suspense, useEffect } from 'react';
 import Layout from './components/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
 import { setCredentials } from './features/auth/authSlice';
@@ -27,7 +27,12 @@ const App = (): ReactElement => {
     <Suspense fallback={<div>Loading...</div>}>
       <Layout>
         <Routes>
-          <Route path="/" element={<MainPage />} />
+          <Route
+            path="/"
+            element={
+              <MainPage />
+            }
+          />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LogInPage />} />
           <Route path="/posts/:postId" element={<DetailPage />} />
