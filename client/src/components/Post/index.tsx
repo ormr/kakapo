@@ -46,13 +46,13 @@ const Post: FC<PostEntity & PostProps> = ({
   return (
     <div className="w-full max-w-lg mx-auto flex flex-col gap-3.5">
       <header className="flex justify-between">
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-1.5 w-full">
           <Link to={`/users/${id}`}>
             <Avatar id={author?.avatarId} />
           </Link>
           <div>@{author?.name}</div>
           <DotIcon />
-          <div>{format(new Date(createdAt), 'dd/MM/yyyy hh:mm')}</div>
+          <div className="w-full">{format(new Date(createdAt), 'dd/MM/yyyy hh:mm')}</div>
           <PostMenuButton onEdit={onEdit} onDelete={onDelete} />
         </div>
       </header>
