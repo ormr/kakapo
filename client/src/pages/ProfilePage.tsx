@@ -1,8 +1,7 @@
-import React, { FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import BriefcaseIcon from '../assets/BriefcaseIcon';
 import LocationIcon from '../assets/LocationIcon';
 import UniversityIcon from '../assets/UniversityIcon';
-import Container from '../components/Container';
 import Post from '../components/Post';
 import UploadProfilePicture from '../components/UploadProfilePicture';
 import { useGetPostsByUserIdQuery } from '../services/api/PostsApi';
@@ -24,30 +23,37 @@ const ProfilePage = () => {
   const [updateUserData] = useUpdateUserDataMutation();
   const { data: posts } = useGetPostsByUserIdQuery(user?.id);
   const { data: userData } = useGetUserByIdQuery(user?.id);
-  const { register, reset } = useForm({
+  const { register, reset, handleSubmit } = useForm({
     defaultValues,
   });
 
   useEffect(() => {
-    reset(userData);
+    reset({
+      location: userData?.location,
+      position: userData?.position,
+      degree: userData?.degree,
+      description: userData?.description,
+    });
   }, [userData]);
 
   const [isEdit, setIsEdit] = useState(false);
 
-  const handleSave = () => {
-    
+  const onSave = async (body: typeof defaultValues) => {
+    try {
+      if (user && 'id' in user) {
+        await updateUserData({ userId: user.id, body });
+
+        setIsEdit(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <main className="profile-page pb-12">
       <section className="relative block h-[500px]">
-        <div
-          className="absolute top-0 w-full h-full bg-center bg-cover"
-          style={{
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1499336315816-097655dcfbda?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=2710&amp;q=80')",
-          }}
-        >
+        <div className="absolute top-0 w-full h-full bg-center bg-cover bg-profile-texture">
           <span id="blackOverlay" className="w-full h-full absolute opacity-50 bg-black"></span>
         </div>
         <div
@@ -92,7 +98,7 @@ const ProfilePage = () => {
                     <button
                       className="bg-pink-500 active:bg-pink-600 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150"
                       type="button"
-                      onClick={() => setIsEdit((prevIsEdit) => !prevIsEdit)}
+                      onClick={isEdit ? handleSubmit(onSave) : () => setIsEdit(true)}
                     >
                       {isEdit ? 'Save' : 'Edit'}
                     </button>
@@ -129,7 +135,7 @@ const ProfilePage = () => {
                       {...register('location')}
                       className="text-sm leading-normal mt-0 text-blueGray-400 font-bold uppercase bg-transparent w-48"
                       disabled={!isEdit}
-                      placeholder={isEdit ? "Enter location" : "Location hasn't been added"}
+                      placeholder={isEdit ? 'Enter location' : "Location hasn't been added"}
                     />
                   </div>
                 </div>
@@ -140,7 +146,7 @@ const ProfilePage = () => {
                       {...register('position')}
                       className="text-sm text-gray-600 leading-normal bg-transparent w-48"
                       disabled={!isEdit}
-                      placeholder={isEdit ? "Enter position" : "Position hasn't been added"}
+                      placeholder={isEdit ? 'Enter position' : "Position hasn't been added"}
                     />
                   </div>
                 </div>
@@ -151,7 +157,7 @@ const ProfilePage = () => {
                       {...register('degree')}
                       className="text-sm text-gray-600 leading-normal bg-transparent w-48"
                       disabled={!isEdit}
-                      placeholder={isEdit ? "Enter degree" : "Degree hasn't been added"}
+                      placeholder={isEdit ? 'Enter degree' : "Degree hasn't been added"}
                     />
                   </div>
                 </div>

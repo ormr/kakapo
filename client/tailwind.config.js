@@ -10,6 +10,9 @@ module.exports = {
         lightgreen: '#9cdd05',
         darkgreen: '#74a305',
       },
+      backgroundImage: {
+        'profile-texture': "url('../public/profile-background.jpg')",
+      },
     },
   },
   plugins: [require('@tailwindcss/forms')],

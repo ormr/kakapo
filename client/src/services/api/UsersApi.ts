@@ -7,12 +7,15 @@ export const usersExtendedApi = api.injectEndpoints({
       query: (userId) => `users/${userId}`,
       providesTags: ['User'],
     }),
-    updateUserData: builder.mutation<Pick<User, 'id'>, User>({
-      query: ({ id: userId }) => {
+    updateUserData: builder.mutation<any, { userId: string; body: Partial<User> }>({
+      query: ({ userId, body }) => {
         return {
-          url: `users/${userId}`
-        }
-      }
+          url: `users/${userId}`,
+          method: 'PUT',
+          body,
+        };
+      },
+      invalidatesTags: ['User'],
     }),
     addProfilePicture: builder.mutation<any, any>({
       query: (profilePicture) => {

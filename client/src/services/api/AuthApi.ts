@@ -8,6 +8,9 @@ export interface User {
   createdAt: string;
   updatedAt: string;
   avatarId: string;
+  location: string;
+  position: string;
+  degree: string;
 }
 
 interface LoginRequest {
