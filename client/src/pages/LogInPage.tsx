@@ -1,4 +1,4 @@
-import React, { FC, ReactElement } from 'react';
+import { FC, ReactElement } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LoginForm from '../components/forms/LoginForm';
 import { setCredentials } from '../features/auth/authSlice';

@@ -1,4 +1,4 @@
-import React, { FC, useRef, useState } from 'react';
+import { FC, useRef, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import ImageIcon from '../../../assets/ImageIcon';
 import PaperclipIcon from '../../../assets/Paperclip';

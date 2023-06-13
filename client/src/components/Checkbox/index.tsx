@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import { ChangeEvent, forwardRef } from 'react';
 
 interface CheckboxProps {
   id?: string;
@@ -8,7 +8,7 @@ interface CheckboxProps {
   label: string;
 }
 
-const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(({ id, name, value, onChange, label }, ref) => (
+const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(({ id, name, value, onChange, label }, ref) => (
   <label className="flex gap-4" htmlFor={name}>
     <input
       ref={ref}

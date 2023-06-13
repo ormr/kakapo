@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useEffect, useState } from 'react';
+import { Dispatch, FC, ReactElement, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Post from '../components/Post';
 import Container from '../components/Container';
@@ -72,7 +72,7 @@ const MainPage: FC = (): ReactElement => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-  const toggleModal = (setModalFn: React.Dispatch<boolean>, isOpen: boolean = true, newPostData?: IPost) => {
+  const toggleModal = (setModalFn: Dispatch<boolean>, isOpen: boolean = true, newPostData?: IPost) => {
     setPostData(newPostData);
     setModalFn(isOpen);
   };

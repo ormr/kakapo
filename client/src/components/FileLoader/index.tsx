@@ -1,4 +1,4 @@
-import React, { FC, ReactNode, useState, useRef, useMemo, useEffect } from 'react';
+import { FC, ReactNode, useState, useRef, useMemo, useEffect } from 'react';
 import FilesContext from './context';
 import FilesPreview from './FilesPreview';
 import { attachmentMap, AttachmentType } from './utils';

@@ -1,4 +1,4 @@
-import React, { FC, Fragment } from 'react';
+import { FC, Fragment } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import DotsIcon from '../../assets/DotsIcon';
 import EditIcon from '../../assets/EditIcon';

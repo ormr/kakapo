@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 
 interface ProgressbarProps {

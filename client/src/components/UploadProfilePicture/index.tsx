@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useRef } from 'react';
+import { ChangeEvent, FC, useRef } from 'react';
 import UploadIcon from '../../assets/UploadIcon';
 
 interface UploadProfilePictureProps {
@@ -25,7 +25,8 @@ const UploadProfilePicture: FC<UploadProfilePictureProps> = ({ href, onChange })
     <div
       role="button"
       tabIndex={0}
-      className="absolute -m-16 max-w-[150px] w-full" onClick={() => ref?.current?.click()}
+      className="absolute -m-16 max-w-[150px] w-full"
+      onClick={() => ref?.current?.click()}
       onKeyDown={handleKeyDown}
     >
       <div className="w-full">

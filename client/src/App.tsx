@@ -1,17 +1,17 @@
 import { Routes, Route } from 'react-router-dom';
-import React, { ReactElement, Suspense, useEffect } from 'react';
+import { ReactElement, Suspense, useEffect, lazy } from 'react';
 import Layout from './components/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
 import { setCredentials } from './features/auth/authSlice';
 import { useAuthQuery } from './services/api/AuthApi';
 import { useAppDispatch } from './store/hooks';
 
-const MainPage = React.lazy(() => import('./pages/MainPage'));
-const RegisterPage = React.lazy(() => import('./pages/RegisterPage'));
-const LogInPage = React.lazy(() => import('./pages/LogInPage'));
-const ProfilePage = React.lazy(() => import('./pages/ProfilePage'));
-const NotFoundPage = React.lazy(() => import('./pages/NotFoundPage'));
-const DetailPage = React.lazy(() => import('./pages/DetailPage'));
+const MainPage = lazy(() => import('./pages/MainPage'));
+const RegisterPage = lazy(() => import('./pages/RegisterPage'));
+const LogInPage = lazy(() => import('./pages/LogInPage'));
+const ProfilePage = lazy(() => import('./pages/ProfilePage'));
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
+const DetailPage = lazy(() => import('./pages/DetailPage'));
 
 const App = (): ReactElement => {
   const dispatch = useAppDispatch();
@@ -27,12 +27,7 @@ const App = (): ReactElement => {
     <Suspense fallback={<div>Loading...</div>}>
       <Layout>
         <Routes>
-          <Route
-            path="/"
-            element={
-              <MainPage />
-            }
-          />
+          <Route path="/" element={<MainPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LogInPage />} />
           <Route path="/posts/:postId" element={<DetailPage />} />

@@ -1,4 +1,4 @@
-import React, { FC, ReactNode, useContext } from 'react';
+import { FC, ReactNode, useContext } from 'react';
 import FilesContext from './context';
 import { AttachmentType } from './utils';
 

@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC, ReactNode } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGetPostByIdQuery, useToggleLikePostMutation, useAddCommentToPostMutation } from '../services/api/PostsApi';
 import Post from '../components/Post';
@@ -6,7 +6,7 @@ import Avatar from '../components/Avatar';
 import AddCommentForm from '../components/forms/AddCommentForm';
 
 interface ContainerInnerProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 const ContainerInner: FC<ContainerInnerProps> = ({ children }) => (

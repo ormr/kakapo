@@ -1,4 +1,4 @@
-import React, { useState, useMemo, FC, ReactNode } from 'react';
+import { useState, useMemo, FC, ReactNode } from 'react';
 import clsx from 'clsx';
 import Header from '../Header';
 import 'react-circular-progressbar/dist/styles.css';

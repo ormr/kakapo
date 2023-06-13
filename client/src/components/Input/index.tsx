@@ -1,4 +1,4 @@
-import React, { ChangeEvent, HTMLInputTypeAttribute } from 'react';
+import { ChangeEvent, HTMLInputTypeAttribute, forwardRef } from 'react';
 
 interface InputProps {
   id?: string;
@@ -10,7 +10,7 @@ interface InputProps {
   onChange?: (value: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Input = React.forwardRef<HTMLInputElement, InputProps>(
+const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ id, type = 'text', name, placeholder, value, onChange, errorMessage }, ref) => (
     <>
       <input

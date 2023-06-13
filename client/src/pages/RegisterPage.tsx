@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import RegisterForm from '../components/forms/RegisterForm';
 import { useRegisterMutation } from '../services/api/AuthApi';
