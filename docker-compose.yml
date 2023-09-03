@@ -28,14 +28,33 @@ services:
     environment:
       - API_PORT=${API_PORT}
       - API_HOST=${API_HOST}
+      - API_ORIGIN_URL=${API_ORIGIN_URL}
       - TYPEORM_CONNECTION=${TYPEORM_CONNECTION}
       - TYPEORM_USERNAME=${TYPEORM_USERNAME}
       - TYPEORM_PASSWORD=${TYPEORM_PASSWORD}
       - TYPEORM_DATABASE=${TYPEORM_DATABASE}
       - TYPEORM_PORT=${TYPEORM_PORT}
       - TYPEORM_HOST=postgres
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_EXPIRATION_TIME=${JWT_EXPIRATION_TIME}
+      - UPLOADED_FILES_DESTINATION=${UPLOADED_FILES_DESTINATION}
     networks:
       - postgres
+
+  client:
+    container_name: kakapo-client
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - '80:80'
+    depends_on:
+      - server
+    environment:
+      - REACT_APP_BASE_URL=${REACT_APP_BASE_URL}
+    networks:
+      - postgres
+    restart: always
 
   pgadmin:
     links:
@@ -43,7 +62,7 @@ services:
     container_name: pgadmin
     image: dpage/pgadmin4
     ports:
-      - "8080:80"
+      - "8080:8080"
     volumes:
       - pgadmin-data:/var/lib/pgadmin
     environment:

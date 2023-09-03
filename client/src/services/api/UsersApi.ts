@@ -13,6 +13,7 @@ export const usersExtendedApi = api.injectEndpoints({
           body: formData,
         };
       },
+      invalidatesTags: ['User'],
     }),
   }),
 });

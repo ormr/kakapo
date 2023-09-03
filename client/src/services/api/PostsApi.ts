@@ -23,10 +23,15 @@ interface Response<T> {
   count: number;
 }
 
+interface Pagination {
+  limit: number;
+  offset: number;
+}
+
 export const postsExtendedApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    getPosts: builder.query<Response<Post[]>, void>({
-      query: () => 'posts',
+    getPosts: builder.query<Response<Post[]>, Pagination>({
+      query: ({ limit, offset }) => `posts?limit=${limit}&offset=${offset}`,
       providesTags: (result) =>
         result && result.items
           ? [...result.items.map(({ id }) => ({ type: 'Posts', id } as const)), { type: 'Posts', id: 'LIST' }]
@@ -57,6 +62,14 @@ export const postsExtendedApi = api.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'Posts', id: 'LIST' }],
     }),
+    updatePost: builder.mutation<Post, { postId: number; content: string }>({
+      query: ({ postId, ...body }) => ({
+        url: `posts/${postId}`,
+        method: 'PUT',
+        body,
+      }),
+      invalidatesTags: [{ type: 'Posts', id: 'LIST' }],
+    }),
     addFileToPost: builder.mutation<any, any>({
       query: (data) => {
         const { postId, file } = data;
@@ -68,6 +81,18 @@ export const postsExtendedApi = api.injectEndpoints({
           url: `posts/${postId}/add-file`,
           method: 'POST',
           body: formData,
+        };
+      },
+      invalidatesTags: (result, error) =>
+        result && !error ? [{ type: 'Posts', id: result.id }] : [{ type: 'Posts', id: 'LIST' }],
+    }),
+    deletePostFile: builder.mutation<any, any>({
+      query: (data) => {
+        const { postId, fileId } = data;
+
+        return {
+          url: `posts/${postId}/delete-file/${fileId}`,
+          method: 'DELETE',
         };
       },
     }),
@@ -94,6 +119,19 @@ export const postsExtendedApi = api.injectEndpoints({
       invalidatesTags: (result, error, arg) =>
         result && !error ? [{ type: 'Posts', id: arg.id }] : [{ type: 'Posts', id: 'LIST' }],
     }),
+    deletePost: builder.mutation<any, any>({
+      query: (postId) => ({
+        url: `posts/${postId}`,
+        method: 'DELETE',
+        providesTags: (result: any) =>
+          result
+            ? [
+                { type: 'Posts', id: result.id },
+                { type: 'Posts', id: 'LIST' },
+              ]
+            : [{ type: 'Posts', id: 'LIST' }],
+      }),
+    }),
   }),
 });
 
@@ -105,4 +143,7 @@ export const {
   useToggleLikePostMutation,
   useAddFileToPostMutation,
   useAddCommentToPostMutation,
+  useDeletePostMutation,
+  useUpdatePostMutation,
+  useDeletePostFileMutation,
 } = postsExtendedApi;

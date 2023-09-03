@@ -50,7 +50,7 @@ export class PostsController {
     @Param('id') userId: string,
     @Query() { offset, limit, startId }: PaginationParams
   ) {
-    return this.postsService.getPosts(offset, limit, startId, {}, userId);
+    return this.postsService.getPosts(offset, limit, startId, {}, userId, true);
   }
 
   @Get(':id')
@@ -132,6 +132,13 @@ export class PostsController {
   @Put(':id')
   async updatePost(@Param('id') id: number, @Body() post: UpdatePostDto) {
     return this.postsService.updatePost(id, post);
+  }
+
+  @Delete(':id/delete-file/:fileId')
+  @UseGuards(JwtAuthenticationGuard)
+  async deleteFile(@Param('id') id: number, @Param('fileId') fileId: string) {
+    console.log(id, fileId);
+    this.postsService.deleteFilePostAndFileId(id, fileId);
   }
 
   @Delete(':id')

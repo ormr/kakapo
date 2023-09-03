@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC } from 'react';
+import React, { ChangeEvent } from 'react';
 
 interface CheckboxProps {
   id?: string;

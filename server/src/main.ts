@@ -12,6 +12,9 @@ async function bootstrap() {
     credentials: true,
   });
   app.use(cookieParser());
+  app.setGlobalPrefix('api');
+  const mode = config.get<string>('MODE');
+  const apiPort = config.get<number>('API_PORT');
   const port = process.env.PORT || 3001;
   await app.listen(port, () => {
     // eslint-disable-next-line no-console
