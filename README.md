@@ -1,6 +1,9 @@
 # Kakapo
 
-Kakapo is the network app
+Introducing Kakapo, an evolving blog application that is gradually transitioning into a thriving social network. This project primarily serves as a platform for experimenting with Nest.js and Postgres. My current focus revolves around the following tasks:
+- Identifying a suitable hosting provider to deploy the application effectively.
+- Implementing a feature-rich text editor to enable detailed and sophisticated post editing.
+- Exploring the potential of Framer Motion to introduce captivating animations that enhance the overall user experience on the site.
 
 ### Setup
 
